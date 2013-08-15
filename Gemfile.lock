@@ -40,6 +40,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    dalli (2.6.4)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -53,6 +54,7 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memcachier (0.0.2)
     mime-types (1.23)
     multi_json (1.7.8)
     mysql2 (0.3.11)
@@ -109,7 +111,9 @@ PLATFORMS
 DEPENDENCIES
   authlogic
   coffee-rails (~> 3.2.1)
+  dalli
   jquery-rails
+  memcachier
   mysql2
   pg
   rails (= 3.2.13)
