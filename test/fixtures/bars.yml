@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  latitude: 1.5
+  longitude: 1.5
+  street: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  url: MyString
+  opening: 2013-08-08 13:18:47
+  closing: 2013-08-08 13:18:47
+
+two:
+  name: MyString
+  latitude: 1.5
+  longitude: 1.5
+  street: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  url: MyString
+  opening: 2013-08-08 13:18:47
+  closing: 2013-08-08 13:18:47
