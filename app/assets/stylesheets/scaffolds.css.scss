@@ -1,15 +1,80 @@
-body {
-  background-color: #fff;
-  color: #333;
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
+html, body {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
 }
 
 p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
+}
+
+.container {
+  width: 100%;
+  height:100%;
+}
+
+/** BG GRAPHICS **/
+
+#bg, #note {
+  z-index: -1;
+  position:fixed;
+}
+
+#bg {
+  width: 100%;
+  height:100%;
+  top: 0px;
+  left: 0px;
+}
+
+header {
+  position: absolute;
+  width: 100%;
+  height:4.5em;
+  top: 0px;
+  background-color: rgba(0,0,0,.9);
+  color: white;
+  
+  nav {
+    margin: 0 auto;
+	width: 1000px;
+	height: inherit;
+	#logo {
+	  font-family: "copal-std-outline";
+	  color: white;
+	}
+	
+	ul {
+	  width: 100%;
+	  font-size: 3em;
+	  height: inherit;
+	}
+	
+	li {
+	  font-family: "myriad-std-sketch";
+	  display: inline-block;
+      *display:inline; /*IE7*/
+      *zoom:1; /*IE7*/
+	  margin-left: .8em;
+	  margin-right: .8em;
+	  /** for mobile?
+	  display: table;
+      margin:0px auto 0px auto;
+	  **/
+	  bottom: 0px;
+	  line-height:1.5em;
+	  list-style: none;  
+	}
+  }
+}
+
+
+h2 {
+  font-size: .75em;
+  text-align: center;
+  font-family: Helvetica, Verdana;
 }
 
 pre {
@@ -64,6 +129,6 @@ div {
   }
   ul li {
     font-size: 12px;
-    list-style: square;
+    list-style: none;
   }
 }

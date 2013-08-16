@@ -6,6 +6,8 @@ BarApp::Application.routes.draw do
 
 
   resources :users
+  
+  root :to => "pages#main"
 
 
   # The priority is based upon order of creation:

@@ -5,10 +5,23 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <script type="text/javascript" src="//use.typekit.net/vfg0zyr.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
 <body>
-
-<%= yield %>
-
+	<header>
+		<nav>
+			<ul>
+				<li id="logo"> <img src="images/note2.png" width="30px" height="45px" alt="note"> Joox </li>
+				<li> Home </li>
+				<li> My Account </li>
+				<li> Search </li>
+			</ul>
+		</nav>
+	</header>
+	<div class="container">
+		<img src="images/bg.png" id="bg">
+		<%= yield %>
+	</div>
 </body>
 </html>
