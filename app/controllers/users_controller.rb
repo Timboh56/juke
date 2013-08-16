@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  filter_access_to :all
+  caches_action :index
+  
   # GET /users
   # GET /users.json
   def index

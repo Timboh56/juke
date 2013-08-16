@@ -1,8 +1,8 @@
 (function($) {
 	
 	$(function() {
-		$(".logo").animate({
-			fontSize: "5em",
+		$("#logo").animate({
+			left: "5000px",
 		},1000);
     });
 })(jQuery)

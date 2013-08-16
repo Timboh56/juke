@@ -7,7 +7,11 @@ BarApp::Application.routes.draw do
 
   resources :users
   
-  root :to => "pages#main"
+  resources :user_sessions
+  
+  root :to => "user_sessions#new"
+  
+  match "/login" => "user_sessions#new"
 
 
   # The priority is based upon order of creation:
