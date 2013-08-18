@@ -11,22 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130808202239) do
-
-  create_table "bars", :force => true do |t|
-    t.string   "name"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.string   "street"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
-    t.string   "url"
-    t.time     "opening"
-    t.time     "closing"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
+ActiveRecord::Schema.define(:version => 20130817094504) do
 
   create_table "bids", :force => true do |t|
     t.float    "amount"
@@ -48,6 +33,21 @@ ActiveRecord::Schema.define(:version => 20130808202239) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "jukeboxes", :force => true do |t|
+    t.string   "name"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "url"
+    t.time     "opening"
+    t.time     "closing"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -62,16 +62,36 @@ ActiveRecord::Schema.define(:version => 20130808202239) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email"
-    t.string   "username"
-    t.string   "password"
+    t.string   "email",               :default => "", :null => false
+    t.string   "username",                            :null => false
+    t.string   "crypted_password",                    :null => false
     t.text     "blurb"
+    t.string   "persistence_token",                   :null => false
+    t.string   "single_access_token",                 :null => false
+    t.string   "perishable_token",                    :null => false
+    t.integer  "login_count",         :default => 0,  :null => false
+    t.integer  "failed_login_count",  :default => 0,  :null => false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.string   "current_login_ip"
     t.string   "street"
     t.string   "city"
     t.string   "state"
     t.string   "country"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+  end
+
+  create_table "votes", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "song_title"
+    t.string   "artist"
+    t.string   "url"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "votes", ["song_title"], :name => "index_votes_on_song_title"
+  add_index "votes", ["user_id"], :name => "index_votes_on_user_id"
 
 end

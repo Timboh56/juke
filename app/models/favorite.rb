@@ -1,3 +1,3 @@
-class UserRoles < ActiveRecord::Base
+class Favorite < ActiveRecord::Base
   # attr_accessible :title, :body
 end

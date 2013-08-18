@@ -1,4 +1,7 @@
 BarApp::Application.routes.draw do
+  resources :votes
+
+
   resources :bids
 
 
@@ -12,6 +15,10 @@ BarApp::Application.routes.draw do
   root :to => "user_sessions#new"
   
   match "/login" => "user_sessions#new"
+  match "/logout" => "user_sessions#destroy"
+  match "/register" => "users#new"
+  
+  
 
 
   # The priority is based upon order of creation:

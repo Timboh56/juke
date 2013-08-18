@@ -10,13 +10,19 @@ p, ol, ul, td {
   line-height: 18px;
 }
 
+.super {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
+
 .container {
-  margin: 0px auto;
+  height:100%;
+  margin-left: 150px;
+  margin-right: 150px;
   position: absolute;
   top: 6em;
-  left: 40%;
   text-align: center;
-  width: 20em;
   height:30%;
   padding: 30px;
   background-color: rgba(255,255,255,.5);
@@ -64,9 +70,11 @@ header {
 	  height: inherit;
 	}
 	
-	li {
+	li, a {
+	  color: #FFF;
 	  font-family: "myriad-std-sketch";
 	  display: inline-block;
+	  font-size: .8em;
       *display:inline; /*IE7*/
       *zoom:1; /*IE7*/
 	  margin-left: .8em;
@@ -78,12 +86,13 @@ header {
 	  bottom: 0px;
 	  line-height:1.5em;
 	  list-style: none;
+	  text-decoration: none;
 	  -webkit-transition: all .5s ease-in;
 	  -moz-transition: all .5s ease-in;
 	  transition: all .5s ease-in; 
 	}
 	
-	li:hover {
+	li:hover, a:hover {
 	  color: rgba(160,20,20,.9);
 	  cursor: pointer;
 	}
@@ -105,17 +114,6 @@ pre {
   background-color: #eee;
   padding: 10px;
   font-size: 11px;
-}
-
-a {
-  color: #000;
-  &:visited {
-    color: #666;
-  }
-  &:hover {
-    color: #fff;
-    background-color: #000;
-  }
 }
 
 div {

@@ -12,16 +12,20 @@
 	<header>
 		<nav>
 			<ul>
-				<li id="logo"> <img src="/images/note3.png" width="30px" height="42px" alt="note"> Joox </li>
-				<li> Home </li>
-				<li> My Account </li>
+				<li id="logo"> <img src="/images/note3.png" width="30px" height="42px" alt="note"> JooKer </li>
 				<li> Search </li>
+				<li> <%= nav_link %></li>
+				<li> <%= link_to "Register", register_path %> </li>
 			</ul>
 		</nav>
 	</header>
-	<div class="container">
-		<img src="/images/bg.png" id="bg">
-		<%= yield %>
+	<div class="super">
+		<center>
+		<div class="container">
+			<img src="/images/bg.png" id="bg">
+			<%= yield %>
+		</div>
+	</center>
 	</div>
 </body>
 </html>

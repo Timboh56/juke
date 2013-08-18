@@ -1,8 +1,7 @@
-class BarsController < ApplicationController
-  # GET /bars
-  # GET /bars.json
+class JukeboxesController < ApplicationController
+
   def index
-    @bars = Bar.all
+    @bars = Jukebox.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +12,7 @@ class BarsController < ApplicationController
   # GET /bars/1
   # GET /bars/1.json
   def show
-    @bar = Bar.find(params[:id])
+    @bar = Jukebox.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +23,7 @@ class BarsController < ApplicationController
   # GET /bars/new
   # GET /bars/new.json
   def new
-    @bar = Bar.new
+    @bar = Jukebox.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,17 +33,17 @@ class BarsController < ApplicationController
 
   # GET /bars/1/edit
   def edit
-    @bar = Bar.find(params[:id])
+    @bar = Jukebox.find(params[:id])
   end
 
   # POST /bars
   # POST /bars.json
   def create
-    @bar = Bar.new(params[:bar])
+    @bar = Jukebox.new(params[:bar])
 
     respond_to do |format|
       if @bar.save
-        format.html { redirect_to @bar, notice: 'Bar was successfully created.' }
+        format.html { redirect_to @bar, notice: 'Jukebox was successfully created.' }
         format.json { render json: @bar, status: :created, location: @bar }
       else
         format.html { render action: "new" }
@@ -56,11 +55,11 @@ class BarsController < ApplicationController
   # PUT /bars/1
   # PUT /bars/1.json
   def update
-    @bar = Bar.find(params[:id])
+    @bar = Jukebox.find(params[:id])
 
     respond_to do |format|
       if @bar.update_attributes(params[:bar])
-        format.html { redirect_to @bar, notice: 'Bar was successfully updated.' }
+        format.html { redirect_to @bar, notice: 'Jukebox was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -72,7 +71,7 @@ class BarsController < ApplicationController
   # DELETE /bars/1
   # DELETE /bars/1.json
   def destroy
-    @bar = Bar.find(params[:id])
+    @bar = Jukebox.find(params[:id])
     @bar.destroy
 
     respond_to do |format|

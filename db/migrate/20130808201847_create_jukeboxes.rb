@@ -1,6 +1,6 @@
-class CreateBars < ActiveRecord::Migration
+class CreateJukeboxes < ActiveRecord::Migration
   def change
-    create_table :bars do |t|
+    create_table :jukeboxes do |t|
       t.string :name
       t.float :latitude
       t.float :longitude

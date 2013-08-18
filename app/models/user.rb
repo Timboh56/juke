@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :username, :street, :city, :state
+  attr_accessible :email, :username, :street, :city, :state, :role, :roles, :password, :password_confirmation
   
   acts_as_authentic do |c|
     c.logged_in_timeout = 10.minutes
@@ -7,5 +7,15 @@ class User < ActiveRecord::Base
   
   has_many :bids, :dependent => :destroy
   has_many :favorites, :dependent => :destroy
+  has_many :user_roles
   has_many :roles, :through => :user_roles
+  
+  validates_uniqueness_of :username
+  validates_uniqueness_of :email
+  validates_presence_of :username
+  validates_presence_of :email
+  validates_presence_of :password
+  
+  
+  
 end

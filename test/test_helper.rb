@@ -10,4 +10,9 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  
+  def prep_objects
+    # create test user
+    user = User.create(:email => "test@test.com", :username => "test", :password => "test")
+  end
 end
