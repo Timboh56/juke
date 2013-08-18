@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @bar.name %>
+</p>
+
+<p>
+  <b>Latitude:</b>
+  <%= @bar.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%= @bar.longitude %>
+</p>
+
+<p>
+  <b>Street:</b>
+  <%= @bar.street %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @bar.city %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @bar.state %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @bar.country %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%= @bar.url %>
+</p>
+
+<p>
+  <b>Opening:</b>
+  <%= @bar.opening %>
+</p>
+
+<p>
+  <b>Closing:</b>
+  <%= @bar.closing %>
+</p>
+
+
+<%= link_to 'Edit', edit_bar_path(@bar) %> |
+<%= link_to 'Back', bars_path %>
