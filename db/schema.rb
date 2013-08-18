@@ -16,22 +16,26 @@ ActiveRecord::Schema.define(:version => 20130817094504) do
   create_table "bids", :force => true do |t|
     t.float    "amount"
     t.integer  "user_id"
-    t.integer  "bar_id"
+    t.integer  "jukebox_id"
     t.string   "song_name"
     t.string   "song_artist"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
-  add_index "bids", ["bar_id"], :name => "index_bids_on_bar_id"
+  add_index "bids", ["jukebox_id"], :name => "index_bids_on_jukebox_id"
+  add_index "bids", ["song_name"], :name => "index_bids_on_song_name"
   add_index "bids", ["user_id"], :name => "index_bids_on_user_id"
 
   create_table "favorites", :force => true do |t|
-    t.integer  "users_id"
-    t.integer  "bars_id"
+    t.integer  "user_id"
+    t.integer  "jukebox_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "favorites", ["jukebox_id"], :name => "index_favorites_on_jukebox_id"
+  add_index "favorites", ["user_id"], :name => "index_favorites_on_user_id"
 
   create_table "jukeboxes", :force => true do |t|
     t.string   "name"
@@ -84,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20130817094504) do
 
   create_table "votes", :force => true do |t|
     t.integer  "user_id"
+    t.integer  "jukebox_id"
     t.string   "song_title"
     t.string   "artist"
     t.string   "url"
@@ -91,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20130817094504) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "votes", ["jukebox_id"], :name => "index_votes_on_jukebox_id"
   add_index "votes", ["song_title"], :name => "index_votes_on_song_title"
   add_index "votes", ["user_id"], :name => "index_votes_on_user_id"
 

@@ -1,2 +1,2 @@
-module BarsHelper
+module JukeboxesHelper
 end

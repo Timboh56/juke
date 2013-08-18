@@ -5,7 +5,7 @@ BarApp::Application.routes.draw do
   resources :bids
 
 
-  resources :bars
+  resources :jukeboxes
 
 
   resources :users

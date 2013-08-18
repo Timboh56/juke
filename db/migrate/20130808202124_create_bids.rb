@@ -3,13 +3,14 @@ class CreateBids < ActiveRecord::Migration
     create_table :bids do |t|
       t.float :amount
       t.references :user
-      t.references :bar
+      t.references :jukebox
       t.string :song_name
       t.string :song_artist
 
       t.timestamps
     end
     add_index :bids, :user_id
-    add_index :bids, :bar_id
+    add_index :bids, :jukebox_id
+    add_index :bids, :song_name
   end
 end
