@@ -8,12 +8,10 @@
 
 u = User.new(username: 'admin1', email: 'timboh256@gmail.com')
 u.password = 'changeme'
+u.password_confirmation = 'changeme'
 u.save!(validate: true)
 
-admin = Role.new(name: 'admin')
-admin.save!
-user = Role.new(name: 'user')
-user.save!
+admin = Role.find_by_name('admin')
 
 u.roles << admin
 

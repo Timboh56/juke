@@ -1,4 +1,5 @@
 class JukeboxesController < ApplicationController
+  filter_resource_access
 
   def index
     @bars = Jukebox.all

@@ -1,4 +1,5 @@
 class BidsController < ApplicationController
+  filter_resource_access
   # GET /bids
   # GET /bids.json
   def index

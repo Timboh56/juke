@@ -16,6 +16,14 @@ class User < ActiveRecord::Base
   validates_presence_of :email
   validates_presence_of :password
   
+  def role_symbols
+    roles.map do |role|
+      role.name.underscore.to_sym
+    end
+  end
   
-  
+  def top_role
+    user_roles.order("id ASC").first.role_id
+  end
+    
 end

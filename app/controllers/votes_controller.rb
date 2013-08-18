@@ -1,4 +1,6 @@
 class VotesController < ApplicationController
+  filter_resource_access
+  
   # GET /votes
   # GET /votes.json
   def index

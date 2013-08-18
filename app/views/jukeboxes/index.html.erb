@@ -1,4 +1,4 @@
-<h1>Listing bars</h1>
+<h1>Listing jukeboxes</h1>
 
 <table>
   <tr>
@@ -17,25 +17,25 @@
     <th></th>
   </tr>
 
-<% @bars.each do |bar| %>
+<% @jukeboxes.each do |jukebox| %>
   <tr>
-    <td><%= bar.name %></td>
-    <td><%= bar.latitude %></td>
-    <td><%= bar.longitude %></td>
-    <td><%= bar.street %></td>
-    <td><%= bar.city %></td>
-    <td><%= bar.state %></td>
-    <td><%= bar.country %></td>
-    <td><%= bar.url %></td>
-    <td><%= bar.opening %></td>
-    <td><%= bar.closing %></td>
-    <td><%= link_to 'Show', bar %></td>
-    <td><%= link_to 'Edit', edit_bar_path(bar) %></td>
-    <td><%= link_to 'Destroy', bar, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= jukebox.name %></td>
+    <td><%= jukebox.latitude %></td>
+    <td><%= jukebox.longitude %></td>
+    <td><%= jukebox.street %></td>
+    <td><%= jukebox.city %></td>
+    <td><%= jukebox.state %></td>
+    <td><%= jukebox.country %></td>
+    <td><%= jukebox.url %></td>
+    <td><%= jukebox.opening %></td>
+    <td><%= jukebox.closing %></td>
+    <td><%= link_to 'Show', jukebox %></td>
+    <td><%= link_to 'Edit', edit_jukebox_path(jukebox) %></td>
+    <td><%= link_to 'Destroy', jukebox, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Bar', new_bar_path %>
+<%= link_to 'New Jukebox', new_jukebox_path %>

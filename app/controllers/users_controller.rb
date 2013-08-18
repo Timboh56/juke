@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
   caches_action :index
+  filter_resource_access
   
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = current_user.top_role == 1 ? User.all :  nil
 
     respond_to do |format|
       format.html # index.html.erb

@@ -19,8 +19,6 @@ BarApp::Application.routes.draw do
   match "/register" => "users#new"
   
   
-
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
