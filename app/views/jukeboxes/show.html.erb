@@ -1,20 +1,7 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <b>Name:</b>
   <%= @jukebox.name %>
 </p>
-
-<p>
-  <b>Latitude:</b>
-  <%= @jukebox.latitude %>
-</p>
-
-<p>
-  <b>Longitude:</b>
-  <%= @jukebox.longitude %>
-</p>
-
 <p>
   <b>Street:</b>
   <%= @jukebox.street %>
@@ -49,6 +36,13 @@
   <b>Closing:</b>
   <%= @jukebox.closing %>
 </p>
+
+<p><h1> Playlist </h1> 
+	<% @songs.each do |song| %>
+		<%= song.name %>
+	<% end%>
+</p>
+<%= link_to 'Add your song', new_vote_path %>
 
 
 <%= link_to 'Edit', edit_jukebox_path(@jukebox) %> |

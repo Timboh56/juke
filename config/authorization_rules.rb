@@ -8,7 +8,7 @@ authorization do
   end  
   
   role :user do  
-    has_permission_on :jukeboxes, :to => [:index, :show]
+    has_permission_on :jukeboxes, :to => [:index, :show, :create, :new, :edit, :update]
     has_permission_on :bids, :to => [:index, :show, :create]  
     has_permission_on :votes, :to => [:index, :show, :new, :create]  
     has_permission_on :favorites, :to => [:edit, :update, :view, :index, :show]

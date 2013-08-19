@@ -12,16 +12,19 @@
 	<header>
 		<nav>
 			<ul>
-				<li id="logo"> <img src="/images/note3.png" width="30px" height="42px" alt="note"> JooKer </li>
-				<li> Search </li>
+				<li id="logo">
+					<%= link_to image_tag("/images/note3.png", :width => "20", :height => "32px", :alt => "note") + "JooKer", root_path %>
+				 </li>
+				<li> <%= link_to "Search", jukeboxes_path %> </li>
 				<li> <%= nav_link %></li>
 				<li> <%= link_to "Register", register_path %> </li>
 			</ul>
 		</nav>
 	</header>
 	<div class="super">
+		<img src="/images/j3.jpg" id="bg">		
+		<%= notice_div %>
 		<span class="container">
-			<img src="/images/bg.png" id="bg">
 			<%= yield %>
 		</span>
 	</div>

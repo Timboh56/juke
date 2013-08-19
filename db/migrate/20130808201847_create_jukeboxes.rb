@@ -1,7 +1,7 @@
 class CreateJukeboxes < ActiveRecord::Migration
   def change
     create_table :jukeboxes do |t|
-      t.string :name
+      t.string :name, :null => false, :unique => true
       t.float :latitude
       t.float :longitude
       t.string :street

@@ -4,23 +4,30 @@ html, body {
   border: 0px;
 }
 
-p, ol, ul, td, label {
+p, ol, ul, td, label{
   font-family: Georgia, helvetica, sans-serif;
   font-size: .9em;
-  line-height: 1.5em;
+  line-height: 1.2em;
+}
+
+a {
+  text-decoration: none;
+  font-family: Georgia, helvetica, sans-serif;
+}
+
+a:hover {
+
+
 }
 
 .super {
   position: relative;
-
   top: 6em;
   text-align: center;
   margin: 0 auto;
   height: 100%;
-
   width: 700px;
   overflow-y: auto;
-
 }
 .container {
   display: inline-block;
@@ -32,7 +39,12 @@ p, ol, ul, td, label {
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
   -o-border-radius: 30px;
-  border-radius: 30px;  
+  border-radius: 30px;
+  // pre-animation opacity 
+  -webkit-opacity: .1;
+  -o-opacity: .1;
+  -moz-opacity: .1;
+  
   p {
     display: inherit;
 	width: 200px;
@@ -60,17 +72,21 @@ p, ol, ul, td, label {
 header {
   position: absolute;
   width: 100%;
-  height:4.5em;
-  top: 0px;
+  height:4em;
+  top: -2em;
   background-color: rgba(0,0,0,.9);
   color: white;
+  transition: top .1s ease-out;
+  -moz-transition: top .1s ease-out;
+  -webkit-transition: top .1s ease-out;
+  -o-transition: top .1s ease-out;
   z-index: 1000;
   
   nav {
     margin: 0 auto;
 	width: 1000px;
 	height: inherit;
-	#logo {
+	#logo a {
 	  font-family: "copal-std-outline";
 	  color: white;
 	}
@@ -135,6 +151,11 @@ div {
 
 #notice {
   color: green;
+  display: inline-block;
+  margin: 15px;
+  background-color: rgba(255,255,255,.3);
+  padding: 15px;
+  border-radius: 5px;
 }
 
 .field_with_errors {

@@ -7,4 +7,9 @@ module ApplicationHelper
     end
   end
 
+  def notice_div
+    if notice
+      content_tag "div", notice, {:id => "notice"}
+    end
+  end
 end

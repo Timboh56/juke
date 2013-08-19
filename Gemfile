@@ -11,6 +11,7 @@ gem 'dalli'
 gem 'memcachier'
 gem 'whenever'
 gem 'will_paginate', '~> 3.0'
+gem 'cucumber'
 gem 'factory_girl'
 
 # Gems used only for assets and not required

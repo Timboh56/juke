@@ -1,10 +1,10 @@
 class CreateVotes < ActiveRecord::Migration
   def change
     create_table :votes do |t|
-      t.references :user
-      t.references :jukebox
-      t.string :song_title
-      t.string :artist
+      t.references :user, :null => false
+      t.references :jukebox, :null => false
+      t.string :song_title, :null => false
+      t.string :artist, :null => false
       t.string :url
 
       t.timestamps

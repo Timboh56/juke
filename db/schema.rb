@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20130817094504) do
   add_index "favorites", ["user_id"], :name => "index_favorites_on_user_id"
 
   create_table "jukeboxes", :force => true do |t|
-    t.string   "name"
+    t.string   "name",       :null => false
     t.float    "latitude"
     t.float    "longitude"
     t.string   "street"
@@ -90,10 +90,10 @@ ActiveRecord::Schema.define(:version => 20130817094504) do
   end
 
   create_table "votes", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "jukebox_id"
-    t.string   "song_title"
-    t.string   "artist"
+    t.integer  "user_id",    :null => false
+    t.integer  "jukebox_id", :null => false
+    t.string   "song_title", :null => false
+    t.string   "artist",     :null => false
     t.string   "url"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

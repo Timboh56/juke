@@ -1,41 +1,6 @@
-<h1>Listing jukeboxes</h1>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Latitude</th>
-    <th>Longitude</th>
-    <th>Street</th>
-    <th>City</th>
-    <th>State</th>
-    <th>Country</th>
-    <th>Url</th>
-    <th>Opening</th>
-    <th>Closing</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @jukeboxes.each do |jukebox| %>
-  <tr>
-    <td><%= jukebox.name %></td>
-    <td><%= jukebox.latitude %></td>
-    <td><%= jukebox.longitude %></td>
-    <td><%= jukebox.street %></td>
-    <td><%= jukebox.city %></td>
-    <td><%= jukebox.state %></td>
-    <td><%= jukebox.country %></td>
-    <td><%= jukebox.url %></td>
-    <td><%= jukebox.opening %></td>
-    <td><%= jukebox.closing %></td>
-    <td><%= link_to 'Show', jukebox %></td>
-    <td><%= link_to 'Edit', edit_jukebox_path(jukebox) %></td>
-    <td><%= link_to 'Destroy', jukebox, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+<%= form_tag '/search', :method => 'put' do %>
+<label for='search'> Search </label>
+<%= text_field_tag 'search' %>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Jukebox', new_jukebox_path %>
+<br>
+<i class="icon-level-up"></i> <%= link_to "Create a jukebox", new_jukebox_path %>
