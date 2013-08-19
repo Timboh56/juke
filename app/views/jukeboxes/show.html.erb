@@ -1,26 +1,7 @@
-<p>
-  <b>Name:</b>
-  <%= @jukebox.name %>
-</p>
-<p>
-  <b>Street:</b>
-  <%= @jukebox.street %>
-</p>
-
-<p>
-  <b>City:</b>
-  <%= @jukebox.city %>
-</p>
-
-<p>
-  <b>State:</b>
-  <%= @jukebox.state %>
-</p>
-
-<p>
-  <b>Country:</b>
-  <%= @jukebox.country %>
-</p>
+<h1>
+  Jukebox <%= @jukebox.name %>
+</h1>
+<%= location(@jukebox) %>
 
 <p>
   <b>Url:</b>
@@ -28,22 +9,20 @@
 </p>
 
 <p>
-  <b>Opening:</b>
+  <b>Opening time:</b>
   <%= @jukebox.opening %>
-</p>
-
-<p>
-  <b>Closing:</b>
+  
+  <b>Closing time:</b>
   <%= @jukebox.closing %>
 </p>
 
-<p><h1> Playlist </h1> 
-	<% @songs.each do |song| %>
-		<%= song.name %>
-	<% end%>
-</p>
-<%= link_to 'Add your song', new_vote_path %>
+<div class="playlist">
+	<h1> Playlist </h1>
+		<%= playlist(@songs) %>
+</div>
+<br>	
+<%= render :partial => "new_song", :locals => {:jukebox => @jukebox}%>
 
-
-<%= link_to 'Edit', edit_jukebox_path(@jukebox) %> |
+<br>
+<%= link_to 'Edit this jukebox\'s details', edit_jukebox_path(@jukebox) %> |
 <%= link_to 'Back', jukeboxes_path %>

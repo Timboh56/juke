@@ -1,15 +1,16 @@
 (function($) {
 	
 	$(function() {
+		var ANIMATION_TIME = 500;
 		
 		// page animations
 		$("header").animate({
 			position: "absolute",
 			top: "0px",
-		},1000);
+		},ANIMATION_TIME);
 		
 		$(".container").animate({
-			opacity: .96
-		},1000);
+			opacity: .9
+		},ANIMATION_TIME);
     });
 })(jQuery)

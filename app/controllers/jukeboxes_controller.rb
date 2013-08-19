@@ -1,25 +1,21 @@
 class JukeboxesController < ApplicationController
   filter_resource_access
+  respond_to :xml, :html, :json
 
   def index
-    @jukeboxs = Jukebox.all
+    @jukeboxes = Jukebox.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @jukeboxs }
-    end
+    respond_with(@jukeboxes)
   end
 
   # GET /jukeboxs/1
   # GET /jukeboxs/1.json
   def show
     @jukebox = Jukebox.find(params[:id])
+    @vote = Vote.new
     @songs = @jukebox.votes
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @jukebox }
-    end
+    respond_with(@jukebox)
   end
 
   # GET /jukeboxs/new
@@ -27,10 +23,7 @@ class JukeboxesController < ApplicationController
   def new
     @jukebox = Jukebox.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @jukebox }
-    end
+    respond_with(@jukebox)
   end
 
   # GET /jukeboxs/1/edit
@@ -76,9 +69,6 @@ class JukeboxesController < ApplicationController
     @jukebox = Jukebox.find(params[:id])
     @jukebox.destroy
 
-    respond_to do |format|
-      format.html { redirect_to jukeboxs_url }
-      format.json { head :no_content }
-    end
+    respond_with(@jukebox)
   end
 end
