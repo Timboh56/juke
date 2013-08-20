@@ -11,7 +11,6 @@ gem 'dalli'
 gem 'memcachier'
 gem 'whenever'
 gem 'will_paginate', '~> 3.0'
-gem 'cucumber'
 gem 'factory_girl'
 
 # Gems used only for assets and not required
@@ -34,6 +33,13 @@ end
 
 group :production do
   gem 'pg'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'rspec'
+  gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
 end
 
 # To use ActiveModel has_secure_password
