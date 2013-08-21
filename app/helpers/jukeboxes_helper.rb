@@ -3,7 +3,7 @@ module JukeboxesHelper
   def playlist(songs)
     if songs && !songs.empty?
       songs.each do |song|
-  	    song.name
+  	    song.song_title
   	  end
     else 
       "There are no songs submitted yet!"

@@ -6,13 +6,21 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-u = User.new(username: 'admin1', email: 'timboh256@gmail.com')
+a = User.new(username: 'admin', email: 'timboh256@gmail.com')
+u = User.new(username: 'user', email: 'timboh56@gmail.com')
+
+a.password = 'changeme'
+a.password_confirmation = 'changeme'
 u.password = 'changeme'
 u.password_confirmation = 'changeme'
 u.save!(validate: true)
+a.save!(validate: true)
 
 admin = Role.find_by_name('admin')
+user = Role.find_by_name('user')
 
-u.roles << admin
+a.roles << admin
+u.roles << user
 
+a.save!
 u.save!

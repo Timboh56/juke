@@ -1,12 +1,12 @@
 Feature: Manage Votes
   In order to make a playlist of songs
-  As an author
+  As an user
   I want to create and manage my songs for the jukebox
   
   Scenario: Votes List
-    Given I have a list of votes
+    Given I have a playlist containing "Hey Jude"
 	  When I go the the jukebox page
-	  Then I should see the songs
+	  Then I should see "Hey Jude"
 	
   Scenario: Upvoting
     Given I have a list of votes

@@ -12,5 +12,9 @@
 		$(".container").animate({
 			opacity: .9
 		},ANIMATION_TIME);
+		
+		/** setTimeout(function() {
+			$("#notice").fadeOut('slow');
+		},50000000); **/
     });
 })(jQuery)

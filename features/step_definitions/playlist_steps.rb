@@ -1,4 +1,4 @@
-Given(/^I have a bunch of songs in the form of votes$/) do
+Given(/^I have a list of votes$/) do
   Vote.delete_all
   User.delete_all
   song1 = FactoryGirl.create!(:vote)
@@ -6,15 +6,19 @@ Given(/^I have a bunch of songs in the form of votes$/) do
   song3 = FactoryGirl.create!(:vote)
 end
 
+Given(/^I have a playlist containing "(.*?)"$/) do |song_title|
+  @song4 = FactoryGirl.create(:vote, :song_title => song_title, :artist => "Beatles")
+end
+
 When(/^I go the the (.+)$/) do |page|
   visit path_to(page)
 end
 
-Then(/^I should see the songs$/) do
+Then(/^I should see "([^\"]*)"$/) do |text|
+  log_in(test_user)  
+  page.should have_content(text)
 end
 
-Given(/^I have a list of votes$/) do
-end
 
 When(/^I upvote a listed song$/) do
 end

@@ -37,30 +37,44 @@ a:hover {
   float: right;
 }
 
-.container {
-  display: inline-block;
-  vertical-align: top;
-  position: relative;
-  top: 6em;
-  padding: 30px;
-  background-color: rgba(255,255,255,1);
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px;
-  -o-border-radius: 30px;
-  border-radius: 30px;
-  // pre-animation opacity 
-  -webkit-opacity: .1;
-  -o-opacity: .1;
-  -moz-opacity: .1;
-  margin: 0 15em 15em 15em;
+.super {
+  #notice, .container { margin: 0 15em .5em 15em; }
   
-  p {
-    display: inherit;
+  #notice {
+	position: relative;
+	color: green;
+	display: inline-block;
+	margin: 15px;
+	background-color: rgba(255, 255, 255, 0.8);
+	padding: 15px;
+	border-radius: 5px;
+	width: 10em;
+	top: 4.5em;
+  }
+
+  .container {
+	display: inline-block;
+	vertical-align: top;
+	position: relative;
+	top: 6em;
+	padding: 30px;
+	background-color: rgba(255,255,255,1);
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	-o-border-radius: 30px;
+	border-radius: 30px;
+	// pre-animation opacity 
+	-webkit-opacity: .1;
+	-o-opacity: .1;
+	-moz-opacity: .1;
+	
+	p {
+	display: inherit;
 	width: 200px;
 	margin:15px;
 	vertical-align: inherit;
+	}
   }
-
 }
 
 /** BG GRAPHICS **/
@@ -158,27 +172,15 @@ div {
   }
 }
 
-#notice {
-	color: green;
-	display: inline-block;
-	margin: 15px;
-	background-color: rgba(255, 255, 255, 0.8);
-	padding: 15px;
-	border-radius: 5px;
-	width: 10em;
-	top: 4.5em;
-	position: relative
-}
-
 .field_with_errors {
   padding: 2px;
   background-color: red;
-  display: table;
+  display: inline-block;
 }
 
-#error_explanation {
-  width: 450px;
+#errorExplanation {
   border: 2px solid red;
+  border-radius: 5px;
   padding: 7px;
   padding-bottom: 0;
   margin-bottom: 20px;
