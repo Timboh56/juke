@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = current_user.top_role == 1 ? User.all :  nil
+    @users = current_user.top_role == 1 ? User.all : nil
 
     respond_to do |format|
       format.html # index.html.erb

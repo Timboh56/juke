@@ -1,4 +1,4 @@
-<h1>Listing users</h1>
+<h1>Registered Users</h1>
 
 <table>
   <tr>
@@ -7,7 +7,7 @@
     <th></th>
   </tr>
 
-<% @users.each do |user| %>
+<% users.each do |user| %>
   <tr>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>

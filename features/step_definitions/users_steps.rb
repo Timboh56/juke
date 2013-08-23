@@ -1,5 +1,9 @@
 Given(/^I am the test_user$/) do
-  @user = test_user
+  @user = test_user  
+end
+
+Given(/^I am the admin_user$/) do
+  @user = admin_user
 end
 
 Given(/^I am on the (.+)$/) do |page_name|

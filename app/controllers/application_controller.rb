@@ -1,12 +1,15 @@
 class ApplicationController < ActionController::Base
+  require 'authlogic'
   protect_from_forgery
 
   helper_method :current_user_session, :current_user
   before_filter { |c| Authorization.current_user = c.current_user }
   
+  attr_reader :current_user
+  
   protected
     def permission_denied
-      flash[:error] = "Sorry, you are not allowed to access that page."
+      flash[:error] = "You are not allowed to access that page."
       redirect_to root_url
     end
     
@@ -17,7 +20,7 @@ class ApplicationController < ActionController::Base
 
     def current_user
       return @current_user if defined?(@current_user)
-      @current_user = current_user_session && current_user_session.user
+      @current_user = current_user_session && current_user_session.user      
     end
 
     def require_user
@@ -44,8 +47,8 @@ class ApplicationController < ActionController::Base
       #session[:return_to] = request.request_uri
     end
 
-    def redirect_back_or_default(default)
-      redirect_to(session[:return_to] || default)
+    def redirect_back_or_default(default, options = {})
+      redirect_to(session[:return_to] || default, options)
       session[:return_to] = nil
     end
 end

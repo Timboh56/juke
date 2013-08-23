@@ -1,5 +1,5 @@
 class JukeboxesController < ApplicationController
-  filter_resource_access
+  # filter_resource_access
   respond_to :xml, :html, :json
 
   def index
@@ -16,6 +16,26 @@ class JukeboxesController < ApplicationController
     @songs = @jukebox.votes
 
     respond_with(@jukebox)
+  end
+  
+  def get_playlist
+    @jukebox = Jukebox.find(params[:jukebox_id])
+    @songs = @jukebox.votes
+    
+    respond_to do |format|
+      msg = { :songs => @songs, :jukebox => @jukebox }
+      format.json { render :json => msg }
+    end
+  end
+  
+  def add_song_for_playlist
+    v = Vote.new(params[:vote])
+    v.user_id = current_user.id
+    v.save!
+    
+    respond_to do |format|
+      format.json { render :nothing => true }
+    end
   end
 
   # GET /jukeboxs/new

@@ -1,6 +1,10 @@
-<h1>
-  Jukebox <%= @jukebox.name %>
-</h1>
+<%= content_for_block(@jukebox) %>
+
+<div class="jukebox_header" id="<%= @jukebox.id %>">
+  <h1>
+    Jukebox <%= @jukebox.name %>
+  </h1>
+</div>
 <%= location(@jukebox) %>
 
 <p>
@@ -17,12 +21,13 @@
 </p>
 
 <div class="playlist">
-	<h1> Playlist </h1>
-		<%= playlist(@songs) %>
+	<h1> Playlist </h1>	
+	<%= playlist(@songs) %>
 </div>
-<br>	
-<%= render :partial => "new_song", :locals => {:jukebox => @jukebox}%>
+<br>
+
+<%= new_song(@jukebox) %>
 
 <br>
-<%= link_to 'Edit this jukebox\'s details', edit_jukebox_path(@jukebox) %> |
-<%= link_to 'Back', jukeboxes_path %>
+
+<%= object_links_bottom(@jukebox) %>

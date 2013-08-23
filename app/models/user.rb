@@ -9,13 +9,14 @@ class User < ActiveRecord::Base
   has_many :favorites, :dependent => :destroy
   has_many :user_roles
   has_many :roles, :through => :user_roles
+  has_many :votes
   
   validates_uniqueness_of :username
   validates_uniqueness_of :email
   validates_presence_of :username
   validates_presence_of :email
   validates_presence_of :password
-  
+
   def role_symbols
     roles.map do |role|
       role.name.underscore.to_sym

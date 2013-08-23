@@ -4,6 +4,8 @@
   <title>BarApp</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "app" %>
+  <%= yield :head %>
   <%= csrf_meta_tags %>
   <script type="text/javascript" src="//use.typekit.net/vfg0zyr.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
@@ -12,12 +14,7 @@
 	<header>
 		<nav>
 			<ul>
-				<li id="logo">
-					<%= link_to image_tag("/images/note3.png", :width => "20", :height => "32px", :alt => "note") + "JooKer", root_path %>
-				 </li>
-				<li> <%= link_to "Search", jukeboxes_path %> </li>
-				<li> <%= nav_link %></li>
-				<li> <%= link_to "Register", register_path %> </li>
+				<%= nav_links %>
 			</ul>
 		</nav>
 	</header>

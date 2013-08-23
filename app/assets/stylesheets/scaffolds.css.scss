@@ -1,3 +1,5 @@
+$header_font: "aw-conqueror-inline";
+
 html, body {
   margin: 0px;
   padding: 0px;
@@ -17,9 +19,9 @@ a {
   font-family: Georgia, helvetica, sans-serif;
 }
 
-a:hover {
-
-
+.partial_field {
+  margin: .2em;
+  float: right;
 }
 
 .super {
@@ -30,27 +32,24 @@ a:hover {
   background: url("/images/j1.jpg") no-repeat center fixed;
   background-size: cover;
   overflow-y: auto;
-}
-
-.partial_field {
-  margin: .2em;
-  float: right;
-}
-
-.super {
-  #notice, .container { margin: 0 15em .5em 15em; }
   
-  #notice {
+  #notice, .container, #permission_denied {
+    margin: 0 15em .5em 15em;
+	border-radius: 30px;
+  }
+  
+  #notice, #permission_denied {
 	position: relative;
-	color: green;
 	display: inline-block;
-	margin: 15px;
 	background-color: rgba(255, 255, 255, 0.8);
 	padding: 15px;
-	border-radius: 5px;
 	width: 10em;
 	top: 4.5em;
   }
+  
+  #notice { color: green; }
+  
+  #permission_denied { color: red; }
 
   .container {
 	display: inline-block;
@@ -109,48 +108,55 @@ header {
     margin: 0 auto;
 	width: 1000px;
 	height: inherit;
-	#logo a {
-	  font-family: "copal-std-outline";
-	  color: white;
+	text-align:center;
+	
+	#logo { 
+	  vertical-align: middle; 
+	  img {
+	    width: 70px;
+	    height: 35px;
+		vertical-align: middle;
+      }
 	}
 	
 	ul {
 	  width: 100%;
 	  font-size: 3em;
 	  height: inherit;
+	  vertical-align: middle;
 	}
 	
 	li, a {
 	  color: #FFF;
-	  font-family: "myriad-std-sketch";
+	  font-family: $header_font, Helvetica, Verdana;
 	  display: inline-block;
-	  font-size: .8em;
+	  font-size: .65em;
       *display:inline; /*IE7*/
       *zoom:1; /*IE7*/
-	  margin-left: .8em;
-	  margin-right: .8em;
+	  margin-left: .4em;
+	  margin-right: .4em;
 	  /** for mobile?
 	  display: table;
       margin:0px auto 0px auto;
 	  **/
-	  bottom: 0px;
-	  line-height:1.5em;
+	  height: 100%;
+	  vertical-align: top;
 	  list-style: none;
 	  text-decoration: none;
-	  -webkit-transition: all .5s ease-in;
-	  -moz-transition: all .5s ease-in;
-	  transition: all .5s ease-in; 
+	  -webkit-transition: all .1s ease-in;
+	  -moz-transition: all .1s ease-in;
+	  transition: all .1s ease-in; 
 	}
 	
 	li:hover, a:hover {
-	  color: rgba(160,20,20,.9);
+	  background-color: rgba(160,20,20,.9);
 	  cursor: pointer;
 	}
   }
 }
 
 h1 {
-  font-family: "myriad-std-sketch";
+  font-family: $header_font, Helvetica, Verdana;
   font-size: 2em;
 }
 
