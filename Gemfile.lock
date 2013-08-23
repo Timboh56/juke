@@ -89,6 +89,7 @@ GEM
     multi_test (0.0.2)
     mysql2 (0.3.11)
     nokogiri (1.5.9)
+    pg (0.16.0)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -171,6 +172,7 @@ DEPENDENCIES
   jquery-rails
   memcachier
   mysql2
+  pg
   rails (= 3.2.13)
   rspec
   sass-rails (~> 3.2.3)
