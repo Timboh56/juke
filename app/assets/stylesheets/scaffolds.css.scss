@@ -117,6 +117,14 @@ header {
 	    height: 35px;
 		vertical-align: middle;
       }
+	  
+	  :hover {
+	  	background-color: black;
+	  }
+	}
+	
+	.active {
+		text-decoration: underline;
 	}
 	
 	ul {

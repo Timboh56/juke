@@ -1,8 +1,8 @@
 module ApplicationHelper
   def nav_links
-    nav_links = content_tag(:li,link_to(image_tag("/images/juke_logotext.png", :alt => "logo"),root_path),:id => "logo") +  content_tag(:li,link_to("Search", jukeboxes_path)) + content_tag(:li, link_to("About", "/about"))
+    nav_links = content_tag(:li,link_to(image_tag("/images/juke_logotext.png", :alt => "logo"),root_path),:id => "logo") +  content_tag(:li,link_to("Search", jukeboxes_path, :id => "jukeboxes")) + content_tag(:li, link_to("About", "/about", :id => "about"))
     if current_user
-      nav_links += content_tag(:li,link_to("My Account", users_path)) + content_tag(:li,link_to("Logout", logout_path))
+      nav_links += content_tag(:li,link_to("My Account", users_path), :id => "users") + content_tag(:li,link_to("Logout", logout_path))
     else
       nav_links += content_tag(:li,link_to("Login", login_path)) + content_tag(:li,link_to("Register", register_path))     
     end
@@ -26,9 +26,13 @@ module ApplicationHelper
     raw(edit_link + "<br>".html_safe +  link_back)
   end
   
-  def content_for_block(obj)
+  def js_content_for_block(obj)
+    content_for_block(obj.class.name.downcase.pluralize(2))
+  end
+  
+  def content_for_block(class_name)
     content_for :head do
-      javascript_include_tag obj.class.name.downcase.pluralize(2)
+      javascript_include_tag class_name
     end
   end
 end

@@ -17,5 +17,10 @@
 		setTimeout(function() {
 			$("#notice").fadeOut('slow');
 		},NOTICE_TIME);
+		
     });
 })(jQuery)
+
+function add_active_class_nav(link_id){
+	$("nav").find("#" + link_id).addClass("active");
+}
