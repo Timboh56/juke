@@ -16,7 +16,31 @@ class User < ActiveRecord::Base
   validates_presence_of :username
   validates_presence_of :email
   validates_presence_of :password
+  
+  before_create(:add_role)
 
+  def add_role
+    roles << Role.find_by_name("User")
+  end
+  
+  def self.from_omniauth(auth)
+    
+    # looks for user with given provider and ui from auth object
+    # if such a user exists, return it, otherwise initialize and save
+    where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
+      user.email = auth.extra.raw_info.email
+      user.username = auth.extra.raw_info.username
+      user.password = rand(1000).to_s + rand(1000).to_s + rand(1000).to_s + rand(1000).to_s + "asdfas" + rand(1000).to_s
+      user.password_confirmation = user.password
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.name = auth.info.name
+      user.oauth_token = auth.credentials.token
+      user.oauth_expires_at = Time.at(auth.credentials.expires_at)
+      user.save!
+    end
+  end
+  
   def role_symbols
     roles.map do |role|
       role.name.underscore.to_sym

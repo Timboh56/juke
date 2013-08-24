@@ -9,7 +9,15 @@ class UserSessionsController < ApplicationController
    end
 
    def create
-     @user_session = UserSession.new(params[:user_session])
+     if env["omniauth.auth"]
+       user = User.from_omniauth(env["omniauth.auth"])
+       @user_session = UserSession.new(:username => user.username, :password => user.password)
+     end
+    
+     if params[:user_session]
+       @user_session = UserSession.new(params[:user_session])
+     end
+     
      if @user_session.save
        redirect_back_or_default users_path, :flash => { :notice => "Login successful!" }
      else

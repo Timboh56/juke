@@ -1,4 +1,4 @@
-$header_font: "aw-conqueror-inline";
+$header_font: "aw-conqueror-carved-one";
 
 html, body {
   margin: 0px;
@@ -55,6 +55,7 @@ a {
 	display: inline-block;
 	vertical-align: top;
 	position: relative;
+	min-width: 29em;
 	top: 6em;
 	padding: 30px;
 	background-color: rgba(255,255,255,1);
@@ -124,7 +125,7 @@ header {
 	}
 	
 	.active {
-		text-decoration: underline;
+		background-color: rgba(160,20,20,.9);
 	}
 	
 	ul {
@@ -141,8 +142,8 @@ header {
 	  font-size: .65em;
       *display:inline; /*IE7*/
       *zoom:1; /*IE7*/
-	  margin-left: .4em;
-	  margin-right: .4em;
+	  padding-left: .2em;
+	  padding-right: .2em;
 	  /** for mobile?
 	  display: table;
       margin:0px auto 0px auto;
@@ -156,7 +157,7 @@ header {
 	  transition: all .1s ease-in; 
 	}
 	
-	li:hover, a:hover {
+	li:hover {
 	  background-color: rgba(160,20,20,.9);
 	  cursor: pointer;
 	}

@@ -34,4 +34,8 @@ BarApp::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  
+  # set environment variables for facebook oauth   
+  ENV['FACEBOOK_APP_ID'] = "618002548238033";
+  ENV['FACEBOOK_SECRET'] = "3a39f3f9f5cba32420520f0885c34763";
 end

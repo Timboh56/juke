@@ -1,6 +1,6 @@
 module ApplicationHelper
   def nav_links
-    nav_links = content_tag(:li,link_to(image_tag("/images/juke_logotext.png", :alt => "logo"),root_path),:id => "logo") +  content_tag(:li,link_to("Search", jukeboxes_path, :id => "jukeboxes")) + content_tag(:li, link_to("About", "/about", :id => "about"))
+    nav_links = content_tag(:li,link_to(image_tag("/images/juke_logotext.png", :alt => "logo"),root_path),:id => "logo") +  content_tag(:li,link_to("Search", jukeboxes_path), :id => "jukeboxes") + content_tag(:li, link_to("About", "/about"), :id => "about")
     if current_user
       nav_links += content_tag(:li,link_to("My Account", users_path), :id => "users") + content_tag(:li,link_to("Logout", logout_path))
     else

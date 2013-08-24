@@ -1,7 +1,7 @@
 authorization do  
 
   role :guest do
-    has_permission_on :users, :to => [:new, :create, :show]
+    has_permission_on :users, :to => [:new, :create, :show, :index]
     has_permission_on :user_sessions, :to => [:login, :register, :create, :edit, :update, :new, :index, :show]
     has_permission_on :user_roles, :to => [:new, :create, :edit, :update]
     has_permission_on :jukeboxes, :to => [:show, :index]

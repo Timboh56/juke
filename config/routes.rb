@@ -1,9 +1,9 @@
 BarApp::Application.routes.draw do
   resources :votes
-
-
   resources :bids
   
+  match 'auth/:provider/callback', to: 'UserSessions#create'
+  match 'auth/failure', to: redirect('/')
   match "/about" => "pages#index"
   
   resources :jukeboxes

@@ -1,5 +1,10 @@
 <h1>Login</h1>
 
+
 <%= render 'form' %>
+
+<%= link_to "Sign in with Facebook", "/auth/facebook", :id => "facebook_sign_in" %>
+
+<br>
 
 <%= link_to 'Back', user_sessions_path %>
