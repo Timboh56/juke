@@ -5,4 +5,14 @@
 <%= text_field_tag 'search' %>
 <% end %>
 <br>
+
+<hr>
+<% @jukeboxes.each do |juke| %>
+<br>
+	<%= link_to juke.name, jukebox_path(juke.id) %> 
+<% end %>
+
+<br>
+<hr>
 <i class="icon-level-up"></i> <%= link_to "Create a jukebox", new_jukebox_path %>
+

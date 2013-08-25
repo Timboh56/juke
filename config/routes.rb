@@ -7,8 +7,7 @@ BarApp::Application.routes.draw do
   match "/about" => "pages#index"
   
   resources :jukeboxes
-  match "get_playlist" => "jukeboxes#get_playlist"
-  put "add_song_for_playlist" => "jukeboxes#add_song_for_playlist"
+  match "add_song_for_playlist" => "jukeboxes#add_song_for_playlist"
   
   resources :users
   

@@ -20,4 +20,10 @@ module JukeboxesHelper
       render :partial => "new_song", :locals => {:jukebox => @jukebox}
     end
   end
+  
+  def jukebox_chat
+    if current_user
+      render :partial => "chat"
+    end
+  end
 end

@@ -2,10 +2,41 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.playlist {
-	text-align: center;
-	font-family: Georgia, Helvetica, sans-serif;
-	.song {
+.jukebox_header {
+  text-align: center;
+  width: 600px;
+  display: inline-block;
+  h1 {
+	font-size: 1.5em;
+  }
+  p {
+    text-align:center;
+  }
+  .playlist {
+  	text-align: inherit;
+  	font-family: Georgia, Helvetica, sans-serif;
+  	.song {
 
-	}
+  	}
+  }
+}
+.new_vote_form {
+  display:inline-block;	
+}
+
+.chat_container {
+  margin-top: 50px;
+  border: 1px solid rgba(0,0,0,1);
+  border-radius: 40px;
+}
+
+.chat_room {
+  padding: 15px;
+  display: inline-block;
+  height: 3em;
+  overflow-y: scroll;
+  .message {
+    font-size: .75em;
+	text-align: center;
+  }
 }

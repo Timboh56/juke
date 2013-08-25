@@ -1,6 +1,11 @@
 class JukeboxesController < ApplicationController
   # filter_resource_access
   respond_to :xml, :html, :json
+  before_filter(:faye_client)
+  
+  def faye_client
+    faye_client ||= Faye::Client.new('http://localhost:9292/faye')
+  end
 
   def index
     @jukeboxes = Jukebox.all
@@ -10,31 +15,24 @@ class JukeboxesController < ApplicationController
 
   # GET /jukeboxs/1
   # GET /jukeboxs/1.json
-  def show
+  def show    
     @jukebox = Jukebox.find(params[:id])
     @vote = Vote.new
     @songs = @jukebox.votes
-
     respond_with(@jukebox)
   end
   
-  def get_playlist
-    @jukebox = Jukebox.find(params[:jukebox_id])
-    @songs = @jukebox.votes
-    
-    respond_to do |format|
-      msg = { :songs => @songs, :jukebox => @jukebox }
-      format.json { render :json => msg }
-    end
-  end
-  
   def add_song_for_playlist
-    v = Vote.new(params[:vote])
-    v.user_id = current_user.id
-    v.save!
+    @v = Vote.new(params[:vote])
+    @v.user_id = current_user.id
     
     respond_to do |format|
-      format.json { render :nothing => true }
+      if @v.save
+        faye_client.publish('/playlists/juke_' + @v.jukebox_id.to_s, :song_title => @v.song_title, :artist => @v.artist)
+        format.json { render :nothing => true }
+      else
+        format.html { render :partial => "layouts/error_messages", :locals => { :target => @v }}
+      end
     end
   end
 
