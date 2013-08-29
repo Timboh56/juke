@@ -2,9 +2,10 @@
   jQuery(function() {
     $('body').prepend('<div id="fb-root"></div>');
     return $.ajax({
-      url: "" + window.location.protocol + "//connect.facebook.net/en_US/all.js",
+      url: "" + window.location.protocol + "//connect.facebook.net/en_US/all/debug.js",
       dataType: 'script',
-      cache: true
+      cache: true,
+	  popup:true
     });
   });
 
@@ -13,9 +14,8 @@
       appId: '618002548238033',
       cookie: true
     });
-    $('#facebook_sign_in').click(function(e) {
+    $('#facebook_sign_in').click(function(e) {	 
       e.preventDefault();
-	 
       var fb = FB.login(function(response) {
         if (response.authResponse) {
 			

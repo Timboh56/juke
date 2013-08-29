@@ -6,36 +6,55 @@ $(function(){
 	
 	// get ID of jukebox from jukebox_header
 	var id = container.find(".jukebox_header").attr("id");
+		
+	var username = container.find(".chat_room").attr("data-username");
 	
-	var last_song_id = container.find(".song").last()
-	
-	// update playlist every few seconds dynamically
-	setInterval(function() {
-		$.ajax({
-			type: "GET",
-			dataType: "jsonp",
-			data: { jukebox_id: id },
-			url: "/get_playlist",
-			complete: function(resp) {
-				$("<div class=\"song\">" + resp)
-				$(".playlist .song").last().append(resp);
-			}
-		});
-	}, UPDATE_INTERVAL);
+    // Create a new client to connect to Faye
+    var client = new Faye.Client("http://localhost:9292/faye");
+    var height = $(".chat_room").height();	
+	var msgs = 0;
 	
 	// handle song submission functionality
-	$(".add_song").on("click",function() {
+	$(".search_song").on("click",function(e) {
+		e.preventDefault();
 		// get song artist field
-		var song_artist = container.find("#vote_artist").val();
-	
-		// get song title field
-		var song_title = container.find("#vote_song_title").val();
-		
+		var search = container.find("#search").val();
+
 		$.ajax({
 			type: "PUT",
 			dataType: "jsonp",
-			data: { vote: { artist: song_artist, song_title: song_title, jukebox_id: id } },
-			url: "/add_song_for_playlist",
+			data: { search: search, jukebox_id: id },
+			url: "/search_for_songs",
+			complete: function(msg) {
+				$("#results_list").append(msg.responseText);
+			}
 		});
 	});
+	
+    // Subscribe to the jukebox channel
+    var chat_sub = client.subscribe("/chats/juke_" + id, function(data) {
+	  msgs++;
+	  $(".chat_room").animate({ scrollTop: msgs*height },"50");
+      $("<div class=\"message\">").html(data.username + ": " + data.msg).appendTo(".chat_room");
+    });
+	
+	var playlist_sub = client.subscribe("/playlists/juke_" + id, function(data) {
+		$("<div class=\"song\">").html("\""+ data.song_title + "\", by " + data.artist).appendTo(".playlist");	
+	});
+ 
+    // Handle form submissions and post messages to faye
+    $("#new_message_form").submit(function(event) {
+		event.preventDefault();
+      // Publish the message to the public channel
+      client.publish("/chats/juke_" + id, {
+        username: username,
+        msg: $("#message").val()
+      });
+ 
+      // Clear the message box
+      $("#message").val("");
+ 
+      // Don"t actually submit the form, otherwise the page will refresh.
+      return false;
+    });
 });

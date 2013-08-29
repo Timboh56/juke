@@ -5,7 +5,7 @@
 	  <i> from <b> <%= r.album %> </b> </i>
 	<% end %>
 	
-	<%= content_tag(:a, content_tag(:icon, "", :class => "icon-check-sign"), :href => "select", :class => "result_action") %>
+	<%= content_tag(:a, content_tag(:icon, "", :class => "icon-check-sign"), :data => r.id, :class => "result_action") %>
 	<br>
   <% end %>
 </div>
