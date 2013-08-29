@@ -8,7 +8,7 @@ html, body {
   width: 100%;
 }
 
-p, ol, ul, td, label{
+p, ol, ul, td, label {
   font-family: Georgia, helvetica, sans-serif;
   font-size: .9em;
   line-height: 1.2em;
@@ -17,6 +17,11 @@ p, ol, ul, td, label{
 a {
   text-decoration: none;
   font-family: Georgia, helvetica, sans-serif;
+}
+
+#user {
+  color: blue;
+  font-weight: bold;
 }
 
 .partial_field {
@@ -57,7 +62,7 @@ a {
 	position: relative;
 	min-width: 29em;
 	top: 6em;
-	padding: 30px;
+	padding: 20px;
 	background-color: rgba(255,255,255,1);
 	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
@@ -69,10 +74,10 @@ a {
 	-moz-opacity: .1;
 	
 	p {
-	display: inherit;
-	width: 200px;
-	margin:15px;
-	vertical-align: inherit;
+	  display: inherit;
+	  width: 200px;
+	  margin:15px;
+	  vertical-align: inherit;
 	}
   }
 }
@@ -166,7 +171,7 @@ header {
 
 h1 {
   font-family: $header_font, Helvetica, Verdana;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 h2 {

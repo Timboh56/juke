@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BarApp</title>
+  <%= stylesheet_link_tag    "mobile", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "app" %>
+  <%= javascript_include_tag "http://localhost:9292/faye.js" %>
+  <%= yield :head %>
+  <%= csrf_meta_tags %>
+  <script type="text/javascript" src="//use.typekit.net/vfg0zyr.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+	<header>
+		<nav>
+			<ul>
+				<%= nav_links %>
+			</ul>
+		</nav>
+	</header>
+	<div class="super">
+		<%= notice_div %>
+		<div class="container">
+			<%= yield %>
+		</div>
+	</div>
+</body>
+</html>

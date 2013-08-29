@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130824082341) do
+ActiveRecord::Schema.define(:version => 20130828025655) do
 
   create_table "bids", :force => true do |t|
     t.float    "amount"
@@ -37,6 +37,21 @@ ActiveRecord::Schema.define(:version => 20130824082341) do
   add_index "favorites", ["jukebox_id"], :name => "index_favorites_on_jukebox_id"
   add_index "favorites", ["user_id"], :name => "index_favorites_on_user_id"
 
+  create_table "jukebox_songs", :force => true do |t|
+    t.integer  "rank"
+    t.integer  "votes_count"
+    t.integer  "song_id",     :null => false
+    t.integer  "jukebox_id",  :null => false
+    t.integer  "user_id",     :null => false
+    t.time     "scheduled"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "jukebox_songs", ["jukebox_id"], :name => "index_jukebox_songs_on_jukebox_id"
+  add_index "jukebox_songs", ["song_id"], :name => "index_jukebox_songs_on_song_id"
+  add_index "jukebox_songs", ["user_id"], :name => "index_jukebox_songs_on_user_id"
+
   create_table "jukeboxes", :force => true do |t|
     t.string   "name",       :null => false
     t.float    "latitude"
@@ -57,6 +72,19 @@ ActiveRecord::Schema.define(:version => 20130824082341) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "songs", :force => true do |t|
+    t.string   "name",       :null => false
+    t.string   "artist",     :null => false
+    t.string   "album"
+    t.string   "url",        :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "songs", ["album"], :name => "index_songs_on_album"
+  add_index "songs", ["artist"], :name => "index_songs_on_artist"
+  add_index "songs", ["name"], :name => "index_songs_on_name"
 
   create_table "user_roles", :force => true do |t|
     t.integer  "user_id"

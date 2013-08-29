@@ -15,7 +15,8 @@
     });
     $('#facebook_sign_in').click(function(e) {
       e.preventDefault();
-      return FB.login(function(response) {
+	 
+      var fb = FB.login(function(response) {
         if (response.authResponse) {
 			
 		  // this call back matches to usersessions#create

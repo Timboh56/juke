@@ -1,0 +1,11 @@
+<div class="search_results">
+  <% results.each do |r| %>
+    <b> "<%= r.name %>" </b> by <%= r.artist %>
+	<% if r.album %>
+	  <i> from <b> <%= r.album %> </b> </i>
+	<% end %>
+	
+	<%= content_tag(:a, content_tag(:icon, "", :class => "icon-check-sign"), :href => "select", :class => "result_action") %>
+	<br>
+  <% end %>
+</div>

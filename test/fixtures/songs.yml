@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  references: 
+  name: MyString
+  artist: MyString
+  scheduled: 2013-08-26 00:44:33
+  rank: 1
+
+two:
+  references: 
+  name: MyString
+  artist: MyString
+  scheduled: 2013-08-26 00:44:33
+  rank: 1

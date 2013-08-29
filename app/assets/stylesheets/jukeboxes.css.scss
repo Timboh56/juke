@@ -15,6 +15,8 @@
   .playlist {
   	text-align: inherit;
   	font-family: Georgia, Helvetica, sans-serif;
+	height: 30%;
+	overflow-y: scroll;
   	.song {
 
   	}
@@ -38,5 +40,25 @@
   .message {
     font-size: .75em;
 	text-align: center;
+  }
+}
+.search {
+  display: inline-block;
+
+}
+
+#results_list {
+  margin-top: 1em;
+  height: 5em;
+  overflow-y: scroll;
+  
+  .search_results {
+    text-align: center;
+  }
+  .result_action {
+    color: black;
+  }
+  .result_action:hover {
+    color: blue;
   }
 }

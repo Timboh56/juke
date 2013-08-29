@@ -1,18 +1,7 @@
-<div class="new_vote_form">
-  <%= form_for(@vote) do |f| %>
-    <div id="playlist_errors">
-
+<div class="search">
+	<%= text_field_tag :search, params[:search] %>
+    <%= button_tag "Search", :class => "search_song", :type => "button" %>	
+	<div id="results_list">
+		
 	</div>
-
-    <div class="partial_field">
-	  <%= f.label :song_title %><br />
-	  <%= f.text_field :song_title %>
-	</div>
-	<div class="partial_field">
-	  <%= f.label :artist %><br />
-	  <%= f.text_field :artist %>
-	</div>
-	<br>
-	<%= button_tag "Add your song", :class => "add_song", :type => "button" %>
-  <% end %>
 </div>

@@ -1,0 +1,24 @@
+<%= render "layouts/error_messages", :target => @song %>
+
+<%= form_for(@song) do |f| %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :artist %><br />
+    <%= f.text_field :artist %>
+  </div>
+  <div class="field">
+    <%= f.label :album %><br />
+    <%= f.text_field :album %>
+  </div>
+  <div class="field">
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

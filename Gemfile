@@ -12,9 +12,10 @@ gem 'memcachier'
 gem 'whenever'
 gem 'will_paginate', '~> 3.0'
 gem 'factory_girl'
-gem 'omniauth-facebook', '1.4.0'
+gem 'omniauth-facebook'
 gem 'thin'
 gem 'faye'
+gem 'sunspot_rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -31,6 +32,7 @@ end
 gem 'jquery-rails'
 
 group :development do
+  gem 'sunspot_solr'
   gem 'mysql2'
 end
 

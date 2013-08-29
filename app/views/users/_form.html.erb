@@ -1,18 +1,27 @@
-<%= render "layouts/error_messages", :target => @user %>
+<%= form_for user do |f| %>
+	<%= render "layouts/error_messages", :target => user %>
 
-<p>
-<%= form.label :username %><br />
-<%= form.text_field :username %>
-</p>
-<p>
-<%= form.label :email %><br />
-<%= form.text_field :email %>
-</p>
-<p>
-<%= form.label :password, form.object.new_record? ? nil : "Change password" %><br />
-<%= form.password_field :password %>
-</p>
-<p>
-<%= form.label :password_confirmation %><br />
-<%= form.password_field :password_confirmation %>
-</p>
+	<div class="field">
+	  <%= f.label :username %><br />
+	  <%= f.text_field :username %>
+	</div>
+
+	<div class="field">
+	  <%= f.label :email %><br />
+	  <%= f.text_field :email %>
+	</div>
+
+	<div class="field">
+	  <%= f.label :password, f.object.new_record? ? nil : "Change password" %><br />
+	  <%= f.password_field :password %>
+	</div>
+
+	<div class="field">
+	  <%= f.label :password_confirmation %><br />
+	  <%= f.password_field :password_confirmation %>
+	</div>
+
+	<div class="actions">
+		<%= f.submit "Register" %>
+	</div>
+<% end %>

@@ -1,4 +1,4 @@
-every 1.day do
+every 1.minute do
   rake "delete_votes_for_day:delete_votes"
 end
 

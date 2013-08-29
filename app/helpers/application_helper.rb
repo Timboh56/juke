@@ -7,6 +7,10 @@ module ApplicationHelper
       nav_links += content_tag(:li,link_to("Login", login_path)) + content_tag(:li,link_to("Register", register_path))     
     end
   end
+  
+  def user_div(user)
+    content_tag(:div, user.username || user.name, :id => "user")
+  end
 
   def notice_div
     if flash[:notice]

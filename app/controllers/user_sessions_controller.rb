@@ -5,10 +5,17 @@ class UserSessionsController < ApplicationController
   before_filter :require_user, :only => :destroy
 
    def new
+     
+     # if user is already logged in, redirect to his account page.
+     if current_user
+       redirect_to users_path  
+     end
+     
      @user_session = UserSession.new
    end
 
    def create
+     
      if env["omniauth.auth"]
        user = User.from_omniauth(env["omniauth.auth"])
        @user_session = UserSession.new(:username => user.username, :password => user.password)

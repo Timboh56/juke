@@ -1,5 +1,5 @@
 BarApp::Application.routes.draw do
-  resources :votes
+  resources :songs
   resources :bids
   
   match 'auth/:provider/callback', to: 'UserSessions#create'
@@ -7,7 +7,8 @@ BarApp::Application.routes.draw do
   match "/about" => "pages#index"
   
   resources :jukeboxes
-  match "add_song_for_playlist" => "jukeboxes#add_song_for_playlist"
+  resources :jukebox_songs
+  match "/search_for_songs" => "JukeboxSongs#search_for_songs"
   
   resources :users
   

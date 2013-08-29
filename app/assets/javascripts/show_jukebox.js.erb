@@ -6,9 +6,7 @@ $(function(){
 	
 	// get ID of jukebox from jukebox_header
 	var id = container.find(".jukebox_header").attr("id");
-	
-	var last_song_id = container.find(".song").last();
-	
+		
 	var username = container.find(".chat_room").attr("data-username");
 	
     // Create a new client to connect to Faye
@@ -17,20 +15,18 @@ $(function(){
 	var msgs = 0;
 	
 	// handle song submission functionality
-	$(".add_song").on("click",function() {
+	$(".search_song").on("click",function(e) {
+		e.preventDefault();
 		// get song artist field
-		var song_artist = container.find("#vote_artist").val();
-	
-		// get song title field
-		var song_title = container.find("#vote_song_title").val();
-		
+		var search = container.find("#search").val();
+
 		$.ajax({
 			type: "PUT",
 			dataType: "jsonp",
-			data: { vote: { artist: song_artist, song_title: song_title, jukebox_id: id } },
-			url: "/add_song_for_playlist",
+			data: { search: search, jukebox_id: id },
+			url: "/search_for_songs",
 			complete: function(msg) {
-				$("#playlist_errors").html(msg.responseText);
+				$("#results_list").append(msg.responseText);
 			}
 		});
 	});

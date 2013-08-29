@@ -1,5 +1,11 @@
 <% songs.each do |song| %>
-<div class="song" id="<%= song.id %>">
-"<%= song.song_title %>" by <%= song.artist %> </h2>
-</div>
+  <% if song.user.uid %>
+    <img src="http://graph.facebook.com/<%= song.user.uid %>/picture?type=small" alt="profile pic">
+  <% end %>
+  <div class="song" id="<%= song.id %>">
+    "<%= song.song_title %>" by <%= song.artist %> </h2>
+  </div>
+  <div class="submitted_by">
+	  Submitted by <%= user_div(song.user) %> 
+  </div>
 <% end %>
