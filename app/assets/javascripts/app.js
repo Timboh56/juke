@@ -2,7 +2,7 @@
 	
 	$(function() {
 		var ANIMATION_TIME = 500;
-		var NOTICE_TIME = 5000;
+		var NOTICE_TIME = 9000;
 		
 		// page animations
 		$("header").animate({

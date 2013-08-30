@@ -1,11 +1,23 @@
+<ul class="songs">
 <% songs.each do |song| %>
-  <% if song.user.uid %>
-    <img src="http://graph.facebook.com/<%= song.user.uid %>/picture?type=small" alt="profile pic">
-  <% end %>
-  <div class="song" id="<%= song.id %>">
-    "<%= song.song_title %>" by <%= song.artist %> </h2>
-  </div>
-  <div class="submitted_by">
-	  Submitted by <%= user_div(song.user) %> 
-  </div>
+  <li class="song" id="<%= song.id %>">
+    <% if song.rank %>
+	  <%= song.rank %>. 
+	<% end %>
+	"<%= song.song_title %>" by <%= song.artist %> </h2>
+    <div class="submitted_by">
+  	  Submitted by <%= user_div(song.user) %> 
+  	  <% if song.user.uid %>
+  	    <img src="http://graph.facebook.com/<%= song.user.uid %>/picture?type=small" alt="profile pic">
+  	  <% end %>
+	  <br>
+	  Votes: <div id="<%= song.id %>" class="jukebox_song_vote_count"> <%= song.votes_count %> </div>
+	  <br>
+	  <% if current_user %>
+	    <a data-jukebox-song="<%= song.id %>" class="upvote_action"><h2>Upvote</h2></a>
+      <% end %>
+	  
+    </div>
+  </li>
 <% end %>
+</ul>

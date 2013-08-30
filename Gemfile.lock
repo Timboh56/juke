@@ -194,6 +194,7 @@ GEM
       nokogiri
       sunspot (= 2.0.0)
     sunspot_solr (2.0.0)
+    taglib-ruby (0.6.0)
     thin (1.5.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -240,6 +241,7 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   sunspot_rails
   sunspot_solr
+  taglib-ruby
   thin
   uglifier (>= 1.0.3)
   whenever

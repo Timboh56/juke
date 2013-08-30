@@ -13,17 +13,29 @@
     text-align:center;
   }
   .playlist {
-  	text-align: inherit;
-  	font-family: Georgia, Helvetica, sans-serif;
-	height: 30%;
-	overflow-y: scroll;
-  	.song {
-
-  	}
+    text-align: inherit;
+    font-family: Georgia, Helvetica, sans-serif;
+	display: inline-block;
+	.songs {
+	  overflow-x: visible; 	
+	  .song {
+	    width: 100px;
+	    font-size: .75em;
+	    float: left;
+  	  }
+	}
   }
+}
+
+.location {
+  font-size: .65em;
 }
 .new_vote_form {
   display:inline-block;	
+}
+
+.error {
+  color: red;
 }
 
 .chat_container {
@@ -49,7 +61,6 @@
 
 #results_list {
   margin-top: 1em;
-  height: 5em;
   overflow-y: scroll;
   
   .search_results {

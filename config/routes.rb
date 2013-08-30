@@ -9,6 +9,8 @@ BarApp::Application.routes.draw do
   resources :jukeboxes
   resources :jukebox_songs
   match "/search_for_songs" => "JukeboxSongs#search_for_songs"
+  match "/upvote" => "JukeboxSongs#upvote"
+  match "/add_song_to_jukebox" => "Jukeboxes#add_song_to_jukebox"
   
   resources :users
   

@@ -16,6 +16,7 @@ gem 'omniauth-facebook'
 gem 'thin'
 gem 'faye'
 gem 'sunspot_rails'
+gem 'taglib-ruby'
 
 # Gems used only for assets and not required
 # in production environments by default.

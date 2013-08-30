@@ -9,7 +9,7 @@ module ApplicationHelper
   end
   
   def user_div(user)
-    content_tag(:div, user.username || user.name, :id => "user")
+    content_tag(:div, user.name || user.username, :id => "user")
   end
 
   def notice_div
@@ -34,9 +34,13 @@ module ApplicationHelper
     content_for_block(obj.class.name.downcase.pluralize(2))
   end
   
-  def content_for_block(class_name)
+  def content_for_block(*class_names)
+    js = ""
+    class_names.each do |c|
+      js = js + javascript_include_tag(c)
+    end
     content_for :head do
-      javascript_include_tag class_name
+      js.html_safe()
     end
   end
 end

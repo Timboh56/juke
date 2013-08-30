@@ -2,7 +2,7 @@ class CreateJukeboxSongs < ActiveRecord::Migration
   def change
     create_table :jukebox_songs do |t|
       t.integer :rank
-      t.integer :votes_count
+      t.integer :votes_count, :default => 0
       t.references :song, :null => false
       t.references :jukebox, :null => false
       t.references :user, :null => false

@@ -175,9 +175,23 @@ h1 {
 }
 
 h2 {
-  font-size: .75em;
+  font-size: .85em;
   text-align: center;
-  font-family: Helvetica, Verdana;
+  font-family: $header_font, Helvetica, Verdana;
+}
+
+a:hover {
+  cursor:pointer;
+  h2 {
+    color:red;
+  }
+}
+
+
+h5 {
+  font-size: 3em;
+  font-family: $header_font, Helvetica, Verdana;
+  margin: .3em;
 }
 
 pre {
