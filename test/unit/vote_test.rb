@@ -10,7 +10,6 @@ class VoteTest < ActiveSupport::TestCase
   end
   
   test "Upvoting" do
-    # user submits a vote for a song
   
   end
   

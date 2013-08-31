@@ -71,21 +71,4 @@ class JukeboxesController < ApplicationController
     respond_with(@jukebox)
   end
     
-  def add_song_to_jukebox
-    if current_user
-      jks = JukeboxSong.new(params[:jukebox_song])
-      jks.user_id = current_user.id
-      jks.save!
-      
-      faye_client.publish("playlists/juke_" + jks.jukebox_id.to_s, 'text' => "hello world")
-      
-      @songs = JukeboxSong.songs_for_jukebox(params[:jukebox_song][:jukebox_id])
-      
-      respond_to do |format|
-        format.html {render :partial => "playlist", :locals => {:songs => @songs}}
-      end
-    end
-    
-  end
-  
 end

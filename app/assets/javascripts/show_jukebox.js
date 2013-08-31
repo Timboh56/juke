@@ -19,19 +19,19 @@ $(function(){
 		var song_id = $(this).attr("data");
 		$.ajax({
 			type: "PUT",
-			dataType: "json",
+			dataType: "html",
 			data: { jukebox_song: {jukebox_id: jukebox_id, song_id: song_id} },
 			url: "/add_song_to_jukebox",
 			success: function(msg) {
-					container.find(".playlist").html(msg.responseText);
+				container.find(".playlist").html(msg);
 			},		
 			error: function(msg){
-						// make playlist errors reappear.
-						container.find(".error").fadeIn(1000);
-						container.find(".error").html("You already added that");
-						setTimeout(function(){
-							container.find(".error").fadeOut(1000);
-						},9000);	
+				// make playlist errors reappear.
+				container.find(".error").fadeIn(1000);
+				container.find(".error").html("You already submitted that!");
+				setTimeout(function(){
+					container.find(".error").fadeOut(1000);
+				},9000);	
 			}	
 		});
 	});
@@ -44,11 +44,11 @@ $(function(){
 
 		$.ajax({
 			type: "GET",
-			dataType: "json",
+			dataType: "html",
 			data: { search: search, jukebox_id: jukebox_id },
 			url: "/search_for_songs",
-			success: function(msg) {
-				$("#results_list").html(msg.responseText);
+			complete: function(data) {
+				$("#results_list").html(data.responseText);
 			}
 		});
 	});
@@ -90,12 +90,36 @@ $(function(){
 			data: { vote: { jukebox_id: jukebox_id, jukebox_song_id: jukebox_song_id } },
 			url: "/upvote",
 			success: function(data) {
-				container.find(".submitted_by #" + jukebox_song_id).html("<h2>" + data.votes_jukebox_song_count);
+				container.find(".submitted_by #" + jukebox_song_id).html(data.votes_jukebox_song_count);
 			},
 			error: function(data) {
 				// make playlist errors reappear.
 				container.find(".error").fadeIn(1000);
 				container.find(".error").html("You have already upvoted this.");
+				setTimeout(function(){
+					container.find(".error").fadeOut(1000);
+				},9000);
+			}
+		});
+		
+	});
+	
+	container.on("click", ".downvote_action", function(){
+		var jukebox_song_id = $(this).attr("data-jukebox-song");
+		var votes_count = container.find("#" + jukebox_song_id).html();
+
+		$.ajax({
+			type: "PUT",
+			dataType: "json",
+			data: { vote: { jukebox_id: jukebox_id, jukebox_song_id: jukebox_song_id } },
+			url: "/downvote",
+			success: function(data) {
+				container.find(".submitted_by #" + jukebox_song_id).html(data.votes_jukebox_song_count);
+			},
+			error: function(data) {
+				// make playlist errors reappear.
+				container.find(".error").fadeIn(1000);
+				container.find(".error").html("You have already downvoted this.");
 				setTimeout(function(){
 					container.find(".error").fadeOut(1000);
 				},9000);

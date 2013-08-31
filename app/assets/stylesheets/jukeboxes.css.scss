@@ -23,6 +23,12 @@
 	    font-size: .75em;
 	    float: left;
   	  }
+	  .upvote_action, .downvote_action {
+	    font-size: 2em;
+	  }
+	  .upvote_action:hover, .downvote_action:hover {
+		color: red;
+	  }
 	}
   }
 }

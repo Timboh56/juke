@@ -11,11 +11,23 @@ class JukeboxSongsController < ApplicationController
     end
   end
   
-  # rerank ranks all songs in the playlist based on votes submitted
-  def rerank(jukebox_id)
-    votes = Vote.arel_table
-    jukebox_songs = JukeboxSong.arel_tabl
-    Vote.jukebox_votes(jukebox_id).count
+  def add_song_to_jukebox
+    if current_user
+      jks = JukeboxSong.new(params[:jukebox_song])
+      jks.user_id = current_user.id
+      jks.save!
+      
+      # rank jukebox's playlist
+      rank(jks.jukebox_id)
+      
+      faye_client.publish("playlists/juke_" + jks.jukebox_id.to_s, 'text' => "hello world")
+      
+      @songs = JukeboxSong.songs_for_jukebox(params[:jukebox_song][:jukebox_id])
+            
+      respond_to do |format|
+        format.html {render :partial => "jukeboxes/playlist", :locals => {:songs => @songs}}
+      end
+    end
     
   end
   
@@ -29,14 +41,67 @@ class JukeboxSongsController < ApplicationController
     respond_to do |format|
     
       if vote.save!    
-        # increment the count number for the vote's jukebox_song
-        votes_jukebox_song = JukeboxSong.where(jukebox_songs[:id].eq(params[:vote][:jukebox_song_id])).first
-        votes_jukebox_song.votes_count = votes_jukebox_song.votes_count + 1
-        votes_jukebox_song.save!
+        votes_jukebox_song = JukeboxSong.find(params[:vote][:jukebox_song_id])
+        rank(vote.jukebox_id)
         format.json { render :json => { :votes_jukebox_song_count => votes_jukebox_song.votes_count } }
       else
         format.json { render :json => { :error => "You have already submitted a vote. " } }
       end
+    end
+    
+    
+  end
+  
+  def downvote
+    jukebox_songs = JukeboxSong.arel_table
+    
+    # create new vote for the jukebox_song
+    vote = Vote.user_votes(current_user)
+        
+    respond_to do |format|    
+      vote = vote.where(:jukebox_song_id => params[:vote][:jukebox_song_id]).first
+      if vote
+        vote.destroy
+        rank(vote.jukebox_id)        
+        votes_jukebox_song = JukeboxSong.find(params[:vote][:jukebox_song_id])
+        
+        format.json { render :json => { :votes_jukebox_song_count => votes_jukebox_song.votes_count } }
+      end
+    end
+  end
+  
+  private
+  
+  # rank ranks all songs in the playlist based on votes submitted
+  def rank(jukebox_id)
+    votes = Vote.arel_table
+    jukebox_songs = JukeboxSong.arel_table
+    
+    # keep an array of arrays of size 2, with index 0 being 
+    # the jukebox_song_id, index 1 being the number of votes for that jukebox_song
+    vote_counts = []
+    
+    # select jukebox votes with distinct jukebox songs
+    Vote.jukebox_votes(jukebox_id).select("DISTINCT(JUKEBOX_SONG_ID)").each do |j|
+      # get the votes count for every distinct jukebox song
+      puts JukeboxSong.find(j.JUKEBOX_SONG_ID).to_s + " votes count"
+      vote_counts.push([j.JUKEBOX_SONG_ID, JukeboxSong.find(j.JUKEBOX_SONG_ID).votes_count])
+    end
+
+    # sort the array by vote count
+    vote_counts = vote_counts.sort_by { |arr|
+      arr[1]
+    }.reverse!
+        
+    # assign rankings
+    vote_counts.each_with_index do |arr,i|
+      id = arr[0]
+      jukebox_song = JukeboxSong.find(id)
+      
+      # start with 1 instead of 0
+      jukebox_song.rank = i + 1
+      
+      jukebox_song.save!
     end
   end
 end
