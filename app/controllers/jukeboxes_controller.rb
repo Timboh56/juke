@@ -12,6 +12,10 @@ class JukeboxesController < ApplicationController
   # GET /jukeboxs/1.json
   def show    
     @jukebox = Jukebox.find(params[:id])
+    
+    # get the highest rank song (current song playing)
+    @current_song = JukeboxSong.songs_for_jukebox(params[:id]).first
+    
     @song = Song.new
     @songs = @jukebox.jukebox_songs
     respond_with(@jukebox)

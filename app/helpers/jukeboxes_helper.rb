@@ -2,7 +2,7 @@ module JukeboxesHelper
   
   def playlist(songs)
     if songs && !songs.empty?
-      render :partial => "playlist", :locals => { :songs => songs}
+      render :partial => "playlist2", :locals => { :songs => songs}
     else 
       "There are no songs submitted yet!"
     end
@@ -17,12 +17,12 @@ module JukeboxesHelper
   def search_song(jukebox)
     @jukebox = jukebox
     if current_user
-      render :partial => "search_song", :locals => {:jukebox => @jukebox}
+      render :partial => "search_song", :locals => { :jukebox => @jukebox }
     end
   end
   
   def jplayer
-    render :partial => "jplayer"
+    render :partial => "jplayer", :locals => { :current_song => @current_song }
   end
   
   def jukebox_chat

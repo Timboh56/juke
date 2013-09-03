@@ -32,7 +32,7 @@ $(function(){
 				setTimeout(function(){
 					container.find(".error").fadeOut(1000);
 				},9000);	
-			}	
+			}
 		});
 	});
 	
@@ -82,15 +82,14 @@ $(function(){
     });
 	
 	container.on("click", ".upvote_action", function(){
-		var jukebox_song_id = $(this).attr("data-jukebox-song");
-		var votes_count = container.find("#" + jukebox_song_id).html();
+		var jukebox_song_id = container.find(this).attr("data-jukebox-song");
 		$.ajax({
 			type: "PUT",
 			dataType: "json",
 			data: { vote: { jukebox_id: jukebox_id, jukebox_song_id: jukebox_song_id } },
 			url: "/upvote",
 			success: function(data) {
-				container.find(".submitted_by #" + jukebox_song_id).html(data.votes_jukebox_song_count);
+				container.find("#" + jukebox_song_id + " .jukebox_song_vote_count ").html(data.votes_jukebox_song_count);
 			},
 			error: function(data) {
 				// make playlist errors reappear.
@@ -105,8 +104,7 @@ $(function(){
 	});
 	
 	container.on("click", ".downvote_action", function(){
-		var jukebox_song_id = $(this).attr("data-jukebox-song");
-		var votes_count = container.find("#" + jukebox_song_id).html();
+		var jukebox_song_id = container.find(this).attr("data-jukebox-song");
 
 		$.ajax({
 			type: "PUT",
@@ -114,7 +112,7 @@ $(function(){
 			data: { vote: { jukebox_id: jukebox_id, jukebox_song_id: jukebox_song_id } },
 			url: "/downvote",
 			success: function(data) {
-				container.find(".submitted_by #" + jukebox_song_id).html(data.votes_jukebox_song_count);
+				container.find("#" + jukebox_song_id + " .jukebox_song_vote_count ").html(data.votes_jukebox_song_count);
 			},
 			error: function(data) {
 				// make playlist errors reappear.
@@ -128,7 +126,7 @@ $(function(){
 		
 	});
 	
-	init_jplayer("jquery_jplayer_1");
+	playlist.init("jquery_jplayer_1", jukebox_id, client);
 	
-	jsplayer(client,jukebox_id);
+	playlist.jsplayer();
 });

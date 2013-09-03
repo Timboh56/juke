@@ -1,6 +1,10 @@
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
 <div id="jp_container_1" class="jp-audio">
 	<div class="jp-type-single">
+	    <h5>
+	      <u>Jukebox <%= @jukebox.name %></u>
+	    </h5>
+  
 		<div class="jp-gui jp-interface">
 			<ul class="jp-controls">
 				<li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
@@ -28,9 +32,14 @@
 			</div>
 		</div>
 		<div class="jp-title">
-			<ul>
-				<li>Test song</li>
-			</ul>
+			<div class="current_song">
+				<h2> 
+					<% if current_song %>
+						<%= current_song.song_title %> by <%= current_song.artist %>
+					<% end %>
+				</h2>
+			</div>
+
 		</div>
 		<div class="jp-no-solution">
 			<span>Update Required</span>

@@ -9,7 +9,7 @@ module ApplicationHelper
   end
   
   def user_div(user)
-    content_tag(:div, user.name || user.username, :id => "user")
+    content_tag(:div, content_tag(:h2,user.name || user.username), :id => "user")
   end
 
   def notice_div

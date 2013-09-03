@@ -1,0 +1,44 @@
+<table>
+	<tr>
+		  <% if current_user %>
+			<th>  </th>
+	      <% end %>
+		<th>  </th>
+		<th>  </th>
+		<th>  </th>
+		<th>  </th>
+	</tr>		
+	<% songs.each do |song| %>
+	<tr class="song" id="<%= song.id %>">
+	      <td>
+			<div id="<%= song.id %>" class="jukebox_song_vote_count">
+	  	      <%= song.votes_count %>
+		    </div>
+		  </td>
+  		  <% if current_user %>
+		    <td id="actions">
+				<a data-jukebox-song="<%= song.id %>" class="upvote_action"><i class="icon-arrow-up"></i></a>
+	    		<a data-jukebox-song="<%= song.id %>" class="downvote_action"><i class="icon-arrow-down"></i></a>
+		    </td>
+	      <% end %>
+		  <td>
+			<h2>
+				"<%= song.song_title %>"
+			</h2>
+		  </td>
+		  <td>
+			  <h2>
+				  <%= song.artist %>
+			  </h2>
+		  </td>
+	      <td>
+		  	  <%= user_div(song.user) %> 
+		  </td>
+		  <td>
+		  	  <% if song.user.uid %>
+		  	    <img src="http://graph.facebook.com/<%= song.user.uid %>/picture?type=small" id="profile" alt="profile pic">
+		  	  <% end %>
+		  </td>
+	  </tr>
+	<% end %>
+</table>
