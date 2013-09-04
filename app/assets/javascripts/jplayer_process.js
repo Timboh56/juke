@@ -28,6 +28,20 @@ var playlist = {
 		});
 	},
 	
+	get_playlist: function(){
+
+		// get the updated playlist
+		$.ajax({
+			type: "GET",
+			dataType: "html",
+			data: { jukebox_id: this.jukebox_id },
+			url: "/get_playlist",
+			success: function(data){
+				$(".playlist").html(data);
+			}
+		});
+	},
+	
 	add_track_to_playlist: function(track){
   
 	},

@@ -3,7 +3,7 @@ class JukeboxSong < ActiveRecord::Base
   belongs_to :jukebox
   belongs_to :song
   belongs_to :user
-  has_many :votes, :dependent => :destroy, :counter_cache => true
+  has_many :votes, :dependent => :destroy, :inverse_of => :jukebox_song
   scope :songs_for_jukebox, lambda { |jukebox_id| 
     jukeboxsongs_arel = JukeboxSong.arel_table
     songs = where(jukeboxsongs_arel[:jukebox_id].eq(jukebox_id))

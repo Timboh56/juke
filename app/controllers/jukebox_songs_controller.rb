@@ -25,7 +25,7 @@ class JukeboxSongsController < ApplicationController
       @songs = JukeboxSong.songs_for_jukebox(params[:jukebox_song][:jukebox_id])
             
       respond_to do |format|
-        format.html {render :partial => "jukeboxes/playlist", :locals => {:songs => @songs}}
+        format.html {render :partial => "jukeboxes/playlist2", :locals => {:songs => @songs}}
       end
     end
     

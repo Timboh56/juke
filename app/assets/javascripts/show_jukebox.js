@@ -1,7 +1,7 @@
 var client = new Faye.Client("http://localhost:9292/faye");
 
 $(function(){
-	var UPDATE_INTERVAL = 1000;
+	var UPDATE_PLAYLIST_INTERVAL = 4000;
 	
 	// get container from DOM
 	var container = $(".container");
@@ -14,6 +14,26 @@ $(function(){
     // Create a new client to connect to Faye
     var height = $(".chat_room").height();	
 	var msgs = 0;
+	
+	playlist.init("jquery_jplayer_1", jukebox_id, client);
+	
+	playlist.jsplayer();
+	
+	// SUBSCRIPTIONS
+	
+    // Subscribe to the jukebox chatroom channel
+    var chat_sub = client.subscribe("/chats/juke_" + jukebox_id, function(data) {
+	  msgs++;
+	  container.find(".chat_room").animate({ scrollTop: msgs*height },"50");
+      $("<div class=\"message\">").html(data.username + ": " + data.msg).appendTo(".chat_room");
+    });
+		
+	// subscribe to updates to the jukebox's playlist
+	client.subscribe("/update/juke_" + jukebox_id, function(data){
+		playlist.get_playlist();
+	});
+	
+	// EVENT HANDLERS
 	
 	container.on("click", ".result_action", function(){
 		var song_id = $(this).attr("data");
@@ -53,17 +73,6 @@ $(function(){
 		});
 	});
 	
-	// Suscribe to jukebox playlist
-	var playlist_sub = client.subscribe("/playlists/juke_" + jukebox_id, function(data) {
-		$("<div class=\"song\">").html("\""+ data.song_title + "\", by " + data.artist).appendTo(".playlist");	
-	});
-	
-    // Subscribe to the jukebox chatroom channel
-    var chat_sub = client.subscribe("/chats/juke_" + jukebox_id, function(data) {
-	  msgs++;
-	  container.find(".chat_room").animate({ scrollTop: msgs*height },"50");
-      $("<div class=\"message\">").html(data.username + ": " + data.msg).appendTo(".chat_room");
-    });
 	
     // Handle form submissions and post messages to faye
     container.find("#new_message_form").submit(function(event) {
@@ -89,6 +98,7 @@ $(function(){
 			data: { vote: { jukebox_id: jukebox_id, jukebox_song_id: jukebox_song_id } },
 			url: "/upvote",
 			success: function(data) {
+				client.publish("/update/juke_" + jukebox_id, data);
 				container.find("#" + jukebox_song_id + " .jukebox_song_vote_count ").html(data.votes_jukebox_song_count);
 			},
 			error: function(data) {
@@ -112,6 +122,7 @@ $(function(){
 			data: { vote: { jukebox_id: jukebox_id, jukebox_song_id: jukebox_song_id } },
 			url: "/downvote",
 			success: function(data) {
+				client.publish("/update/juke_" + jukebox_id, data);
 				container.find("#" + jukebox_song_id + " .jukebox_song_vote_count ").html(data.votes_jukebox_song_count);
 			},
 			error: function(data) {
@@ -126,7 +137,9 @@ $(function(){
 		
 	});
 	
-	playlist.init("jquery_jplayer_1", jukebox_id, client);
-	
-	playlist.jsplayer();
+	/** 
+	setInterval(function() {
+		playlist.get_playlist();
+	},UPDATE_PLAYLIST_INTERVAL);
+	**/
 });

@@ -74,5 +74,10 @@ class JukeboxesController < ApplicationController
 
     respond_with(@jukebox)
   end
+  
+  def get_playlist
+    @songs = JukeboxSong.where(:jukebox_id => params[:jukebox_id])
+    render :partial => "playlist2", :locals => { :songs => @songs }
+  end
     
 end
