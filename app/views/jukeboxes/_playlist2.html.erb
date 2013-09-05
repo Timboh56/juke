@@ -9,6 +9,7 @@
 		<th>  </th>
 		<th>  </th>
 		<th>  </th>
+		<th>  </th>
 	</tr>		
 	<% songs.each do |song| %>
 	<tr class="song" id="<%= song.id %>">
@@ -40,6 +41,11 @@
 		  	  <% if song.user.uid %>
 		  	    <img src="http://graph.facebook.com/<%= song.user.uid %>/picture?type=small" id="profile" alt="profile pic">
 		  	  <% end %>
+		  </td>
+		  <td>
+			  <% if song.user == current_user %>
+		        <%= link_to 'X', song, method: :delete, data: { confirm: 'Are you sure?' } %>
+			  <% end %>
 		  </td>
 	  </tr>
 	<% end %>

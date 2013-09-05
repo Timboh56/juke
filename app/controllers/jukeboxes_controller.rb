@@ -13,11 +13,12 @@ class JukeboxesController < ApplicationController
   def show    
     @jukebox = Jukebox.find(params[:id])
     
-    # get the highest rank song (current song playing)
-    @current_song = JukeboxSong.songs_for_jukebox(params[:id]).first
-    
     @song = Song.new
     @songs = @jukebox.jukebox_songs
+    
+    # get the highest rank song (current song playing)
+    @current_song = @songs.first
+    
     respond_with(@jukebox)
   end
 
@@ -79,5 +80,26 @@ class JukeboxesController < ApplicationController
     @songs = JukeboxSong.where(:jukebox_id => params[:jukebox_id])
     render :partial => "playlist2", :locals => { :songs => @songs }
   end
+  
+  def next_song
+    @songs = JukeboxSong.where(:jukebox_id => params[:jukebox_id])
     
+    # get the next highest rank song (current song playing)
+    @current_song = @songs.first
+    
+    # TODO: CHANGE TO MORE EFFECTIVE AUTHORIZATION 
+    if current_user && current_user.user_authorized_for_jukebox?(params[:jukebox_id])
+  
+      # current_song playing is done playing, delete from db
+      @songs.first.destroy!
+  
+    end
+    
+    @current_song = @songs.first.song
+  
+    respond_to do |format|
+      format.json { render json: @current_song }
+    end      
+      
+  end 
 end

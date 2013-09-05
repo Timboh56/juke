@@ -24,4 +24,8 @@ class JukeboxSong < ActiveRecord::Base
   def artist
     song.artist
   end
+  
+  def url
+    song.url
+  end
 end

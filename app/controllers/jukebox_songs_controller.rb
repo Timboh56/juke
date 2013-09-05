@@ -1,4 +1,6 @@
 class JukeboxSongsController < ApplicationController
+  respond_to :xml, :html, :json
+  
   def search_for_songs
     @search = Song.search do
       fulltext params[:search]
@@ -70,6 +72,16 @@ class JukeboxSongsController < ApplicationController
     end
   end
   
+  # DELETE /jukeboxs/1
+  # DELETE /jukeboxs/1.json
+  def destroy
+    @jukebox_song = JukeboxSong.find(params[:id])
+    @jukebox_song.destroy
+
+    respond_with(@jukebox_song)
+  end
+  
+  
   private
   
   # rank ranks all songs in the playlist based on votes submitted
@@ -81,18 +93,16 @@ class JukeboxSongsController < ApplicationController
     # the jukebox_song_id, index 1 being the number of votes for that jukebox_song
     vote_counts = []
     
-    # select jukebox votes with distinct jukebox songs
-    Vote.jukebox_votes(jukebox_id).select("DISTINCT(JUKEBOX_SONG_ID)").each do |j|
-      # get the votes count for every distinct jukebox song
-      puts JukeboxSong.find(j.JUKEBOX_SONG_ID).to_s + " votes count"
-      vote_counts.push([j.JUKEBOX_SONG_ID, JukeboxSong.find(j.JUKEBOX_SONG_ID).votes_count])
+    JukeboxSong.songs_for_jukebox(jukebox_id).each do |jukebox_song|
+      vote_counts.push([jukebox_song.id, jukebox_song.votes_count])
     end
+
 
     # sort the array by vote count
     vote_counts = vote_counts.sort_by { |arr|
       arr[1]
     }.reverse!
-        
+            
     # assign rankings
     vote_counts.each_with_index do |arr,i|
       id = arr[0]

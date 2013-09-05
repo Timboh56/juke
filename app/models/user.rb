@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   has_many :user_roles
   has_many :roles, :through => :user_roles
   has_many :votes
+  has_many :jukeboxes, :dependent => :destroy
+  has_many :jukebox_songs, :dependent => :destroy
   
   validates_uniqueness_of :username
   validates_uniqueness_of :email
@@ -18,6 +20,14 @@ class User < ActiveRecord::Base
   validates_presence_of :password
   
   before_create(:add_role)
+  
+  def user_authorized_for_jukebox?(jukebox_id)
+    if jukebox_id == id
+      return true
+    else
+      return false
+    end
+  end
 
   def add_role
     roles << Role.find_by_name("User")

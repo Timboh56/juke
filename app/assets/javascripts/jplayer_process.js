@@ -3,29 +3,13 @@ var playlist = {
 		
 		// class variables
 		var self = this;
+
 		this.client = client;
-		this.tracks = [];
-		this.current_song_index = 0;
+		this.current_song;
 		this.jukebox_id = jukebox_id;
+		this.jplayer_div_id = jplayer_div_id;
 		
 		var track = this.get_next_track();
-	
-		$("#" + jplayer_div_id).jPlayer({
-			ready: function (event){
-				$(this).jPlayer("setMedia", {
-					mp3: "home.mp3"
-				});
-			},
-			swfPath: "js",
-			supplied: "mp3",
-			wmode: "window",
-			smoothPlayBar: true,
-			keyEnabled:true,
-			ended: function(){
-				self.track = get_next_track();
-			    $(this).jPlayer("play");
-			}
-		});
 	},
 	
 	get_playlist: function(){
@@ -47,13 +31,23 @@ var playlist = {
 	},
 	
 	get_next_track: function(){
-		var track = this.tracks[this.current_song_index];
-		this.current_song_index++;
-		return track;
+		var self = this;
+		
+		$.ajax({
+			type: "GET",
+			dataType: "json",
+			data: { jukebox_id: this.jukebox_id },
+			url: "/next_song",
+			success: function(data){
+				self.current_song = data;
+			}
+		});
+		
 	},
 	
 	jsplayer: function(){
-	
+		var self = this;
+		
 		// everytime a song completes, or jukebox owner starts playing the playlist
 		// 1. get reranked playlist
 		// 2. send current song (highest rank) url to front end for processing
@@ -63,6 +57,23 @@ var playlist = {
 		this.client.subscribe("playlists/juke_" + this.jukebox_id, function(data){
 		
 	
+		});
+		
+		$("#" + self.jplayer_div_id).jPlayer({
+			ready: function (event){
+				$(this).jPlayer("setMedia", {
+					mp3: "/tunes/" + self.current_song.url
+				});
+			},
+			swfPath: "js",
+			supplied: "mp3",
+			wmode: "window",
+			smoothPlayBar: true,
+			keyEnabled:true,
+			ended: function(){
+				self.get_next_track();
+			    $(this).jPlayer("play");
+			}
 		});
 	}
 };
