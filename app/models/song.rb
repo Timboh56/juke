@@ -13,7 +13,6 @@ class Song < ActiveRecord::Base
     
     # Load file from name
     TagLib::FileRef.open("public/tunes/" + self.name + ".mp3") do |fileref|
-      puts "is this working?"
       unless fileref.null?
         song_info = tag = fileref.tag
         tag.title   #=> "Wake Up"
@@ -28,8 +27,6 @@ class Song < ActiveRecord::Base
         properties.length  #=> 335 (song length in seconds)
         self.length = properties.length
         
-        # bound to change
-        self.url = "public/tunes/" + self.name + ".mp3"
       end
     end  # File is automatically closed at block end
   end

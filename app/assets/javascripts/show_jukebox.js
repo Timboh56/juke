@@ -16,9 +16,7 @@ $(function(){
 	var msgs = 0;
 	
 	playlist.init("jquery_jplayer_1", jukebox_id, client);
-	
-	playlist.jsplayer();
-	
+		
 	// SUBSCRIPTIONS
 	
     // Subscribe to the jukebox chatroom channel
@@ -42,8 +40,8 @@ $(function(){
 			dataType: "html",
 			data: { jukebox_song: {jukebox_id: jukebox_id, song_id: song_id} },
 			url: "/add_song_to_jukebox",
-			success: function(msg) {
-				container.find(".playlist").html(msg);
+			success: function(data) {
+				container.find(".playlist").html(data);
 			},		
 			error: function(msg){
 				// make playlist errors reappear.
@@ -73,7 +71,6 @@ $(function(){
 		});
 	});
 	
-	
     // Handle form submissions and post messages to faye
     container.find("#new_message_form").submit(function(event) {
 		event.preventDefault();
@@ -89,6 +86,20 @@ $(function(){
       // Don"t actually submit the form, otherwise the page will refresh.
       return false;
     });
+	
+	container.on("click", ".delete_jukebox_song", function(e){
+		e.preventDefault();
+		var jukebox_song_id = container.find(this).attr("data");
+		$.ajax({
+			type: "POST",
+			dataType: "html",
+			data: { _method: "delete" },
+			url: "/jukebox_songs/" + jukebox_song_id,
+			success: function(data){
+				container.find(".playlist").html(data);
+			}
+		});
+	});
 	
 	container.on("click", ".upvote_action", function(){
 		var jukebox_song_id = container.find(this).attr("data-jukebox-song");

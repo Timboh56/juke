@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class UserSessionsController < ActionController::TestCase
+class UserSessionsControllerTest < ActionController::TestCase
   setup do
   end
 end

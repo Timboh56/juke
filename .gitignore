@@ -17,3 +17,4 @@
 /tmp
 
 solr/data/development/index/*
+solr/*

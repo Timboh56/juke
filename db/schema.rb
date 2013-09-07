@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130830052325) do
+ActiveRecord::Schema.define(:version => 20130905075937) do
 
   create_table "bids", :force => true do |t|
     t.float    "amount"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20130830052325) do
     t.time     "closing"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "user_id"
   end
 
   create_table "roles", :force => true do |t|

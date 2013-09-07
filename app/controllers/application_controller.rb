@@ -7,13 +7,16 @@ class ApplicationController < ActionController::Base
   before_filter(:faye_client)
 
   layout :check_browser
-  
+
   attr_reader :current_user, :faye_client
-    
-  MOBILE_BROWSERS = ["android", "ipod", "opera mini", "blackberry", "palm","hiptop","avantgo","plucker", "xiino","blazer","elaine", "windows ce; ppc;", "windows ce; smartphone;","windows ce; iemobile", "up.browser","up.link","mmp","symbian","smartphone", "midp","wap","vodafone","o2","pocket","kindle", "mobile","pda","psp","treo"]
-  
+
+  MOBILE_BROWSERS = ["android", "ipod", "opera mini", "blackberry", "palm","hiptop","avantgo","plucker",
+    "xiino","blazer","elaine", "windows ce; ppc;", "windows ce; smartphone;","windows ce; iemobile",
+    "up.browser","up.link","mmp","symbian","smartphone", "midp","wap","vodafone","o2","pocket","kindle",
+    "mobile","pda","psp","treo"]
+
   protected
-  
+
   def faye_client
     faye_client ||= Faye::Client.new('http://localhost:9292/faye')
   end
@@ -36,8 +39,8 @@ class ApplicationController < ActionController::Base
     @current_user_session = UserSession.find
   end
 
-  def current_user      
-    return @current_user if defined?(@current_user)
+  def current_user
+    return @current_user if defined?(@current_user)    
     @current_user = current_user_session && current_user_session.user      
   end
 
@@ -68,5 +71,46 @@ class ApplicationController < ActionController::Base
   def redirect_back_or_default(default, options = {})
     redirect_to(session[:return_to] || default, options)
     session[:return_to] = nil
+  end
+  
+  def user_authorized_for_jukebox?(jukebox_id)
+    if Jukebox.find(jukebox_id).user_id == current_user.id
+      return true
+    else
+      return false
+    end
+  end
+  
+  private
+  
+  # rank ranks all songs in the playlist based on votes submitted
+  def rank(jukebox_id)
+    votes = Vote.arel_table
+    jukebox_songs = JukeboxSong.arel_table
+    
+    # keep an array of arrays of size 2, with index 0 being 
+    # the jukebox_song_id, index 1 being the number of votes for that jukebox_song
+    vote_counts = []
+    
+    JukeboxSong.songs_for_jukebox(jukebox_id).each do |jukebox_song|
+      vote_counts.push([jukebox_song.id, jukebox_song.votes_count])
+    end
+
+
+    # sort the array by vote count
+    vote_counts = vote_counts.sort_by { |arr|
+      arr[1]
+    }.reverse!
+            
+    # assign rankings
+    vote_counts.each_with_index do |arr,i|
+      id = arr[0]
+      jukebox_song = JukeboxSong.find(id)
+      
+      # start with 1 instead of 0
+      jukebox_song.rank = i + 1
+      
+      jukebox_song.save!
+    end
   end
 end

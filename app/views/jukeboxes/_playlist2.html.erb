@@ -44,7 +44,7 @@
 		  </td>
 		  <td>
 			  <% if song.user == current_user %>
-		        <%= link_to 'X', song, method: :delete, data: { confirm: 'Are you sure?' } %>
+		        <%= link_to content_tag(:i,"",:class => "icon-trash"),"delete", :class => "delete_jukebox_song", :data => song.id %>
 			  <% end %>
 		  </td>
 	  </tr>

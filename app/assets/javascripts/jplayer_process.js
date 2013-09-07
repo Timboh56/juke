@@ -9,40 +9,69 @@ var playlist = {
 		this.jukebox_id = jukebox_id;
 		this.jplayer_div_id = jplayer_div_id;
 		
-		var track = this.get_next_track();
+		var self = this;
+		
+		var dfd = $.Deferred();
+		
+		self.get_first_song().done(self.get_first_song.call(self), function(){
+			self.jsplayer();
+		});
+		
+	},
+	
+	get_first_song: function(){	
+		var self = this;
+		var dfd = $.Deferred();
+		$.ajax({
+			type: "GET",
+			dataType: "json",
+			data: { jukebox_id: self.jukebox_id, type: "init" },
+			url: "/next_song",
+			success: function(data){
+				self.current_song = data;
+				dfd.resolve();
+			},
+			error: function(){				
+				dfd.reject();
+			}
+		});
+		return dfd.promise();
 	},
 	
 	get_playlist: function(){
-
+		var self = this;
+		
 		// get the updated playlist
 		$.ajax({
 			type: "GET",
 			dataType: "html",
-			data: { jukebox_id: this.jukebox_id },
+			data: { jukebox_id: self.jukebox_id},
 			url: "/get_playlist",
 			success: function(data){
 				$(".playlist").html(data);
 			}
 		});
 	},
-	
-	add_track_to_playlist: function(track){
-  
-	},
-	
-	get_next_track: function(){
+
+	get_next_song: function(){
 		var self = this;
+		var dfd = $.Deferred();
 		
 		$.ajax({
 			type: "GET",
 			dataType: "json",
-			data: { jukebox_id: this.jukebox_id },
+			data: { jukebox_id: this.jukebox_id, type: "next" },
 			url: "/next_song",
 			success: function(data){
 				self.current_song = data;
+				dfd.resolve();
+			},
+			error: function(){
+				dfd.reject();
 			}
 		});
 		
+		return dfd.promise();
 	},
 	
 	jsplayer: function(){
@@ -54,11 +83,6 @@ var playlist = {
 		// 3. use jplayer to detect when song completes, or if that's not possible, make a bootleg timer
 		// 4.when song completes, repeat until no songs are left in playlist.
 	
-		this.client.subscribe("playlists/juke_" + this.jukebox_id, function(data){
-		
-	
-		});
-		
 		$("#" + self.jplayer_div_id).jPlayer({
 			ready: function (event){
 				$(this).jPlayer("setMedia", {
@@ -71,9 +95,13 @@ var playlist = {
 			smoothPlayBar: true,
 			keyEnabled:true,
 			ended: function(){
-				self.get_next_track();
-			    $(this).jPlayer("play");
+			    var jplayer_div = this;
+				self.get_next_song().done(function(){
+					self.jsplayer();
+				});
 			}
 		});
+		
+		$("#" + self.jplayer_div_id).jPlayer("play");
 	}
 };

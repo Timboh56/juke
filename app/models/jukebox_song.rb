@@ -12,6 +12,10 @@ class JukeboxSong < ActiveRecord::Base
   validates_uniqueness_of :song_id, :scope => [:jukebox_id, :song_id], :message => "Your selected song has already been submitted!"
   after_create(:add_vote_for_jukebox_song)
   
+  def self.current_song(jukebox_id)
+    songs_for_jukebox(jukebox_id).first
+  end
+
   def add_vote_for_jukebox_song
     self.votes << Vote.new(:user_id => self.user_id, :jukebox_id => self.jukebox_id)
     self.save!

@@ -20,17 +20,10 @@ class User < ActiveRecord::Base
   validates_presence_of :password
   
   before_create(:add_role)
-  
-  def user_authorized_for_jukebox?(jukebox_id)
-    if jukebox_id == id
-      return true
-    else
-      return false
-    end
-  end
 
   def add_role
-    roles << Role.find_by_name("User")
+    r = Role.user_role
+    roles << r
   end
   
   def self.from_omniauth(auth)

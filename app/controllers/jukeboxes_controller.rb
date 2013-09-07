@@ -1,5 +1,5 @@
 class JukeboxesController < ApplicationController
-  # filter_resource_access
+  filter_resource_access
   respond_to :xml, :html, :json
 
   def index
@@ -82,23 +82,30 @@ class JukeboxesController < ApplicationController
   end
   
   def next_song
-    @songs = JukeboxSong.where(:jukebox_id => params[:jukebox_id])
     
-    # get the next highest rank song (current song playing)
-    @current_song = @songs.first
+    puts params[:jukebox_id].to_s + " is the jukebox id"
     
-    # TODO: CHANGE TO MORE EFFECTIVE AUTHORIZATION 
-    if current_user && current_user.user_authorized_for_jukebox?(params[:jukebox_id])
+    # REFACTOR
+    @current_song = JukeboxSong.current_song(params[:jukebox_id])
+        
+    if params[:type] == "next"
+      # TODO: CHANGE TO MORE EFFECTIVE AUTHORIZATION 
+      if user_authorized_for_jukebox?(params[:jukebox_id])
   
-      # current_song playing is done playing, delete from db
-      @songs.first.destroy!
+        # current_song playing is done playing, delete from db
+        @current_song.destroy
   
+      end      
     end
+        
+    rank(params[:jukebox_id])
     
-    @current_song = @songs.first.song
+    # find newest current_song
+    # REFACTOR
+    @current_song = JukeboxSong.current_song(params[:jukebox_id])
   
     respond_to do |format|
-      format.json { render json: @current_song }
+      format.json { render json: @current_song.song }
     end      
       
   end 

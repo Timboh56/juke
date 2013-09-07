@@ -76,42 +76,14 @@ class JukeboxSongsController < ApplicationController
   # DELETE /jukeboxs/1.json
   def destroy
     @jukebox_song = JukeboxSong.find(params[:id])
+    jukebox_id = @jukebox_song.jukebox_id
     @jukebox_song.destroy
-
-    respond_with(@jukebox_song)
-  end
-  
-  
-  private
-  
-  # rank ranks all songs in the playlist based on votes submitted
-  def rank(jukebox_id)
-    votes = Vote.arel_table
-    jukebox_songs = JukeboxSong.arel_table
     
-    # keep an array of arrays of size 2, with index 0 being 
-    # the jukebox_song_id, index 1 being the number of votes for that jukebox_song
-    vote_counts = []
+    @songs = JukeboxSong.songs_for_jukebox(jukebox_id)
     
-    JukeboxSong.songs_for_jukebox(jukebox_id).each do |jukebox_song|
-      vote_counts.push([jukebox_song.id, jukebox_song.votes_count])
-    end
-
-
-    # sort the array by vote count
-    vote_counts = vote_counts.sort_by { |arr|
-      arr[1]
-    }.reverse!
-            
-    # assign rankings
-    vote_counts.each_with_index do |arr,i|
-      id = arr[0]
-      jukebox_song = JukeboxSong.find(id)
-      
-      # start with 1 instead of 0
-      jukebox_song.rank = i + 1
-      
-      jukebox_song.save!
+    respond_to do |format|
+      format.html {render :partial => "jukeboxes/playlist2", :locals => {:songs => @songs}}
     end
   end
+  
 end
