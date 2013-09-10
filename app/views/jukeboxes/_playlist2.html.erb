@@ -43,7 +43,7 @@
 		  	  <% end %>
 		  </td>
 		  <td>
-			  <% if song.user == current_user %>
+			  <% if user_authorized_for_jukebox_song?(song)  %>
 		        <%= link_to content_tag(:i,"",:class => "icon-trash"),"delete", :class => "delete_jukebox_song", :data => song.id %>
 			  <% end %>
 		  </td>

@@ -21,8 +21,10 @@ module JukeboxesHelper
     end
   end
   
-  def jplayer
-    render :partial => "jplayer", :locals => { :current_song => @current_song }
+  def jplayer(jukebox)
+    if user_authorized_for_jukebox?(jukebox.id) && !empty_playlist?
+      render :partial => "jplayer"
+    end
   end
   
   def jukebox_chat

@@ -38,6 +38,7 @@ div.jp-audio-stream {
 	width:182px;
 }
 div.jp-video-270p {
+	margin: 0px auto;
 	width:480px;
 }
 div.jp-video-360p {

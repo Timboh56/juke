@@ -15,7 +15,7 @@ $(function(){
     var height = $(".chat_room").height();	
 	var msgs = 0;
 	
-	playlist.init("jquery_jplayer_1", jukebox_id, client);
+	playlist.init("jquery_jplayer_1", "jp_container_1", jukebox_id, client);
 		
 	// SUBSCRIPTIONS
 	

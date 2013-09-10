@@ -1,9 +1,11 @@
 var playlist = {
-	init: function(jplayer_div_id, jukebox_id, client){
+	init: function(jplayer_div_id, jp_container, jukebox_id, client){
 		
 		// class variables
 		var self = this;
 
+		this.options = {};
+		
 		this.client = client;
 		this.current_song;
 		this.jukebox_id = jukebox_id;
@@ -13,8 +15,10 @@ var playlist = {
 		
 		var dfd = $.Deferred();
 		
-		self.get_first_song().done(self.get_first_song.call(self), function(){
+		self.get_first_song().done(function(){
 			self.jsplayer();
+		}).fail(function(){
+			$("#" + self.jp_container).html("nothing to display");
 		});
 		
 	},
@@ -31,7 +35,7 @@ var playlist = {
 				self.current_song = data;
 				dfd.resolve();
 			},
-			error: function(){				
+			error: function(){
 				dfd.reject();
 			}
 		});
@@ -63,6 +67,7 @@ var playlist = {
 			data: { jukebox_id: this.jukebox_id, type: "next" },
 			url: "/next_song",
 			success: function(data){
+				alert("done no partial content");
 				self.current_song = data;
 				dfd.resolve();
 			},
@@ -83,25 +88,46 @@ var playlist = {
 		// 3. use jplayer to detect when song completes, or if that's not possible, make a bootleg timer
 		// 4.when song completes, repeat until no songs are left in playlist.
 	
-		$("#" + self.jplayer_div_id).jPlayer({
-			ready: function (event){
-				$(this).jPlayer("setMedia", {
-					mp3: "/tunes/" + self.current_song.url
-				});
-			},
-			swfPath: "js",
-			supplied: "mp3",
-			wmode: "window",
-			smoothPlayBar: true,
-			keyEnabled:true,
-			ended: function(){
-			    var jplayer_div = this;
-				self.get_next_song().done(function(){
-					self.jsplayer();
-				});
-			}
-		});
+		var html = $("<h2>").html(self.current_song.name + " by " + self.current_song.artist);
+		$(".current_song").html(html);
 		
-		$("#" + self.jplayer_div_id).jPlayer("play");
+		var playlist = new jPlayerPlaylist({
+			jPlayer: "#" + self.jplayer_div_id,
+			cssSelectorAncestor: self.jp_container
+		}, [{
+				title: self.current_song.name,
+				artist: self.current_song.artist,
+				mp3: "/tunes/" + self.current_song.url	// TO-DO: CHANGE TO MORE DYNAMIC FORMAT
+			}],
+		    {
+		   		playlistOptions: {
+		   			enableRemoveControls: true
+		   		},
+		   		swfPath: "js",
+		   		supplied: "webmv, ogv, m4v, oga, mp3",
+		   		smoothPlayBar: true,
+		   		keyEnabled: true,
+		   		audioFullScreen: true,
+				ended: function(){
+				    var jplayer_div = this;
+					self.get_next_song().done(function(){
+						var html = $("<h2>").html(self.current_song.name + " by " + self.current_song.artist);
+						$(".current_song").html(html);
+						self.get_playlist();	
+						playlist.add({
+							title: self.current_song.name,
+							artist: self.current_song.artist,
+							mp3: "/tunes/" + self.current_song.url	// TO-DO: CHANGE TO MORE DYNAMIC FORMAT
+						}, true);
+						playlist.remove(0);
+						
+						
+						playlist.play();
+					});
+				}
+			}
+		); 
+		
+		playlist.play();
 	}
 };

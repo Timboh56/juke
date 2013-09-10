@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   require 'authlogic'
   protect_from_forgery
 
-  helper_method :current_user_session, :current_user
+  helper_method :current_user_session, :current_user, :user_authorized_for_jukebox?, :user_authorized_for_jukebox_song?
   before_filter { |c| Authorization.current_user = c.current_user }
   before_filter(:faye_client)
 
@@ -74,15 +74,31 @@ class ApplicationController < ActionController::Base
   end
   
   def user_authorized_for_jukebox?(jukebox_id)
-    if Jukebox.find(jukebox_id).user_id == current_user.id
+    
+    # check if user is logged in AND the owner of the jukebox to show jplayer
+    # this is subject to change in the future.
+    if current_user && Jukebox.find(jukebox_id).user_id == current_user.id
       return true
     else
       return false
     end
   end
   
+  def user_authorized_for_jukebox_song?(jukebox_song_id)
+    
+    # check if user is logged in and authorized to edit the jukebox song he submitted
+    # checks if the user is the owner of the jukebox song
+    if current_user && JukeboxSong.find(jukebox_song_id).user_id == current_user.id
+      return true
+    else
+      return false
+    end
+    
+  end
+  
   private
   
+  # TODO MOVE TO JUKEBOX MODEL AFTER_DESTROY, AFTER VOTE_UPDATE
   # rank ranks all songs in the playlist based on votes submitted
   def rank(jukebox_id)
     votes = Vote.arel_table
@@ -92,6 +108,7 @@ class ApplicationController < ActionController::Base
     # the jukebox_song_id, index 1 being the number of votes for that jukebox_song
     vote_counts = []
     
+    puts "does this work " + jukebox_id.to_s
     JukeboxSong.songs_for_jukebox(jukebox_id).each do |jukebox_song|
       vote_counts.push([jukebox_song.id, jukebox_song.votes_count])
     end

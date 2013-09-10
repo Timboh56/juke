@@ -8,12 +8,11 @@ class JukeboxSong < ActiveRecord::Base
     jukeboxsongs_arel = JukeboxSong.arel_table
     songs = where(jukeboxsongs_arel[:jukebox_id].eq(jukebox_id))
   }
-  default_scope order("rank ASC").limit(4)
   validates_uniqueness_of :song_id, :scope => [:jukebox_id, :song_id], :message => "Your selected song has already been submitted!"
   after_create(:add_vote_for_jukebox_song)
   
   def self.current_song(jukebox_id)
-    songs_for_jukebox(jukebox_id).first
+    songs_for_jukebox(jukebox_id).order("rank ASC").first
   end
 
   def add_vote_for_jukebox_song

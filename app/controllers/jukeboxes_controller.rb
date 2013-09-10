@@ -1,6 +1,7 @@
 class JukeboxesController < ApplicationController
-  filter_resource_access
+  # filter_resource_access
   respond_to :xml, :html, :json
+  helper_method :empty_playlist?
 
   def index
     @jukeboxes = Jukebox.all
@@ -12,12 +13,7 @@ class JukeboxesController < ApplicationController
   # GET /jukeboxs/1.json
   def show    
     @jukebox = Jukebox.find(params[:id])
-    
-    @song = Song.new
-    @songs = @jukebox.jukebox_songs
-    
-    # get the highest rank song (current song playing)
-    @current_song = @songs.first
+    @songs = @jukebox.jukebox_songs.order("rank ASC")
     
     respond_with(@jukebox)
   end
@@ -39,6 +35,7 @@ class JukeboxesController < ApplicationController
   # POST /jukeboxs.json
   def create
     @jukebox = Jukebox.new(params[:jukebox])
+    @jukebox.user_id = current_user.id
 
     respond_to do |format|
       if @jukebox.save
@@ -76,6 +73,16 @@ class JukeboxesController < ApplicationController
     respond_with(@jukebox)
   end
   
+  def empty_playlist?
+    @jukebox = Jukebox.find(params[:id])
+    @songs = @jukebox.jukebox_songs.order("rank ASC")
+    if @songs.empty?
+      return true
+    else
+      return false
+    end
+  end
+  
   def get_playlist
     @songs = JukeboxSong.where(:jukebox_id => params[:jukebox_id])
     render :partial => "playlist2", :locals => { :songs => @songs }
@@ -87,11 +94,12 @@ class JukeboxesController < ApplicationController
     
     # REFACTOR
     @current_song = JukeboxSong.current_song(params[:jukebox_id])
-        
+    
+    puts @current_song.to_s + " is the current song gonna be deletesen"
     if params[:type] == "next"
       # TODO: CHANGE TO MORE EFFECTIVE AUTHORIZATION 
       if user_authorized_for_jukebox?(params[:jukebox_id])
-  
+        puts "this is supposed to happen"
         # current_song playing is done playing, delete from db
         @current_song.destroy
   
@@ -105,7 +113,11 @@ class JukeboxesController < ApplicationController
     @current_song = JukeboxSong.current_song(params[:jukebox_id])
   
     respond_to do |format|
-      format.json { render json: @current_song.song }
+      if @current_song
+        format.json { render json: @current_song.song }
+      else
+        format.json { render json: "No songs", status: :unprocessable_entity }
+      end
     end      
       
   end 

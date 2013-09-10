@@ -11,21 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130905075937) do
-
-  create_table "bids", :force => true do |t|
-    t.float    "amount"
-    t.integer  "user_id"
-    t.integer  "jukebox_id"
-    t.string   "song_name"
-    t.string   "song_artist"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "bids", ["jukebox_id"], :name => "index_bids_on_jukebox_id"
-  add_index "bids", ["song_name"], :name => "index_bids_on_song_name"
-  add_index "bids", ["user_id"], :name => "index_bids_on_user_id"
+ActiveRecord::Schema.define(:version => 20130910091601) do
 
   create_table "favorites", :force => true do |t|
     t.integer  "user_id"
@@ -82,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20130905075937) do
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
     t.integer  "length",     :default => 0, :null => false
+    t.string   "image_url"
   end
 
   add_index "songs", ["album"], :name => "index_songs_on_album"

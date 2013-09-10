@@ -6,6 +6,5 @@ FactoryGirl.define do
   factory :vote do
     user test_user
 	  jukebox test_jukebox
-    song_title test_song_name
   end
 end
