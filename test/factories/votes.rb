@@ -4,7 +4,6 @@ end
 
 FactoryGirl.define do
   factory :vote do
-    user test_user
-	  jukebox test_jukebox
+	  jukebox {test_jukebox}
   end
 end

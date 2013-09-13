@@ -12,13 +12,15 @@ class JukeboxesControllerTest < ActionController::TestCase
   
   end
   
+  test "set current song" do
+    get :set_current_song, { :jukebox_id => @test_jukebox.id }
+    assert
+  end
+  
   test "next song" do
     
-    # assign rankings automatically to jukebox_songs
-    @jukebox_song1.update_attributes!(:rank => 1)
-    @jukebox_song2.update_attributes!(:rank => 2)
-    
-    get :next_song, { :jukebox_id => @test_jukebox.id }
+    get :set_current_song, { :jukebox_id => @test_jukebox.id }
+    get :next_song, { :jukebox_id => @test_jukebox.id, :type => "next" }
     
     # look for the deleted jukebox_song
     result = JukeboxSong.where(:id => @jukebox_song1.id)

@@ -156,6 +156,8 @@ $(function(){
 		});
 	});
 	
+	// function attachHandler
+	
 	function flash_Error_Messages(message){
 		// make playlist errors reappear.
 		container.find(".error").fadeIn(1000);

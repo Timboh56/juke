@@ -11,7 +11,7 @@ var playlist = {
 		this.jukebox_id = jukebox_id;
 		this.jplayer_div_id = jplayer_div_id;
 		this.jp_container = jp_container;
-		
+		var NO_SONG_MSG = "Ain't got nothing har.";
 		var self = this;
 		
 		var dfd = $.Deferred();
@@ -19,7 +19,7 @@ var playlist = {
 		self.get_first_song().done(function(){
 			self.init_jsplayer();
 		}).fail(function(){
-			$("#" + self.jplayer_div_id).html("Ain't got nothing har.");
+			$("#" + self.jp_container).html(NO_SONG_MSG);
 		});
 		
 	},

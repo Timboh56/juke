@@ -4,6 +4,9 @@ end
 
 FactoryGirl.define do
   factory :jukebox do
+    city "city"
+    street "street"
+    state "state"
     name "test_jukebox"
     user { test_user }
   end

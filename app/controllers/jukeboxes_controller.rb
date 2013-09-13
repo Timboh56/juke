@@ -107,8 +107,7 @@ class JukeboxesController < ApplicationController
           format.json { render json: current_song.song }
         rescue
           format.json { render json: "An error occurred", status: :unprocessable_entity }
-        
-        end        
+        end
       else
         format.json { render json: "You haven't added any songs.", status: :unprocessable_entity }
       end
@@ -125,7 +124,7 @@ class JukeboxesController < ApplicationController
         
         # REFACTOR
         current_song = jukebox.current_song 
-        
+        puts "deletssen"
         # current_song playing is done playing, delete from db
         current_song.destroy
   
