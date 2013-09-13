@@ -505,12 +505,9 @@ div.jp-video-play:hover a.jp-video-play-icon {
 }
 
 
-
-
-
 div.jp-jplayer audio,
 div.jp-jplayer {
-	width:0px;
+	width: 100%;
 	height:0px;
 }
 

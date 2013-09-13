@@ -75,33 +75,59 @@ class JukeboxesController < ApplicationController
   
   def empty_playlist?
     @jukebox = Jukebox.find(params[:id])
-    @songs = @jukebox.jukebox_songs.order("rank ASC")
-    if @songs.empty?
-      return true
-    else
-      return false
-    end
+    return @jukebox.jukebox_songs.empty?
   end
   
   def get_playlist
-    @songs = JukeboxSong.where(:jukebox_id => params[:jukebox_id])
+    @songs = JukeboxSong.songs_for_jukebox(params[:jukebox_id])
     render :partial => "playlist2", :locals => { :songs => @songs }
+  end
+  
+  # sets the highest ranked song as the currently played song
+  # executed when user hits play on jplayer
+  def set_current_song
+    
+    jukebox = Jukebox.find(params[:jukebox_id])
+    
+    respond_to do |format|
+    
+      if !jukebox.empty?
+        
+        begin
+          
+          # make sure songs in jukebox are all ranked
+          # to-do: add ranked boolean column in jukebox table after each ranking
+          # to determine if jukebox songs of jukebox are already ranked
+          # instead of having to see if each jukebox_song has a number assigned for ranking
+          # if not ranked, rank
+          rank(params[:jukebox_id]) # if !jukebox.ranked?
+    
+          jukebox.set_current_song!
+          current_song = jukebox.current_song
+          format.json { render json: current_song.song }
+        rescue
+          format.json { render json: "An error occurred", status: :unprocessable_entity }
+        
+        end        
+      else
+        format.json { render json: "You haven't added any songs.", status: :unprocessable_entity }
+      end
+    end
   end
   
   def next_song
     
-    puts params[:jukebox_id].to_s + " is the jukebox id"
+    jukebox = Jukebox.find(params[:jukebox_id])
     
-    # REFACTOR
-    @current_song = JukeboxSong.current_song(params[:jukebox_id])
-    
-    puts @current_song.to_s + " is the current song gonna be deletesen"
     if params[:type] == "next"
-      # TODO: CHANGE TO MORE EFFECTIVE AUTHORIZATION 
+      
       if user_authorized_for_jukebox?(params[:jukebox_id])
-        puts "this is supposed to happen"
+        
+        # REFACTOR
+        current_song = jukebox.current_song 
+        
         # current_song playing is done playing, delete from db
-        @current_song.destroy
+        current_song.destroy
   
       end      
     end
@@ -109,14 +135,13 @@ class JukeboxesController < ApplicationController
     rank(params[:jukebox_id])
     
     # find newest current_song
-    # REFACTOR
-    @current_song = JukeboxSong.current_song(params[:jukebox_id])
-  
+    current_song = Jukebox.find(params[:jukebox_id]).current_song
+      
     respond_to do |format|
-      if @current_song
-        format.json { render json: @current_song.song }
+      if current_song
+        format.json { render json: current_song.song }
       else
-        format.json { render json: "No songs", status: :unprocessable_entity }
+        format.json { render json: "An error occurred!", status: :unprocessable_entity }
       end
     end      
       

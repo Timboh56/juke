@@ -10,15 +10,16 @@ var playlist = {
 		this.current_song;
 		this.jukebox_id = jukebox_id;
 		this.jplayer_div_id = jplayer_div_id;
+		this.jp_container = jp_container;
 		
 		var self = this;
 		
 		var dfd = $.Deferred();
 		
 		self.get_first_song().done(function(){
-			self.jsplayer();
+			self.init_jsplayer();
 		}).fail(function(){
-			$("#" + self.jp_container).html("nothing to display");
+			$("#" + self.jplayer_div_id).html("Ain't got nothing har.");
 		});
 		
 	},
@@ -79,7 +80,7 @@ var playlist = {
 		return dfd.promise();
 	},
 	
-	jsplayer: function(){
+	init_jsplayer: function(){
 		var self = this;
 		
 		// everytime a song completes, or jukebox owner starts playing the playlist
@@ -90,10 +91,9 @@ var playlist = {
 	
 		var html = $("<h2>").html(self.current_song.name + " by " + self.current_song.artist);
 		$(".current_song").html(html);
-		
-		var playlist = new jPlayerPlaylist({
+		self.playlist = new jPlayerPlaylist({
 			jPlayer: "#" + self.jplayer_div_id,
-			cssSelectorAncestor: self.jp_container
+			cssSelectorAncestor: "#" + self.jp_container
 		}, [{
 				title: self.current_song.name,
 				artist: self.current_song.artist,
@@ -110,24 +110,25 @@ var playlist = {
 		   		audioFullScreen: true,
 				ended: function(){
 				    var jplayer_div = this;
-					self.get_next_song().done(function(){
+					  self.get_next_song().done(function(){
 						var html = $("<h2>").html(self.current_song.name + " by " + self.current_song.artist);
 						$(".current_song").html(html);
 						self.get_playlist();	
-						playlist.add({
+						self.playlist.add({
 							title: self.current_song.name,
 							artist: self.current_song.artist,
 							mp3: "/tunes/" + self.current_song.url	// TO-DO: CHANGE TO MORE DYNAMIC FORMAT
 						}, true);
 						playlist.remove(0);
-						
-						
-						playlist.play();
+						self.play();
 					});
 				}
 			}
 		); 
 		
-		playlist.play();
+		self.play();
+	},
+	play: function(){
+		this.playlist.play();
 	}
 };

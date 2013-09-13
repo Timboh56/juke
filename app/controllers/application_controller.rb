@@ -5,8 +5,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user, :user_authorized_for_jukebox?, :user_authorized_for_jukebox_song?
   before_filter { |c| Authorization.current_user = c.current_user }
   before_filter(:faye_client)
-
-  layout :check_browser
+  before_filter :check_for_mobile
 
   attr_reader :current_user, :faye_client
 
@@ -21,12 +20,20 @@ class ApplicationController < ActionController::Base
     faye_client ||= Faye::Client.new('http://localhost:9292/faye')
   end
   
-  def check_browser
+  def check_for_mobile
+    prepare_for_mobile if mobile?
+  end
+  
+  def mobile?
     agent = request.headers["HTTP_USER_AGENT"].downcase
     MOBILE_BROWSERS.each do |m|
-      return "mobile" if agent.match(m)
+      return true if agent.match(m)
     end
-    return "application"
+    return false
+  end
+  
+  def prepare_for_mobile
+    prepend_view_path Rails.root + 'app' + 'views_mobile'
   end
   
   def permission_denied
@@ -98,8 +105,9 @@ class ApplicationController < ActionController::Base
   
   private
   
-  # TODO MOVE TO JUKEBOX MODEL AFTER_DESTROY, AFTER VOTE_UPDATE
   # rank ranks all songs in the playlist based on votes submitted
+  # rank is called after a song finishes playing, when a jukebox_song is added, 
+  # a jukebox_song is deleted, when a vote is added, a vote is deleted
   def rank(jukebox_id)
     votes = Vote.arel_table
     jukebox_songs = JukeboxSong.arel_table
@@ -108,26 +116,32 @@ class ApplicationController < ActionController::Base
     # the jukebox_song_id, index 1 being the number of votes for that jukebox_song
     vote_counts = []
     
-    puts "does this work " + jukebox_id.to_s
     JukeboxSong.songs_for_jukebox(jukebox_id).each do |jukebox_song|
       vote_counts.push([jukebox_song.id, jukebox_song.votes_count])
     end
 
-
     # sort the array by vote count
-    vote_counts = vote_counts.sort_by { |arr|
+    vote_counts.sort_by! { |arr|
       arr[1]
     }.reverse!
             
     # assign rankings
+    # if rankings have already been assigned to jukebox songs of this jukebox with jukebox_id,
+    # skip jukebox_song with ranking of 0 because that's the currently playing jukebox_song
     vote_counts.each_with_index do |arr,i|
       id = arr[0]
       jukebox_song = JukeboxSong.find(id)
       
-      # start with 1 instead of 0
-      jukebox_song.rank = i + 1
+      # start with 0, rank 0 is current song playing
+      jukebox_song.rank = i
       
-      jukebox_song.save!
+      jukebox_song.save
     end
+    
+    @songs = JukeboxSong.songs_for_jukebox(jukebox_id)
+    
+    # list ranked, publish to faye client
+    faye_client.publish("/playlists/juke_" + jukebox_id.to_s, :songs => @songs)
+    
   end
 end

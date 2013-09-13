@@ -4,7 +4,9 @@
 
 tr {
   background-color: rgba(160,20,20,.2);
+}
 
+td {
 }
 .jukebox_header {
   text-align: center;
@@ -17,9 +19,14 @@ tr {
     text-align:center;
   }
   .playlist {
+    width: 100%;
     text-align: inherit;
     font-family: Georgia, Helvetica, sans-serif;
 	display: inline-block;
+  
+    table {
+      width: 100%;
+    }
 	.songs {
 	  overflow-x: visible; 	
 	  .song {

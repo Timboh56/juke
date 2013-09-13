@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130910091601) do
+ActiveRecord::Schema.define(:version => 20130913025243) do
 
   create_table "favorites", :force => true do |t|
     t.integer  "user_id"
@@ -26,12 +26,13 @@ ActiveRecord::Schema.define(:version => 20130910091601) do
   create_table "jukebox_songs", :force => true do |t|
     t.integer  "rank"
     t.integer  "votes_count", :default => 0
-    t.integer  "song_id",                    :null => false
-    t.integer  "jukebox_id",                 :null => false
-    t.integer  "user_id",                    :null => false
+    t.integer  "song_id",                        :null => false
+    t.integer  "jukebox_id",                     :null => false
+    t.integer  "user_id",                        :null => false
     t.time     "scheduled"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "playing",     :default => false
   end
 
   add_index "jukebox_songs", ["jukebox_id"], :name => "index_jukebox_songs_on_jukebox_id"
@@ -42,9 +43,9 @@ ActiveRecord::Schema.define(:version => 20130910091601) do
     t.string   "name",       :null => false
     t.float    "latitude"
     t.float    "longitude"
-    t.string   "street"
-    t.string   "city"
-    t.string   "state"
+    t.string   "street",     :null => false
+    t.string   "city",       :null => false
+    t.string   "state",      :null => false
     t.string   "country"
     t.string   "url"
     t.time     "opening"

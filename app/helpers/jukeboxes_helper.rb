@@ -1,7 +1,7 @@
 module JukeboxesHelper
   
   def playlist(songs)
-    if songs && !songs.empty?
+    if songs
       render :partial => "playlist2", :locals => { :songs => songs}
     else 
       "There are no songs submitted yet!"

@@ -5,6 +5,10 @@ class Vote < ActiveRecord::Base
   belongs_to :jukebox_song, :counter_cache => true, :inverse_of => :votes
   scope :todays_votes, lambda { Vote.where("created_at = ? ", Time.zone.now.beginning_of_day) }
   scope :user_votes, lambda { |user| Vote.where(:user_id => user.id) }
+  scope :user_votes_for_jukebox_song, lambda { 
+    |user, jukebox_song| 
+    Vote.where(:user_id => user.id).where(:jukebox_song_id => jukebox_song.id) 
+  }
   scope :jukebox_votes, lambda { |jukebox_id| where(:jukebox_id => jukebox_id) }
   scope :jukebox_song_votes, lambda { |jukebox_song_id| where(:jukebox_song_id => jukebox_song_id) }
   
