@@ -12,12 +12,19 @@ class JukeboxesControllerTest < ActionController::TestCase
   
   end
   
-  test "set current song" do
+  test "set current song" do    
+    setup_votes
+    
     get :set_current_song, { :jukebox_id => @test_jukebox.id }
-    assert
+    
+    result = JukeboxSong.find(@jukebox_song1.id)
+    
+    assert_equal(result.playing,true)
   end
   
   test "next song" do
+    
+    setup_votes
     
     get :set_current_song, { :jukebox_id => @test_jukebox.id }
     get :next_song, { :jukebox_id => @test_jukebox.id, :type => "next" }
@@ -32,17 +39,15 @@ class JukeboxesControllerTest < ActionController::TestCase
   
   test "next song with two songs with same number of votes" do
     
-    # assign rankings automatically to jukebox_songs
-    @jukebox_song1.votes << FactoryGirl.create(:vote)
-    @jukebox_song2.votes << FactoryGirl.create(:vote)
+    setup_votes_same_vote_count
     
     get :next_song, { :jukebox_id => @test_jukebox.id }
     
     # look for the deleted jukebox_song
-    result = JukeboxSong.where(:id => @jukebox_song1.id)
+    result = Jukebox.find(@test_jukebox.id)
     
     # assert nothing to be found from the result
-    assert_empty(result)
+    assert_not_empty(result)
     
   end
 end

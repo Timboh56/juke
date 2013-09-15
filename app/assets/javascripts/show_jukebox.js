@@ -4,7 +4,7 @@ $(function(){
 	var UPDATE_PLAYLIST_INTERVAL = 4000;
 	
 	// get container from DOM
-	var container = $(".container");
+	var container = $(".content");
 	
 	// get ID of jukebox from jukebox_header
 	var jukebox_id = container.find(".jukebox_header").attr("id");

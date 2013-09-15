@@ -17,6 +17,7 @@ BarApp::Application.routes.draw do
   match "/get_playlist" => "Jukeboxes#get_playlist"
   match "/next_song" => "Jukeboxes#next_song"
   match "/set_current_song" => "Jukeboxes#set_current_song"
+  match "/initialize_playlist" => "Jukeboxes#initialize_playlist"
   
   resources :users
   

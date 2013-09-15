@@ -11,7 +11,7 @@ class JukeboxesController < ApplicationController
 
   # GET /jukeboxs/1
   # GET /jukeboxs/1.json
-  def show    
+  def show
     @jukebox = Jukebox.find(params[:id])
     @songs = @jukebox.jukebox_songs.order("rank ASC")
     
@@ -101,7 +101,7 @@ class JukeboxesController < ApplicationController
           # instead of having to see if each jukebox_song has a number assigned for ranking
           # if not ranked, rank
           rank(params[:jukebox_id]) # if !jukebox.ranked?
-    
+
           jukebox.set_current_song!
           current_song = jukebox.current_song
           format.json { render json: current_song.song }
@@ -114,6 +114,10 @@ class JukeboxesController < ApplicationController
     end
   end
   
+  def initialize_playlist
+    set_current_song
+  end
+  
   def next_song
     
     jukebox = Jukebox.find(params[:jukebox_id])
@@ -124,7 +128,7 @@ class JukeboxesController < ApplicationController
         
         # REFACTOR
         current_song = jukebox.current_song 
-        puts "deletssen"
+
         # current_song playing is done playing, delete from db
         current_song.destroy
   
@@ -140,7 +144,7 @@ class JukeboxesController < ApplicationController
       if current_song
         format.json { render json: current_song.song }
       else
-        format.json { render json: "An error occurred!", status: :unprocessable_entity }
+        format.json { render json: "Couldn't find another song!", status: :unprocessable_entity }
       end
     end      
       

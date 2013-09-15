@@ -1,15 +1,23 @@
 module ApplicationHelper
   def nav_links
-    nav_links = content_tag(:li,link_to(image_tag("/images/juke_logotext.png", :alt => "logo"),root_path),:id => "logo") +  content_tag(:li,link_to("Jukeboxes", jukeboxes_path), :id => "jukeboxes") + content_tag(:li, link_to("About", "/about"), :id => "about")
+    nav_links = content_tag(:li,link_to(image_tag("/images/juke_logotext.png", :alt => "logo"),root_path), :id => "logo") + content_tag(:li,link_to("Jukeboxes", jukeboxes_path), :id => "jukeboxes") + content_tag(:li, link_to("About", "/about"), :id => "about")
     if current_user
       nav_links += content_tag(:li,link_to("My Account", users_path), :id => "users") + content_tag(:li,link_to("Logout", logout_path))
     else
-      nav_links += content_tag(:li,link_to("Login", login_path)) + content_tag(:li,link_to("Register", register_path))     
+      nav_links += content_tag(:li,link_to("Register", register_path))     
     end
   end
   
   def user_div(user)
     content_tag(:div, content_tag(:h2,user.name || user.username), :id => "user")
+  end
+  
+  def login_nav
+    if !current_user
+      render :partial => "layouts/form2", :locals => { :user_session => @user_session }
+    else
+      content_tag(:div, "Welcome " + current_user.username, :class => "navbar-right")
+    end
   end
 
   def notice_div
@@ -24,9 +32,9 @@ module ApplicationHelper
     class_name = obj.class.name.downcase
     edit_link = ""
     if current_user
-      edit_link = link_to("Edit this " + class_name + "\'s details", send("edit_#{class_name}_path",obj))
+      edit_link = link_to("Edit this " + class_name + "\'s details", send("edit_#{class_name}_path",obj), :class => "btn btn-default")
     end
-    link_back = link_to('Back', send("#{class_name.pluralize(2)}_path")).html_safe
+    link_back = link_to('Back', send("#{class_name.pluralize(2)}_path"), :class => "btn btn-default").html_safe
     raw(edit_link + "<br>".html_safe +  link_back)
   end
   

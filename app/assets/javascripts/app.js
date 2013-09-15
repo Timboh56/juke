@@ -10,7 +10,7 @@
 			top: "0px",
 		},ANIMATION_TIME);
 		
-		$(".container").animate({
+		$(".content").animate({
 			opacity: .9
 		},ANIMATION_TIME);
 		

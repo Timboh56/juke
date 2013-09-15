@@ -19,7 +19,7 @@ var playlist = {
 		self.get_first_song().done(function(){
 			self.init_jsplayer();
 		}).fail(function(){
-			$("#" + self.jp_container).html(NO_SONG_MSG);
+			self.finish();
 		});
 		
 	},
@@ -31,7 +31,7 @@ var playlist = {
 			type: "GET",
 			dataType: "json",
 			data: { jukebox_id: self.jukebox_id, type: "init" },
-			url: "/next_song",
+			url: "/initialize_playlist",
 			success: function(data){
 				self.current_song = data;
 				dfd.resolve();
@@ -110,18 +110,22 @@ var playlist = {
 		   		audioFullScreen: true,
 				ended: function(){
 				    var jplayer_div = this;
-					  self.get_next_song().done(function(){
-						var html = $("<h2>").html(self.current_song.name + " by " + self.current_song.artist);
-						$(".current_song").html(html);
-						self.get_playlist();	
-						self.playlist.add({
-							title: self.current_song.name,
-							artist: self.current_song.artist,
-							mp3: "/tunes/" + self.current_song.url	// TO-DO: CHANGE TO MORE DYNAMIC FORMAT
-						}, true);
-						playlist.remove(0);
-						self.play();
-					});
+					  self.get_next_song()
+							.done(function(){
+								var html = $("<h2>").html(self.current_song.name + " by " + self.current_song.artist);
+								$(".current_song").html(html);
+								self.get_playlist();	
+								self.playlist.add({
+									title: self.current_song.name,
+									artist: self.current_song.artist,
+									mp3: "/tunes/" + self.current_song.url	// TO-DO: CHANGE TO MORE DYNAMIC FORMAT
+								}, true);
+								playlist.remove(0);
+								self.play();
+						  })
+							.fail(function(){
+								self.finish();
+							});
 				}
 			}
 		); 
@@ -130,5 +134,9 @@ var playlist = {
 	},
 	play: function(){
 		this.playlist.play();
+	},
+	
+	finish: function(){
+		$("#" + self.jp_container).html(NO_SONG_MSG);
 	}
 };

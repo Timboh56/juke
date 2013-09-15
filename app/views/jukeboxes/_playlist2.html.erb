@@ -44,7 +44,7 @@
 		  </td>
 		  <td>
 			  <% if user_authorized_for_jukebox_song?(song)  %>
-		        <%= link_to content_tag(:i,"",:class => "icon-trash"),"delete", :class => "delete_jukebox_song", :data => song.id %>
+		        <%= link_to content_tag(:i,"",:class => "icon-trash"),"delete", :class => "delete_jukebox_song btn btn-default", :data => song.id %>
 			  <% end %>
 		  </td>
 	  </tr>

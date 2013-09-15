@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+<meta charset=”utf-8”> 
+
 <html>
 <head>
   <title>BarApp</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "app" %>
   <%= javascript_include_tag "http://localhost:9292/faye.js" %>
@@ -14,14 +16,17 @@
 <body>
 	<header>
 		<nav>
-			<ul>
-				<%= nav_links %>
-			</ul>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<%= nav_links %>
+				</ul>
+				<%= login_nav %>
+			</div>
 		</nav>
 	</header>
 	<div class="super">
 		<%= notice_div %>
-		<div class="container">
+		<div class="content">
 			<%= yield %>
 		</div>
 	</div>

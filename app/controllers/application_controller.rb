@@ -2,9 +2,10 @@ class ApplicationController < ActionController::Base
   require 'authlogic'
   protect_from_forgery
 
-  helper_method :current_user_session, :current_user, :user_authorized_for_jukebox?, :user_authorized_for_jukebox_song?
+  helper_method :new_user_session, :current_user_session, :current_user, :user_authorized_for_jukebox?, :user_authorized_for_jukebox_song?
   before_filter { |c| Authorization.current_user = c.current_user }
   before_filter(:faye_client)
+  before_filter(:new_user_session)
   before_filter :check_for_mobile
 
   attr_reader :current_user, :faye_client
@@ -15,6 +16,10 @@ class ApplicationController < ActionController::Base
     "mobile","pda","psp","treo"]
 
   protected
+  
+  def new_user_session
+    @user_session = UserSession.new
+  end
 
   def faye_client
     faye_client ||= Faye::Client.new('http://localhost:9292/faye')
