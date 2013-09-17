@@ -75,7 +75,33 @@ class JukeboxesController < ApplicationController
   
   def empty_playlist?
     @jukebox = Jukebox.find(params[:id])
-    return @jukebox.jukebox_songs.empty?
+    return @jukebox.empty_playlist?
+  end
+  
+  def add_song_to_jukebox
+    if current_user
+      jukebox_song = JukeboxSong.new(params[:jukebox_song])
+      jukebox_song.user_id = current_user.id
+      respond_to do |format|
+        if jukebox_song.save
+        
+          jukebox = Jukebox.find(jukebox_song.jukebox_id)
+        
+          # rank jukebox's playlist
+          jukebox.rank!
+          
+          # publish the new playlist to faye client
+          publish_to_jukebox(jukebox.id)
+          
+          format.json { render json: { :success => "Song added to jukebox" } }
+        else
+          
+          # failed validation -> song has already been submitted
+          
+          format.json { render json: "That song has already been submitted.", status: :unprocessable_entity }
+        end
+      end
+    end
   end
   
   def get_playlist
@@ -83,70 +109,52 @@ class JukeboxesController < ApplicationController
     render :partial => "playlist2", :locals => { :songs => @songs }
   end
   
-  # sets the highest ranked song as the currently played song
-  # executed when user hits play on jplayer
-  def set_current_song
-    
-    jukebox = Jukebox.find(params[:jukebox_id])
-    
-    respond_to do |format|
-    
-      if !jukebox.empty?
-        
-        begin
-          
-          # make sure songs in jukebox are all ranked
-          # to-do: add ranked boolean column in jukebox table after each ranking
-          # to determine if jukebox songs of jukebox are already ranked
-          # instead of having to see if each jukebox_song has a number assigned for ranking
-          # if not ranked, rank
-          rank(params[:jukebox_id]) # if !jukebox.ranked?
-
-          jukebox.set_current_song!
-          current_song = jukebox.current_song
-          format.json { render json: current_song.song }
-        rescue
-          format.json { render json: "An error occurred", status: :unprocessable_entity }
-        end
-      else
-        format.json { render json: "You haven't added any songs.", status: :unprocessable_entity }
-      end
-    end
-  end
-  
-  def initialize_playlist
-    set_current_song
-  end
-  
+  # when user clicks play or the track is at an end,
+  # this function is called. It first sets current_song if
+  # it is not set, which indicates the current song playing.
   def next_song
     
-    jukebox = Jukebox.find(params[:jukebox_id])
-    
-    if params[:type] == "next"
+    # check if user is authorized to do this, REFACTOR    
+    if user_authorized_for_jukebox?(params[:jukebox_id])
       
-      if user_authorized_for_jukebox?(params[:jukebox_id])
-        
-        # REFACTOR
-        current_song = jukebox.current_song 
+      jukebox = Jukebox.find(params[:jukebox_id])
+
+      # sets current song if it hasn't been set yet
+      current_song = jukebox.set_current_song!
+      
+      # current song finished
+      if params[:type] == "playing" # user clicked play
+
+  
+      elsif params[:type] == "next" # track is at its end
 
         # current_song playing is done playing, delete from db
         current_song.destroy
-  
-      end      
-    end
         
-    rank(params[:jukebox_id])
+        # reload jukebox, REFACTOR!!!
+        jukebox = Jukebox.find(params[:jukebox_id])
+        
+        # rerank the jukebox's playlist
+        jukebox.rank!
+        
+        # set current_song based on new ranking
+        jukebox.set_current_song!
+        
+        # publish new playlist to faye client
+        publish_to_jukebox(jukebox.id)
     
-    # find newest current_song
-    current_song = Jukebox.find(params[:jukebox_id]).current_song
+      end 
+          
+      # find newest current_song
+      current_song = Jukebox.find(params[:jukebox_id]).current_song
       
-    respond_to do |format|
-      if current_song
-        format.json { render json: current_song.song }
-      else
-        format.json { render json: "Couldn't find another song!", status: :unprocessable_entity }
+      respond_to do |format|
+        if current_song
+          format.json { render json: current_song.song }
+        else
+          format.json { render json: "Couldn't find another song!", status: :unprocessable_entity }
+        end
       end
-    end      
-      
-  end 
+    end   
+  end
 end

@@ -13,11 +13,10 @@ BarApp::Application.routes.draw do
   match "/search_for_songs" => "JukeboxSongs#search_for_songs"
   match "/upvote" => "JukeboxSongs#upvote"
   match "/downvote" => "JukeboxSongs#downvote"
-  match "/add_song_to_jukebox" => "JukeboxSongs#add_song_to_jukebox"
+  match "/add_song_to_jukebox" => "Jukeboxes#add_song_to_jukebox"
   match "/get_playlist" => "Jukeboxes#get_playlist"
   match "/next_song" => "Jukeboxes#next_song"
   match "/set_current_song" => "Jukeboxes#set_current_song"
-  match "/initialize_playlist" => "Jukeboxes#initialize_playlist"
   
   resources :users
   

@@ -16,7 +16,7 @@ module ApplicationHelper
     if !current_user
       render :partial => "layouts/form2", :locals => { :user_session => @user_session }
     else
-      content_tag(:div, "Welcome " + current_user.username, :class => "navbar-right")
+      content_tag(:div, "Welcome " + current_user.username + "!", :class => "navbar-right welcome")
     end
   end
 

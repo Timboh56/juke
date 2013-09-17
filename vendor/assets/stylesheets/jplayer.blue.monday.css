@@ -18,6 +18,10 @@ div.jp-audio,
 div.jp-audio-stream,
 div.jp-video {
 
+	border-top-left-radius: 2em;
+	border-top-right-radius: 2em;
+	
+
 	/* Edit the font-size to counteract inherited font sizing.
 	 * Eg. 1.25em = 1 / 0.8em
 	 */

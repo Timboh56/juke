@@ -16,7 +16,7 @@ $(function(){
     var height = chatroom.height();	
 	var msgs = 0;
 	
-	playlist.init("jquery_jplayer_1", "jp_container_1", jukebox_id, client);
+	playlist.init("jquery_jplayer_1", "#jp_container_1", jukebox_id, client);
 		
 	// SUBSCRIPTIONS
 	
@@ -113,7 +113,7 @@ $(function(){
 				container.find("#" + jukebox_song_id + " .jukebox_song_vote_count ").html(data.votes_jukebox_song_count);
 			},
 			error: function(data) {
-				flash_Error_Messages(data.responseText);
+				playlist.flash_Error_Messages(data.responseText);
 			}
 		});
 		
@@ -132,38 +132,9 @@ $(function(){
 				container.find("#" + jukebox_song_id + " .jukebox_song_vote_count ").html(data.votes_jukebox_song_count);
 			},
 			error: function(data) {
-				flash_Error_Messages("You already downvoted this");
+				playlist.flash_Error_Messages("You already downvoted this");
 			}
 		});
 	});
 	
-	
-	// move to playlist module
-	container.on("click",".jp-play", function(event){
-		event.preventDefault();
-		$.ajax({
-			type: "PUT",
-			dataType: "json",
-			data: { jukebox_id: jukebox_id },
-			url: "/set_current_song",
-			success: function(data){
-				// play song
-				self.playlist.play();
-			},
-			error: function(data){
-				flash_Error_Messages(data.responseText);
-			}
-		});
-	});
-	
-	// function attachHandler
-	
-	function flash_Error_Messages(message){
-		// make playlist errors reappear.
-		container.find(".error").fadeIn(1000);
-		container.find(".error").html(message);
-		setTimeout(function(){
-			container.find(".error").fadeOut(1000);
-		},9000);
-	}
 });

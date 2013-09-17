@@ -105,48 +105,12 @@ class ApplicationController < ActionController::Base
     else
       return false
     end
-    
   end
   
-  private
-  
-  # rank ranks all songs in the playlist based on votes submitted
-  # rank is called after a song finishes playing, when a jukebox_song is added, 
-  # a jukebox_song is deleted, when a vote is added, a vote is deleted
-  def rank(jukebox_id)
-    votes = Vote.arel_table
-    jukebox_songs = JukeboxSong.arel_table
-    
-    # keep an array of arrays of size 2, with index 0 being 
-    # the jukebox_song_id, index 1 being the number of votes for that jukebox_song
-    vote_counts = []
-    
-    JukeboxSong.songs_for_jukebox(jukebox_id).each do |jukebox_song|
-      vote_counts.push([jukebox_song.id, jukebox_song.votes_count])
-    end
-
-    # sort the array by vote count
-    vote_counts.sort_by! { |arr|
-      arr[1]
-    }.reverse!
-            
-    # assign rankings
-    # if rankings have already been assigned to jukebox songs of this jukebox with jukebox_id,
-    # skip jukebox_song with ranking of 0 because that's the currently playing jukebox_song
-    vote_counts.each_with_index do |arr,i|
-      id = arr[0]
-      jukebox_song = JukeboxSong.find(id)
-      
-      # start with 0, rank 0 is current song playing
-      jukebox_song.rank = i
-      
-      jukebox_song.save
-    end
-    
+  def publish_to_jukebox(jukebox_id)
     @songs = JukeboxSong.songs_for_jukebox(jukebox_id)
     
-    # list ranked, publish to faye client
+    # publish playlist of jukebox_songs to faye client
     faye_client.publish("/playlists/juke_" + jukebox_id.to_s, :songs => @songs)
-    
   end
 end

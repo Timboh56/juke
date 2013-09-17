@@ -13,28 +13,7 @@ class JukeboxSongsController < ApplicationController
     end
   end
   
-  def add_song_to_jukebox
-    if current_user
-      jukebox_song = JukeboxSong.new(params[:jukebox_song])
-      jukebox_song.user_id = current_user.id
-      respond_to do |format|
-        if jukebox_song.save
-        
-          # rank jukebox's playlist
-          rank(jukebox_song.jukebox_id)
-          format.json { render json: { :success => "Song added to jukebox" } }
-        else
-          
-          # failed validation -> song has already been submitted
-          
-          format.json { render json: "That song has already been submitted.", status: :unprocessable_entity }
-        end
-      end
-    end
-  end
-  
   def upvote
-    jukebox_songs = JukeboxSong.arel_table
     
     # create new vote for the jukebox_song
     vote = Vote.new(params[:vote])
@@ -44,7 +23,12 @@ class JukeboxSongsController < ApplicationController
     
       if vote.save
         votes_jukebox_song = JukeboxSong.find(params[:vote][:jukebox_song_id])
-        rank(vote.jukebox_id)
+        jukebox = Jukebox.find(vote.jukebox_id)
+        jukebox.rank!
+        
+        # publish the new playlist to faye client
+        publish_to_jukebox(jukebox.id)
+    
         format.json { render :json => { :votes_jukebox_song_count => votes_jukebox_song.votes_count } }
       else
         format.json { render json: "Vote already submitted.", status: :unprocessable_entity }
@@ -61,7 +45,12 @@ class JukeboxSongsController < ApplicationController
     respond_to do |format|    
       if vote
         vote.destroy
-        rank(vote.jukebox_id)        
+        jukebox = Jukebox.find(vote.jukebox_id)
+        jukebox.rank!
+        
+        # publish the new playlist to faye client
+        publish_to_jukebox(vote.jukebox_id)
+            
         votes_jukebox_song = JukeboxSong.find(params[:vote][:jukebox_song_id])
         
         format.json { render :json => { :votes_jukebox_song_count => votes_jukebox_song.votes_count } }
@@ -85,5 +74,4 @@ class JukeboxSongsController < ApplicationController
       format.html {render :partial => "jukeboxes/playlist2", :locals => {:songs => @songs}}
     end
   end
-  
 end

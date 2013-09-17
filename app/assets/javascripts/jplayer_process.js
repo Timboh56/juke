@@ -1,8 +1,7 @@
 var playlist = {
 	init: function(jplayer_div_id, jp_container, jukebox_id, client){
 		
-		// class variables
-		var self = this;
+		this.NO_SONG_MSG = "Ain't got nothing har.";
 
 		this.options = {};
 		
@@ -11,36 +10,26 @@ var playlist = {
 		this.jukebox_id = jukebox_id;
 		this.jplayer_div_id = jplayer_div_id;
 		this.jp_container = jp_container;
-		var NO_SONG_MSG = "Ain't got nothing har.";
+		this.container = $(jp_container);
+		this.initialized = false;
+		
 		var self = this;
 		
 		var dfd = $.Deferred();
 		
-		self.get_first_song().done(function(){
-			self.init_jsplayer();
-		}).fail(function(){
-			self.finish();
+		this.init_jsplayer();
+		
+		// move to playlist module
+		this.container.on("click",".jp-play", function(event){
+			event.preventDefault();
+			
+			// get the first song
+			// if success, start playing it
+			self.get_next_song("init").done(function(){
+				self.add_and_play_current_song();
+			});
 		});
 		
-	},
-	
-	get_first_song: function(){	
-		var self = this;
-		var dfd = $.Deferred();
-		$.ajax({
-			type: "GET",
-			dataType: "json",
-			data: { jukebox_id: self.jukebox_id, type: "init" },
-			url: "/initialize_playlist",
-			success: function(data){
-				self.current_song = data;
-				dfd.resolve();
-			},
-			error: function(){
-				dfd.reject();
-			}
-		});
-		return dfd.promise();
 	},
 	
 	get_playlist: function(){
@@ -58,17 +47,16 @@ var playlist = {
 		});
 	},
 
-	get_next_song: function(){
+	get_next_song: function(type){
 		var self = this;
 		var dfd = $.Deferred();
 		
 		$.ajax({
 			type: "GET",
 			dataType: "json",
-			data: { jukebox_id: this.jukebox_id, type: "next" },
+			data: { jukebox_id: this.jukebox_id, type: type },
 			url: "/next_song",
 			success: function(data){
-				alert("done no partial content");
 				self.current_song = data;
 				dfd.resolve();
 			},
@@ -89,16 +77,10 @@ var playlist = {
 		// 3. use jplayer to detect when song completes, or if that's not possible, make a bootleg timer
 		// 4.when song completes, repeat until no songs are left in playlist.
 	
-		var html = $("<h2>").html(self.current_song.name + " by " + self.current_song.artist);
-		$(".current_song").html(html);
 		self.playlist = new jPlayerPlaylist({
 			jPlayer: "#" + self.jplayer_div_id,
-			cssSelectorAncestor: "#" + self.jp_container
-		}, [{
-				title: self.current_song.name,
-				artist: self.current_song.artist,
-				mp3: "/tunes/" + self.current_song.url	// TO-DO: CHANGE TO MORE DYNAMIC FORMAT
-			}],
+			cssSelectorAncestor: self.jp_container
+		}, [],
 		    {
 		   		playlistOptions: {
 		   			enableRemoveControls: true
@@ -110,18 +92,12 @@ var playlist = {
 		   		audioFullScreen: true,
 				ended: function(){
 				    var jplayer_div = this;
-					  self.get_next_song()
-							.done(function(){
-								var html = $("<h2>").html(self.current_song.name + " by " + self.current_song.artist);
-								$(".current_song").html(html);
-								self.get_playlist();	
-								self.playlist.add({
-									title: self.current_song.name,
-									artist: self.current_song.artist,
-									mp3: "/tunes/" + self.current_song.url	// TO-DO: CHANGE TO MORE DYNAMIC FORMAT
-								}, true);
-								playlist.remove(0);
-								self.play();
+						
+						// call get_next_song, which sets current_song
+					  self.get_next_song("next")
+							.done(function(){		
+								self.playlist.remove(0);
+								self.add_and_play_current_song();
 						  })
 							.fail(function(){
 								self.finish();
@@ -129,14 +105,42 @@ var playlist = {
 				}
 			}
 		); 
-		
-		self.play();
 	},
-	play: function(){
-		this.playlist.play();
+	
+	add_and_play_current_song: function(){
+		var self = this;
+		
+		// set header on jplayer to current song name and artist
+		// REFACTOR TO SOMETHING LESS UGLY
+		var html = $("<h2>").html(self.current_song.name + " by " + self.current_song.artist);
+		self.container.find(".current_song").html(html);
+		
+		// update the page's playlist for any changes
+		self.get_playlist();
+		
+		// add current_song to jPlaylist for jplayer
+		self.playlist.add({
+			title: self.current_song.name,
+			artist: self.current_song.artist,
+			mp3: "/tunes/" + self.current_song.url	// TO-DO: CHANGE TO MORE DYNAMIC FORMAT
+		}, true);
+		
+		self.playlist.play();
 	},
 	
 	finish: function(){
-		$("#" + self.jp_container).html(NO_SONG_MSG);
+		this.initialized = false;
+		this.container.html(self.NO_SONG_MSG);
+	},
+		
+	flash_Error_Messages: function(message){
+		var self = this;
+		
+		// make playlist errors reappear.
+		self.container.find(".error").fadeIn(1000);
+		self.container.find(".error").html(message);
+		setTimeout(function(){
+			self.container.find(".error").fadeOut(1000);
+		},9000);
 	}
 };
