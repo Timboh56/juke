@@ -1,5 +1,5 @@
 class UserSession < Authlogic::Session::Base
-  remember_me_for 30.seconds
+  remember_me_for 10.minutes
   logout_on_timeout true # default if false
   
   def to_key

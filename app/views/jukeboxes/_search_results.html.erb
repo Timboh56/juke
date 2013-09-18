@@ -1,11 +1,15 @@
-<div class="search_results">
+<table>
   <% results.each do |r| %>
-    <b> "<%= r.name %>" </b> by <%= r.artist %>
-	<% if r.album %>
-	  <i> from <b> <%= r.album %> </b> </i>
-	<% end %>
-	
-	<%= content_tag(:a, content_tag(:icon, "", :class => "icon-check-sign"), :data => r.id, :class => "result_action") %>
-	<br>
+		<tr>
+			<td>
+			  <b> "<%= r.name %>" </b> by <%= r.artist %>
+				<% if r.album %>
+				  <i> from <b> <%= r.album %> </b> </i>
+				<% end %>
+			</td>
+			<td>
+				<%= content_tag(:a, "Add", :data => r.id, :class => "btn btn-default result_action") %>
+			</td>
+		</tr>
   <% end %>
-</div>
+</table>

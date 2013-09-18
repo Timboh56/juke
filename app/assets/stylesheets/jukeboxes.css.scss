@@ -2,16 +2,22 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.jukeboxes_index {
-	margin: 1em;
+.playlist_table {
+	background-color: rgba(160,20,20,.2);
 }
 
-tr {
-  background-color: rgba(160,20,20,.2);
-}
 
 td {
+  .ranking {
+		font-weight: bold;
+  }
 }
+
+.new_jukebox, .jukeboxes_index {
+	padding: 1em;
+	margin: 1.5em;
+}
+
 .jukebox_header {
   text-align: center;
   width: 600px;
@@ -68,18 +74,18 @@ td {
 	text-align: center;
   }
 }
-.search {
-  display: inline-block;
 
+.search {
+	width: inherit;
+  display: inline-block;
 }
 
 #results_list {
   margin-top: 1em;
-  overflow-y: scroll;
-  
-  .search_results {
-    text-align: center;
-  }
+	height: 5em;
+	width: inherit;
+  overflow-y: auto;
+
   .result_action {
     color: black;
   }

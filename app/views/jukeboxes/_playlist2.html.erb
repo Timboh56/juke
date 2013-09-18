@@ -1,6 +1,6 @@
 <h5> The Playlist </h5>	
 <br>
-<table>
+<table class="playlist_table">
 	<tr>
 		  <% if current_user %>
 			<th>  </th>
@@ -13,16 +13,19 @@
 	</tr>		
 	<% songs.each do |song| %>
 	<tr class="song" id="<%= song.id %>">
-	      <td>
-			<div id="<%= song.id %>" class="jukebox_song_vote_count">
-	  	      <%= song.votes_count %>
-		    </div>
+		  <td>
+				<div class="ranking">
+	  	  	<%= song.rank + 1 %>
+				</div>
 		  </td>
   		  <% if current_user %>
-		    <td id="actions">
-				<a data-jukebox-song="<%= song.id %>" class="upvote_action"><i class="icon-arrow-up"></i></a>
-	    		<a data-jukebox-song="<%= song.id %>" class="downvote_action"><i class="icon-arrow-down"></i></a>
-		    </td>
+			    <td id="actions">
+							<a data-jukebox-song="<%= song.id %>" class="upvote_action"><i class="icon-arrow-up"></i></a>
+								<div id="<%= song.id %>" class="jukebox_song_vote_count">
+				  	    	<%= song.votes_count %>
+					    	</div>
+		    			<a data-jukebox-song="<%= song.id %>" class="downvote_action"><i class="icon-arrow-down"></i></a>
+			    </td>
 	      <% end %>
 		  <td>
 			<h2>

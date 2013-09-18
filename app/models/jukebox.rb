@@ -42,7 +42,7 @@ class Jukebox < ActiveRecord::Base
   end
   
   def empty_playlist?
-    return jukebox_songs.empty? || jukebox_songs.nil?
+    return jukebox_songs.empty?
   end
   
   # rank ranks all songs in the playlist based on votes submitted

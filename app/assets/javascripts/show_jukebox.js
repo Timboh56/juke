@@ -72,11 +72,11 @@ $(function(){
 	
     // Handle form submissions and post messages to faye
     container.find("#new_message_form").submit(function(event) {
-		event.preventDefault();
+			event.preventDefault();
       // Publish the message to the public channel
       client.publish("/chats/juke_" + jukebox_id, {
         username: username,
-        msg: $("#message").val()
+        msg: container.find(".message").val()
       });
 	   
       // Clear the message box
@@ -110,7 +110,7 @@ $(function(){
 			data: { vote: { jukebox_id: jukebox_id, jukebox_song_id: jukebox_song_id } },
 			url: "/upvote",
 			success: function(data) {
-				container.find("#" + jukebox_song_id + " .jukebox_song_vote_count ").html(data.votes_jukebox_song_count);
+				container.find(".upvote_action").css("color","#FF0000");
 			},
 			error: function(data) {
 				playlist.flash_Error_Messages(data.responseText);

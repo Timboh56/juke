@@ -122,11 +122,7 @@ class JukeboxesController < ApplicationController
       # sets current song if it hasn't been set yet
       current_song = jukebox.set_current_song!
       
-      # current song finished
-      if params[:type] == "playing" # user clicked play
-
-  
-      elsif params[:type] == "next" # track is at its end
+      if params[:type] == "next" # track is at its end
 
         # current_song playing is done playing, delete from db
         current_song.destroy
@@ -134,14 +130,17 @@ class JukeboxesController < ApplicationController
         # reload jukebox, REFACTOR!!!
         jukebox = Jukebox.find(params[:jukebox_id])
         
-        # rerank the jukebox's playlist
-        jukebox.rank!
+        # REFACTOR
+        if !jukebox.empty_playlist?
+          # rerank the jukebox's playlist
+          jukebox.rank!
         
-        # set current_song based on new ranking
-        jukebox.set_current_song!
+          # set current_song based on new ranking
+          jukebox.set_current_song!
         
-        # publish new playlist to faye client
-        publish_to_jukebox(jukebox.id)
+          # publish new playlist to faye client
+          publish_to_jukebox(jukebox.id)
+        end
     
       end 
           

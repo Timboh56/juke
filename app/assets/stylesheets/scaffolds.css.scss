@@ -1,4 +1,6 @@
 $header_font: "aw-conqueror-carved-one";
+$header_font2: "sans-serif";
+$font3: "hellenic-wide";
 
 html, body {
 	font-family: helvetica, verdana;
@@ -81,6 +83,16 @@ a {
 		  vertical-align: inherit;
 		}
   }
+}
+
+.new_session, .users_index, .about{
+  display: inline-block;
+	vertical-align: top;
+	margin: 2em;
+}
+
+.form {
+  margin: 2em;
 }
 
 #profile {
@@ -192,17 +204,18 @@ h1 {
 h2 {
   font-size: .85em;
   text-align: center;
-  font-family: $header_font, Helvetica, Verdana;
+  font-family: $header_font2, Helvetica, Verdana;
 }
 
 
 td {
-  padding:1em;
+  padding: .2em;
+	vertical-align: middle;
 }
 
 h5 {
   font-size: 1.2em;
-  font-family: $header_font, Helvetica, Verdana;
+  font-family: $header_font2, Helvetica, Verdana;
   margin: .3em;
 }
 

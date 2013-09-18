@@ -428,8 +428,7 @@ div.jp-type-playlist div.jp-playlist li:last-child {
 	border-bottom:none;
 }
 div.jp-type-playlist div.jp-playlist li.jp-playlist-current {
-	list-style-type:square;
-	list-style-position:inside;
+	list-style-type: none;
 	padding-left:7px;
 }
 div.jp-type-playlist div.jp-playlist a {
