@@ -10,7 +10,8 @@
  *
  *= require bootstrap
  *= require_self
- *= require_tree .
+ *= require_tree ./base
+ *= require_tree ./all
  *= require font-awesome
  *= require jplayer.blue.monday
  */

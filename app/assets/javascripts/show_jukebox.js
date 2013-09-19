@@ -76,7 +76,7 @@ $(function(){
       // Publish the message to the public channel
       client.publish("/chats/juke_" + jukebox_id, {
         username: username,
-        msg: container.find(".message").val()
+        msg: container.find("#message").val()
       });
 	   
       // Clear the message box
