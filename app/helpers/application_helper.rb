@@ -31,7 +31,7 @@ module ApplicationHelper
   def object_links_bottom(obj)
     class_name = obj.class.name.downcase
     edit_link = ""
-    if current_user
+    if user_authorized_for_object?(obj)
       edit_link = link_to("Edit this " + class_name + "\'s details", send("edit_#{class_name}_path",obj), :class => "btn btn-default")
     end
     link_back = link_to('Back', send("#{class_name.pluralize(2)}_path"), :class => "btn btn-default").html_safe

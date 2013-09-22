@@ -1,0 +1,45 @@
+$header_font: "aw-conqueror-carved-one";
+
+body {
+	width: 100%;
+	font-size: 1em;	
+	background-color: rgba(240,30,30,1);
+	color: white;
+}
+
+ul {
+  li {
+	  margin-left: -1em;
+		font-size: 2em;
+		font-family: $header_font, Helvetica, sans-serif;
+	  text-align: center;
+	  width: inherit;
+		float: none;
+		list-style-type: none;
+		text-decoration: none;
+		a {
+		  color: white;
+		  text-decoration: none;
+		}
+		a:visited {
+		  color: white;
+		}
+	}
+}
+
+.container {
+	background-color: white;
+	color: black;
+}
+
+td {
+  font-size: .8em;
+
+}
+
+/** font-awesome stuff **/
+.upvote_action, .downvote_action {
+  font-size: 2em;
+	color: black;
+
+}

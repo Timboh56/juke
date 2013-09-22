@@ -115,10 +115,10 @@ class JukeboxesController < ApplicationController
   def next_song
     
     # check if user is authorized to do this, REFACTOR    
-    if user_authorized_for_jukebox?(params[:jukebox_id])
+    jukebox = Jukebox.find(params[:jukebox_id])
+    
+    if user_authorized_for_object?(jukebox)
       
-      jukebox = Jukebox.find(params[:jukebox_id])
-
       # sets current song if it hasn't been set yet
       current_song = jukebox.set_current_song!
       

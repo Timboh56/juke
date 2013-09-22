@@ -22,7 +22,7 @@ module JukeboxesHelper
   end
   
   def jplayer(jukebox)
-    if user_authorized_for_jukebox?(jukebox.id) && !empty_playlist?
+    if user_authorized_for_object?(jukebox) && !empty_playlist?
       render :partial => "jplayer"
     end
   end

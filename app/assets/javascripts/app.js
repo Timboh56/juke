@@ -11,7 +11,7 @@
 		},ANIMATION_TIME);
 		
 		$(".content").animate({
-			opacity: .9
+			opacity: 1
 		},ANIMATION_TIME);
 		
 		setTimeout(function() {

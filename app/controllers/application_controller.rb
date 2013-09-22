@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   require 'authlogic'
   protect_from_forgery
 
-  helper_method :new_user_session, :current_user_session, :current_user, :user_authorized_for_jukebox?, :user_authorized_for_jukebox_song?
+  helper_method :new_user_session, :current_user_session, :current_user, :user_authorized_for_object?
   before_filter { |c| Authorization.current_user = c.current_user }
   before_filter(:faye_client)
   before_filter(:new_user_session)
@@ -85,28 +85,17 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
   
-  def user_authorized_for_jukebox?(jukebox_id)
+  def user_authorized_for_object?(obj)
     
     # check if user is logged in AND the owner of the jukebox to show jplayer
     # this is subject to change in the future.
-    if current_user && Jukebox.find(jukebox_id).user_id == current_user.id
+    if current_user && obj.user_id == current_user.id
       return true
     else
       return false
     end
   end
-  
-  def user_authorized_for_jukebox_song?(jukebox_song_id)
-    
-    # check if user is logged in and authorized to edit the jukebox song he submitted
-    # checks if the user is the owner of the jukebox song
-    if current_user && JukeboxSong.find(jukebox_song_id).user_id == current_user.id
-      return true
-    else
-      return false
-    end
-  end
-  
+
   def publish_to_jukebox(jukebox_id)
     @songs = JukeboxSong.songs_for_jukebox(jukebox_id)
     

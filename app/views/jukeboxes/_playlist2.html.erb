@@ -1,4 +1,4 @@
-<h5> The Playlist </h5>	
+<h1> The Playlist </h1>	
 <br>
 <table class="playlist_table">
 	<tr>
@@ -46,7 +46,7 @@
 		  	  <% end %>
 		  </td>
 		  <td>
-			  <% if user_authorized_for_jukebox_song?(song)  %>
+			  <% if user_authorized_for_object?(song)  %>
 		        <%= link_to content_tag(:i,"",:class => "icon-trash"),"delete", :class => "delete_jukebox_song btn btn-default", :data => song.id %>
 			  <% end %>
 		  </td>
