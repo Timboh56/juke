@@ -232,17 +232,34 @@ div {
   }
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"], input[type="email"], textarea {
 	-webkit-border-radius: 100px;
 	-moz-border-radius: 100px;
 	border-radius: 100px;
-	border-style: inset;
 	border-width: 2px;
 	border-radius: 10px;
 	height: 2.2em;
 	padding: 5px;
 	font-size: 1em;
+	-webkit-transition: all .5s linear;
+	-o-transition: all .5s linear;
+	-moz-transition: all .5s linear;
+	transition: all .5s linear;
+	background-color: rgb(250, 255, 189);
+}
 
+input[type="text"]:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, textarea:focus {
+  background-color: white;
+}
+
+.facebook {
+	width: 70%
+}
+
+.icon {
+	width: 35px;
+	vertical-align: middle;
+	display: inline-block;
 }
 
 .field_with_errors {

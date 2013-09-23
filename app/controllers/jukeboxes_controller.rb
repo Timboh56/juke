@@ -119,39 +119,40 @@ class JukeboxesController < ApplicationController
     
     if user_authorized_for_object?(jukebox)
       
-      # sets current song if it hasn't been set yet
-      current_song = jukebox.set_current_song!
+      if !jukebox.empty_playlist?
+        # sets current song if it hasn't been set yet
+        current_song = jukebox.set_current_song!
       
-      if params[:type] == "next" # track is at its end
+        if params[:type] == "next" # track is at its end
 
-        # current_song playing is done playing, delete from db
-        current_song.destroy
+          # current_song playing is done playing, delete from db
+          current_song.destroy
         
-        # reload jukebox, REFACTOR!!!
-        jukebox = Jukebox.find(params[:jukebox_id])
-        
-        # REFACTOR
+          # reload jukebox, REFACTOR!!!
+          jukebox = Jukebox.find(params[:jukebox_id])
+    
+        end      
+        # check again if jukebox is empty
         if !jukebox.empty_playlist?
           # rerank the jukebox's playlist
           jukebox.rank!
-        
+      
           # set current_song based on new ranking
           jukebox.set_current_song!
-        
-          # publish new playlist to faye client
-          publish_to_jukebox(jukebox.id)
         end
-    
-      end 
+        
+        # publish new playlist to faye client
+        publish_to_jukebox(jukebox.id)
           
-      # find newest current_song
-      current_song = Jukebox.find(params[:jukebox_id]).current_song
+        # find newest current_song
+        current_song = Jukebox.find(params[:jukebox_id]).current_song
       
-      respond_to do |format|
-        if current_song
-          format.json { render json: current_song.song }
-        else
-          format.json { render json: "Couldn't find another song!", status: :unprocessable_entity }
+        respond_to do |format|
+          if current_song
+            format.json { render json: current_song.song }
+          else
+            format.json { render json: "Couldn't find another song!", status: :unprocessable_entity }
+          end
         end
       end
     end   

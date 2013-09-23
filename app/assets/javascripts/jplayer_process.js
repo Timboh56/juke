@@ -17,6 +17,7 @@ var playlist = {
 		
 		var dfd = $.Deferred();
 		
+		// check if playlist is empty
 		this.init_jsplayer();
 		
 		// move to playlist module
@@ -81,27 +82,27 @@ var playlist = {
 			jPlayer: "#" + self.jplayer_div_id,
 			cssSelectorAncestor: self.jp_container
 		}, [],
-		    {
-		   		playlistOptions: {
-		   			enableRemoveControls: true
-		   		},
-		   		swfPath: "js",
-		   		supplied: "webmv, ogv, m4v, oga, mp3",
-		   		smoothPlayBar: true,
-		   		keyEnabled: true,
-		   		audioFullScreen: true,
-				ended: function(){
-				    var jplayer_div = this;
+		{
+			playlistOptions: {
+				enableRemoveControls: true
+			},
+			swfPath: "js",
+			supplied: "webmv, ogv, m4v, oga, mp3",
+			smoothPlayBar: true,
+			keyEnabled: true,
+			audioFullScreen: true,
+			ended: function(){
+				var jplayer_div = this;
 						
-						// call get_next_song, which sets current_song
-					  self.get_next_song("next")
-							.done(function(){		
-								self.playlist.remove(0);
-								self.add_and_play_current_song();
-						  })
-							.fail(function(){
-								self.finish();
-							});
+				// call get_next_song, which sets current_song
+				self.get_next_song("next")
+					.done(function(){		
+						self.playlist.remove(0);
+						self.add_and_play_current_song();
+					})
+					.fail(function(){
+						self.finish();
+					});
 				}
 			}
 		); 
@@ -130,7 +131,7 @@ var playlist = {
 	
 	finish: function(){
 		this.initialized = false;
-		this.container.html(self.NO_SONG_MSG);
+		this.container.html(this.NO_SONG_MSG);
 	},
 		
 	flash_Error_Messages: function(message){

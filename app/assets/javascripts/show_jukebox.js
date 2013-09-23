@@ -34,8 +34,10 @@ $(function(){
 	
 	// EVENT HANDLERS
 	
-	container.on("click", ".result_action", function(){
+	container.on("click", ".add_song_to_playlist", function(){
 		var song_id = $(this).attr("data");
+		// check if playlist is empty
+		// if playlist is empty, initialize the jPlaylist player
 		$.ajax({
 			type: "PUT",
 			dataType: "json",
@@ -64,8 +66,8 @@ $(function(){
 			dataType: "html",
 			data: { search: search, jukebox_id: jukebox_id },
 			url: "/search_for_songs",
-			complete: function(data) {
-				$("#results_list").html(data.responseText);
+			success: function(data) {
+				$("#results_list").html(data);
 			}
 		});
 	});

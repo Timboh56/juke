@@ -40,20 +40,12 @@
 				
     </head>
     <body>
-			<header>
-				<nav>
-					<ul>
-						<%= nav_links %>
-					</ul>
-				</nav>
-			</header>
 			<div class="super">
-				<%= notice_div %>
-				<div class="container">
-					<%= yield %>
-				</div>
+				<div class="content">
+				<%= yield %>
 			</div>
-      <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+		</div>
+				<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
       <script>
           var _gaq=[["_setAccount","UA-XXXXX-X"],["_trackPageview"]];
           (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;

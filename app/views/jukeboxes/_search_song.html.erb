@@ -1,6 +1,5 @@
 <div class="search">
-	<h1>Add your song</h1>
-	<%= text_field_tag :search, params[:search] %>
+	<%= text_field_tag :search, params[:search], :placeholder => "Find for your song" %>
     <%= button_tag "Search", :class => "search_song btn btn-default", :type => "button" %>
 	<div class="error"></div>
 	<div id="results_list">

@@ -18,6 +18,8 @@ BarApp::Application.routes.draw do
   match "/next_song" => "Jukeboxes#next_song"
   match "/set_current_song" => "Jukeboxes#set_current_song"
   
+  resources :pages
+  
   resources :users
   
   resources :user_sessions
