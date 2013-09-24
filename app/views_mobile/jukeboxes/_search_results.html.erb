@@ -1,0 +1,15 @@
+<table>
+  <% results.each do |r| %>
+		<tr>
+			<td>
+			  <b> "<%= r.name %>" </b> by <%= r.artist %>
+				<% if r.album %>
+				  <i> from <b> <%= r.album %> </b> </i>
+				<% end %>
+			</td>
+			<td>
+				<%= content_tag(:a, "Add", :data => r.id, "data-role" => "button", "data-inline" => "true", :href => "blah") %>
+			</td>
+		</tr>
+  <% end %>
+</table>

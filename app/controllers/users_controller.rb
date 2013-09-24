@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   caches_action :index
-  filter_resource_access
+  filter_resource_access :attribute_check => true
   
   # GET /users
   # GET /users.json
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
+    @user = current_user if current_user.id == params[:id]
   end
 
   # POST /users
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.json
   def update
-    @user = User.find(params[:id])
+    @user = current_user.id if current_user.id == params[:id]
 
     respond_to do |format|
       if @user.update_attributes(params[:user])

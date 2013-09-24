@@ -67,10 +67,16 @@ label {
 }
 
 .chat_container {
+	display: none;
   margin-top: 50px;
 }
 
-.chat_room {
+#chat_icon {
+	display: inline;
+	cursor: pointer;
+}
+
+.messages {
   padding: 15px;
   display: inline-block;
   height: 3em;
@@ -87,6 +93,7 @@ label {
 }
 
 #results_list {
+	display: none;
   margin-top: 1em;
 	height: 5em;
 	width: inherit;

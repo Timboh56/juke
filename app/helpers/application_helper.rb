@@ -1,10 +1,19 @@
 module ApplicationHelper
   def nav_links
-    nav_links = content_tag(:li,link_to(image_tag("/images/juke_logotext.png", :alt => "logo"),root_path), :id => "logo") + content_tag(:li,link_to("Jukeboxes", jukeboxes_path), :id => "jukeboxes") + content_tag(:li, link_to("About", "/about"), :id => "about")
+    nav_links = content_tag(:li,link_to(image_tag("/images/juke_logotext.png", :alt => "logo"),root_path), :id => "logo") + content_tag(:li,link_to("Jukeboxes", jukeboxes_path, :class => "nav_link"), :id => "jukeboxes") + content_tag(:li, link_to("About", "/about", :class => "nav_link"), :id => "about")
     if current_user
-      nav_links += content_tag(:li,link_to("My Account", users_path), :id => "users") + content_tag(:li,link_to("Logout", logout_path))
+      nav_links += content_tag(:li,link_to("My Account", users_path, :class => "nav_link"), :id => "users") + content_tag(:li,link_to("Logout", logout_path, :class => "nav_link"))
     else
-      nav_links += content_tag(:li,link_to("Register", register_path))     
+      nav_links += content_tag(:li,link_to("Register", register_path, :class => "nav_link"))     
+    end
+  end
+  
+  def mobile_nav_links
+    nav_links = content_tag(:li, image_tag("/images/juke_logotext.png", :alt => "logo", :id => "logo")) + content_tag(:li,link_to("Jukeboxes", jukeboxes_path, :class => "nav_link"), :id => "jukeboxes") + content_tag(:li, link_to("About", "/about", :class => "nav_link"), :id => "about")
+    if current_user
+      nav_links += content_tag(:li,link_to("My Account", edit_user_path(current_user), :class => "nav_link"), :id => "users") + content_tag(:li,link_to("Logout", logout_path, :class => "nav_link"))
+    else
+      nav_links += content_tag(:li,link_to("Register", register_path, :class => "nav_link"))     
     end
   end
   
@@ -36,6 +45,12 @@ module ApplicationHelper
     end
     link_back = link_to('Back', send("#{class_name.pluralize(2)}_path"), :class => "btn btn-default").html_safe
     raw(edit_link + "<br>".html_safe +  link_back)
+  end
+  
+  def header_name(name)
+    content_for :page do
+      name
+    end
   end
   
   def js_content_for_block(obj)

@@ -25,7 +25,8 @@
         <!--
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="apple-mobile-web-app-title" content="">
+        <meta name="apple-mobile-web-app-title" content=""><script src="../../assets/javascripts/mobile/main.js" type="text/javascript" charset="utf-8"></script>
+        
         -->
 
         <!-- This script prevents links from opening in Mobile Safari. https://gist.github.com/1042026 -->
@@ -37,14 +38,22 @@
 
 			  <%= stylesheet_link_tag    "application-mobile", :media => "all" %>
 			  <%= javascript_include_tag "http://localhost:9292/faye.js" %>
+				<%= javascript_include_tag "application-mobile" %>				
+			  <%= yield :head %>
 				
     </head>
     <body>
+			<div data-role="header" data-position="fixed">
+				<h1> <%= yield :page %> </h1>
+				
+				<%= link_to(image_tag("/images/icons/menu-icon.png", :alt => "menu", :id => "menu_icon"),root_path) %>				
+			</div>
+
 			<div class="super">
 				<div class="content">
-				<%= yield %>
+					<%= yield %>
+				</div>
 			</div>
-		</div>
 				<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
       <script>
           var _gaq=[["_setAccount","UA-XXXXX-X"],["_trackPageview"]];

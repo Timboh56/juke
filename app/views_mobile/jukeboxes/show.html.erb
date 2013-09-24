@@ -1,10 +1,10 @@
 <%= content_for_block("show_jukebox","jplayer_process") %>
+<%= header_name(@jukebox.name )%>
 <div class="jukebox_header" id="<%= @jukebox.id %>">
 <div class="jquery_jplayer">
 	
 </div>
 
-<%= jplayer(@jukebox) %>
 <%= location(@jukebox) %>
 
 <div class="middle">
@@ -14,8 +14,6 @@
 	<br>
 	<%= search_song(@jukebox) %>
 </div>
-
-<%= jukebox_chat %>
 
 <p>
   <b>Opening time:</b>

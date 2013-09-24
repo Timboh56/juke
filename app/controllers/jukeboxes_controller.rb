@@ -4,7 +4,8 @@ class JukeboxesController < ApplicationController
   helper_method :empty_playlist?
 
   def index
-    @jukeboxes = Jukebox.all
+    @not_user_jukeboxes = Jukebox.not_user_jukeboxes(current_user)
+    @user_jukeboxes = Jukebox.user_jukeboxes(current_user)
 
     respond_with(@jukeboxes)
   end

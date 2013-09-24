@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
   
   def check_for_mobile
-    prepare_for_mobile if mobile?
+    prepare_for_mobile
   end
   
   def mobile?

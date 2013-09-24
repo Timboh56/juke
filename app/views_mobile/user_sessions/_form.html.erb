@@ -1,0 +1,9 @@
+<%= render :partial => "layouts/error_messages", :locals => {:target => @user_session} %>
+
+<%= form_for @user_session do |f| %>
+		<li><%= f.label :username %></li>
+    <li><%= f.text_field :username, :placeholder => "Username", :class => "form-control", :size => "10" %> </li>
+		<li><%= f.label :password %></li>
+    <li><%= f.password_field :password, :placeholder => "Password", :class => "form-control" , :size => "10" %></li>
+    <li><%= f.submit "Login" %></li>
+<% end %>

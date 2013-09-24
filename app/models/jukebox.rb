@@ -5,6 +5,12 @@ class Jukebox < ActiveRecord::Base
   has_many :jukebox_songs, :dependent => :destroy
   has_many :votes, :dependent => :destroy
   belongs_to :user
+  scope :not_user_jukeboxes, lambda { 
+    |user| 
+    arel = Jukebox.arel_table
+    where(arel[:user_id].not_eq(user.id)) 
+  }
+  scope :user_jukeboxes, lambda { |user| where(:user_id => user.id) }
   
   validates_presence_of :name
   validates_uniqueness_of :name

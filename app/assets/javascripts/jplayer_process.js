@@ -1,6 +1,5 @@
 var playlist = {
 	init: function(jplayer_div_id, jp_container, jukebox_id, client){
-		
 		this.NO_SONG_MSG = "Ain't got nothing har.";
 
 		this.options = {};

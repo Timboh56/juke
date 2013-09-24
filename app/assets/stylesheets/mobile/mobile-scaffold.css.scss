@@ -1,15 +1,22 @@
 $header_font: "aw-conqueror-carved-one";
 
 body {
-	width: 100%;
 	font-size: 1em;	
-	background-color: rgba(240,30,30,1);
 	color: white;
+	overflow-y: scroll;
 }
 
+h1 {
+	font-family: $header_font;
+	text-align: center;
+}
+
+table {
+	width: 100%;
+}
 ul {
+	padding-left: 0;
   li {
-	  margin-left: -1em;
 		font-size: 2em;
 		font-family: $header_font, Helvetica, sans-serif;
 	  text-align: center;
@@ -17,19 +24,57 @@ ul {
 		float: none;
 		list-style-type: none;
 		text-decoration: none;
+		color: white;
 		a {
-		  color: white;
 		  text-decoration: none;
 		}
-		a:visited {
-		  color: white;
+		a:active {
+		  color: blue;
 		}
 	}
 }
 
-.container {
-	background-color: white;
-	color: black;
+.facebook {
+	width: 100%
+}
+
+.nav_link.ui-link:visited, .nav_link.ui-link, .nav_link.ui-link:hover {
+  color: white;
+}
+
+header {
+	background-color: rgba(240,30,30,1);
+	height: 100%;
+	width: 100%;
+	padding-top: .5em;
+	padding-bottom: .5em;
+	position: fixed;
+	top: 0px;
+	border-bottom: .4em solid rgba(200,30,30,1);
+	z-index: 1000;
+}
+
+.mobile_nav_links {
+  display: none;
+}
+
+#logo {
+	width: 4em;
+}
+
+#logo_menu { 
+  vertical-align: top; 
+  width: 30px;
+  height: 15px;
+}
+
+#menu_icon {
+	width: 16px;
+	height: 16px;
+}
+
+td {
+  background-color: rgba(20,20,20,.1);
 }
 
 td {

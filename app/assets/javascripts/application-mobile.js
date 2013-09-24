@@ -9,9 +9,10 @@
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
-//= require_tree ./mobile
 //= require jquery
 //= require jquery_ujs
+//= require_tree ./mobile
 //= require facebook
+//= require jquery.mobile-1.3.2.min
 //= require jquery.jplayer
 //= require jplayer.playlist
