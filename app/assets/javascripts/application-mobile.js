@@ -13,6 +13,6 @@
 //= require jquery_ujs
 //= require_tree ./mobile
 //= require facebook
-//= require jquery.mobile-1.3.2.min
+//= require jquery.mobile-1.3.2
 //= require jquery.jplayer
 //= require jplayer.playlist

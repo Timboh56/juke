@@ -38,12 +38,13 @@
 
 			  <%= stylesheet_link_tag    "application-mobile", :media => "all" %>
 			  <%= javascript_include_tag "http://localhost:9292/faye.js" %>
-				<%= javascript_include_tag "application-mobile" %>				
+				<%= javascript_include_tag "application-mobile" %>
 			  <%= yield :head %>
 				
     </head>
     <body>
 			<div data-role="header" data-position="fixed">
+				<a href="./" data-icon="delete">Cancel</a>
 				<h1> <%= yield :page %> </h1>
 				
 				<%= link_to(image_tag("/images/icons/menu-icon.png", :alt => "menu", :id => "menu_icon"),root_path) %>				

@@ -3,9 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 $header_font: "aw-conqueror-carved-one";
-
+$color_theme: rgba(160,20,20,.2);
 .playlist_table {
-	background-color: rgba(160,20,20,.2);
+	background-color: $color_theme;
 }
 
 

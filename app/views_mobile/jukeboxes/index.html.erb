@@ -1,4 +1,3 @@
-<%= content_for_block("jukeboxes") %>
 <%= header_name("Jukeboxes") %>
 
 <div class="jukeboxes_index">
@@ -11,18 +10,19 @@
 	<br>
 
 	<h1> My Jukeboxes </h1>
-	<% @user_jukeboxes.each do |juke| %>
-	<br>
-		<%= link_to juke.name, jukebox_path(juke.id) %> 
-	<% end %>
+	<ul data-role="listview">
+		<% @user_jukeboxes.each do |juke| %>
+			<li><%= link_to juke.name, jukebox_path(juke.id) %></li>
+		<% end %>
+  </ul>
 	<hr>
 	
 	<h1> Other Jukeboxes </h1>
-	
-	<% @not_user_jukeboxes.each do |juke| %>
-	<br>
-		<%= link_to juke.name, jukebox_path(juke.id) %> 
-	<% end %>
+	<ul data-role="listview">
+		<% @not_user_jukeboxes.each do |juke| %>
+			<li><%= link_to juke.name, jukebox_path(juke.id) %> </li>
+		<% end %>
+	</ul>
 	
 	<br>
 	<hr>

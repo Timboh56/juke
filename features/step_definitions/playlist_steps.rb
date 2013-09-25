@@ -20,6 +20,7 @@ When(/^I go the the (.+)$/) do |page|
 end
 
 When(/^I downvote a listed song$/) do
+  
 end
 
 When(/^I upvote a listed song$/) do

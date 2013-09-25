@@ -1,15 +1,7 @@
-<table>
+<ul data-role="listview" class="ul-li-icon">
   <% results.each do |r| %>
-		<tr>
-			<td>
-			  <b> "<%= r.name %>" </b> by <%= r.artist %>
-				<% if r.album %>
-				  <i> from <b> <%= r.album %> </b> </i>
-				<% end %>
-			</td>
-			<td>
-				<%= content_tag(:a, "Add", :data => r.id, "data-role" => "button", "data-inline" => "true", :href => "blah") %>
-			</td>
-		</tr>
+		<li>
+				<%= content_tag(:a, r.name.to_s + " by " + r.artist.to_s, :data => r.id, :class => "add_song_to_playlist") %>
+		</li>
   <% end %>
-</table>
+</ul>

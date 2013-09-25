@@ -1,13 +1,14 @@
 class JukeboxesController < ApplicationController
-  # filter_resource_access
+  filter_resource_access
   respond_to :xml, :html, :json
   helper_method :empty_playlist?
 
   def index
-    @not_user_jukeboxes = Jukebox.not_user_jukeboxes(current_user)
-    @user_jukeboxes = Jukebox.user_jukeboxes(current_user)
-
-    respond_with(@jukeboxes)
+    if current_user
+      @not_user_jukeboxes = Jukebox.not_user_jukeboxes(current_user)
+      @user_jukeboxes = Jukebox.user_jukeboxes(current_user)
+      respond_with(@jukeboxes)
+    end
   end
 
   # GET /jukeboxs/1
@@ -82,6 +83,7 @@ class JukeboxesController < ApplicationController
   def add_song_to_jukebox
     if current_user
       jukebox_song = JukeboxSong.new(params[:jukebox_song])
+      jukebox_song.jukebox_id = params[:id]
       jukebox_song.user_id = current_user.id
       respond_to do |format|
         if jukebox_song.save
@@ -106,7 +108,7 @@ class JukeboxesController < ApplicationController
   end
   
   def get_playlist
-    @songs = JukeboxSong.songs_for_jukebox(params[:jukebox_id])
+    @songs = JukeboxSong.songs_for_jukebox(params[:id])
     render :partial => "playlist2", :locals => { :songs => @songs }
   end
   
@@ -116,7 +118,7 @@ class JukeboxesController < ApplicationController
   def next_song
     
     # check if user is authorized to do this, REFACTOR    
-    jukebox = Jukebox.find(params[:jukebox_id])
+    jukebox = Jukebox.find(params[:id])
     
     if user_authorized_for_object?(jukebox)
       
@@ -130,7 +132,7 @@ class JukeboxesController < ApplicationController
           current_song.destroy
         
           # reload jukebox, REFACTOR!!!
-          jukebox = Jukebox.find(params[:jukebox_id])
+          jukebox = Jukebox.find(params[:id])
     
         end      
         # check again if jukebox is empty
@@ -146,7 +148,7 @@ class JukeboxesController < ApplicationController
         publish_to_jukebox(jukebox.id)
           
         # find newest current_song
-        current_song = Jukebox.find(params[:jukebox_id]).current_song
+        current_song = Jukebox.find(params[:id]).current_song
       
         respond_to do |format|
           if current_song

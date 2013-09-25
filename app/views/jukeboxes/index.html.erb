@@ -8,14 +8,15 @@
 	<%= text_field_tag 'search' %>
 	<% end %>
 	<br>
-
-	<h1> My Jukeboxes </h1>
-	<% @user_jukeboxes.each do |juke| %>
-	<br>
-		<%= link_to juke.name, jukebox_path(juke.id) %> 
-	<% end %>
-	<hr>
 	
+	<h1> My Jukeboxes </h1>
+	<%= cache @user_jukeboxes do %>
+		<% @user_jukeboxes.each do |juke| %>
+			<br>
+			<%= link_to juke.name, jukebox_path(juke.id) %> 
+		<% end %>
+		<hr>
+	<% end %>
 	<h1> Other Jukeboxes </h1>
 	
 	<% @not_user_jukeboxes.each do |juke| %>

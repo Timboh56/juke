@@ -55,7 +55,7 @@ $(function(){
 		$.ajax({
 			type: "PUT",
 			dataType: "json",
-			data: { jukebox_song: {jukebox_id: jukebox_id, song_id: song_id} },
+			data: { id: jukebox_id, jukebox_song: { song_id: song_id } },
 			url: "/add_song_to_jukebox",
 			error: function(data){
 				// make playlist errors reappear.

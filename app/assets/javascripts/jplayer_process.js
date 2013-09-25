@@ -39,7 +39,7 @@ var playlist = {
 		$.ajax({
 			type: "GET",
 			dataType: "html",
-			data: { jukebox_id: self.jukebox_id},
+			data: { id: self.jukebox_id, jukebox_id: self.jukebox_id},
 			url: "/get_playlist",
 			success: function(data){
 				$(".playlist").html(data);
@@ -54,7 +54,7 @@ var playlist = {
 		$.ajax({
 			type: "GET",
 			dataType: "json",
-			data: { jukebox_id: this.jukebox_id, type: type },
+			data: { id: this.jukebox_id, type: type },
 			url: "/next_song",
 			success: function(data){
 				self.current_song = data;
@@ -89,7 +89,10 @@ var playlist = {
 			supplied: "webmv, ogv, m4v, oga, mp3",
 			smoothPlayBar: true,
 			keyEnabled: true,
-			audioFullScreen: true,
+			size: {
+				width: 0,
+				height: 0
+			},
 			ended: function(){
 				var jplayer_div = this;
 						
