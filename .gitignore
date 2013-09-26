@@ -21,3 +21,5 @@ Gemfile.lock
 
 solr/data/development/index/*
 solr/*
+
+*/.DS_Store

@@ -41,6 +41,16 @@ class ApplicationController < ActionController::Base
     prepend_view_path Rails.root + 'app' + 'views_mobile'
   end
   
+  # store caches in different directories depending on
+  # mobile or web browser
+  def cache_path
+    if mobile?
+      '/mobile/'
+    else
+      '/web/'
+    end
+  end
+  
   def permission_denied
     flash[:error] = "You are not allowed to access that page."
     redirect_to root_url

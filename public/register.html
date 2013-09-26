@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<meta charset=”utf-8”> 
+
+<html>
+<head>
+  <title>BarApp</title>
+  <link href="/assets/bootstrap.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/application-all.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/base/reset.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/all/bids.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/all/jukeboxes.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/all/scaffolds.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/all/users.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/all/votes.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/font-awesome.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/jplayer.blue.monday.css?body=1" media="all" rel="stylesheet" type="text/css" />
+  <script src="/assets/jquery.js?body=1" type="text/javascript"></script>
+<script src="/assets/jquery_ujs.js?body=1" type="text/javascript"></script>
+<script src="/assets/facebook.js?body=1" type="text/javascript"></script>
+<script src="/assets/jquery.jplayer.js?body=1" type="text/javascript"></script>
+<script src="/assets/jplayer.playlist.js?body=1" type="text/javascript"></script>
+<script src="/assets/application.js?body=1" type="text/javascript"></script>
+  <script src="/assets/app.js?body=1" type="text/javascript"></script>
+  <script src="http://localhost:9292/faye.js" type="text/javascript"></script>
+  
+  <meta content="authenticity_token" name="csrf-param" />
+<meta content="qe+DNmormBTXa+hEX0Vb1le96Jda23Ruxbtl9eIW2dk=" name="csrf-token" />
+  <script type="text/javascript" src="//use.typekit.net/vfg0zyr.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+	<header>
+		<nav>
+			<div class="navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li id="logo"><a href="/"><img alt="logo" src="/images/juke_logotext.png" /></a></li><li id="jukeboxes"><a href="/jukeboxes" class="nav_link">Jukeboxes</a></li><li id="about"><a href="/about" class="nav_link">About</a></li><li><a href="/register" class="nav_link">Register</a></li>
+				</ul>
+				
+<form accept-charset="UTF-8" action="/user_sessions" class="adjust navbar-form navbar-right" id="new_user_session" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="qe+DNmormBTXa+hEX0Vb1le96Jda23Ruxbtl9eIW2dk=" /></div>
+  <div class="form-group">
+    <input class="form-control" id="user_session_username" name="user_session[username]" placeholder="Username" size="10" type="text" />
+  </div>
+  <div class="form-group">
+    <input class="form-control" id="user_session_password" name="user_session[password]" placeholder="Password" size="10" type="password" />
+  </div>
+  <input class="btn btn-success" name="commit" type="submit" value="Login" />
+	<a href="/auth/facebook" id="facebook_sign_in"><img alt="Facebook-icon" class="icon" src="/images/icons/facebook-icon.png" /></a>
+	
+</form>
+			</div>
+		</nav>
+	</header>
+	<div class="super">
+		
+		<div class="content">
+			<h1>Register</h1>
+<div class="form">
+	<form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="qe+DNmormBTXa+hEX0Vb1le96Jda23Ruxbtl9eIW2dk=" /></div>
+		
+
+		<div class="field">
+		  <label for="user_username">Username</label><br />
+		  <input id="user_username" name="user[username]" size="30" type="text" />
+		</div>
+
+		<div class="field">
+		  <label for="user_email">Email</label><br />
+		  <input id="user_email" name="user[email]" size="30" type="text" value="" />
+		</div>
+
+		<div class="field">
+		  <label for="user_password">Password</label><br />
+		  <input id="user_password" name="user[password]" size="30" type="password" />
+		</div>
+
+		<div class="field">
+		  <label for="user_password_confirmation">Password confirmation</label><br />
+		  <input id="user_password_confirmation" name="user[password_confirmation]" size="30" type="password" />
+		</div>
+
+		<div class="actions">
+			<input class="btn btn-primary" name="commit" type="submit" value="Submit" />
+		</div>
+</form></div>
+<a href="/users" class="btn btn-default">Back</a>
+		</div>
+	</div>
+</body>
+</html>

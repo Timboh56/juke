@@ -1,11 +1,12 @@
 BarApp::Application.routes.draw do
+  get "static_pages/about"
+  get "static_pages/home"
+
   resources :songs
   resources :bids
   
   match 'auth/:provider/callback', to: 'UserSessions#create'
-  match 'auth/failure', to: redirect('/')
-  match '/about' => "pages#index"
-  
+  match 'auth/failure', to: redirect('/')  
   
   resources :jukeboxes
   resources :jukebox_songs
@@ -17,8 +18,8 @@ BarApp::Application.routes.draw do
   match "/get_playlist" => "Jukeboxes#get_playlist"
   match "/next_song" => "Jukeboxes#next_song"
   match "/set_current_song" => "Jukeboxes#set_current_song"
-  
-  resources :pages
+    
+  match '/about' => "static_pages#about"
   
   resources :users
   

@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
-  caches_action :index
   filter_resource_access :attribute_check => true
+  caches_page :new
+  caches_action :index, :cache_path => :cache_path.to_proc
+  cache_sweeper :user_sweeper, :only => [ :index ]
   
   # GET /users
   # GET /users.json

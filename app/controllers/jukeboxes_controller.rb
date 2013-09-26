@@ -1,7 +1,7 @@
 class JukeboxesController < ApplicationController
   filter_resource_access
   respond_to :xml, :html, :json
-  helper_method :empty_playlist?
+  caches_action :index, :cache_path => :cache_path.to_proc  
 
   def index
     if current_user
@@ -108,7 +108,9 @@ class JukeboxesController < ApplicationController
   end
   
   def get_playlist
-    @songs = JukeboxSong.songs_for_jukebox(params[:id])
+    cache do
+      @songs = JukeboxSong.songs_for_jukebox(params[:id])
+    end
     render :partial => "playlist2", :locals => { :songs => @songs }
   end
   

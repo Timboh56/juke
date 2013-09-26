@@ -1,0 +1,13 @@
+<%= content_for_block("about") %>
+
+<div class="about">
+	<h1> About </h1>
+	<p> Juke is a new way to listen and interact with your party. Great for house parties, bars, or any social gathering, Juke allows users to interact with your party playlist in a live setting. </p>
+	<p> If you seriously love Jooker, let me know! Email me at timboh56@gmail.com. Seriously, I'm a <i> great </i>
+		guy </p> 
+	
+		<% if permitted_to? :index, Jukebox.new %>
+		  <%= link_to "Find a jukebox", "jukeboxes", :class => "btn btn-large btn-primary" %>
+		<% end %>
+	
+</div>

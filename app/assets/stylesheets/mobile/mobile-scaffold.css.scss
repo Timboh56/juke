@@ -77,6 +77,13 @@ header {
 	z-index: 1000;
 }
 
+#errorExplanation {
+	h2 {
+		text-align: center;
+		color: white;
+	}
+}
+
 .mobile_nav_links {
   display: none;
 }
