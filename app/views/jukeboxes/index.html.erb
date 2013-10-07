@@ -1,4 +1,4 @@
-<%= content_for_block("jukeboxes") %>
+<%= content_for_block("jukeboxes", "map") %>
 
 <div class="jukeboxes_index">
 	<h1> Find Your Jukebox </h1>
@@ -9,22 +9,34 @@
 	<% end %>
 	<br>
 	
-	<h1> My Jukeboxes </h1>
-	<%= cache @user_jukeboxes do %>
-		<% @user_jukeboxes.each do |juke| %>
-			<br>
-			<%= link_to juke.name, jukebox_path(juke.id) %> 
+	<% if !@user_jukeboxes.empty? %>
+		<h1> My Jukeboxes </h1>
+		<ul>
+		<%= cache @user_jukeboxes do %>
+				<% @user_jukeboxes.each do |juke| %>
+				<li><%= link_to juke.name, jukebox_path(juke.id) %></li>
+			<% end %>
+			<hr>
 		<% end %>
-		<hr>
+		</ul>			
+	<% end %>
+	<% if !@faved_jukeboxes.empty? %>
+		<h1> My favorited Jukeboxes </h1>
+		<ul>
+		<% @faved_jukeboxes.each do |juke| %>
+			<br>
+			<li><%= link_to juke.name, jukebox_path(juke.id) %> </li>
+			<% end %>
+		</ul>
 	<% end %>
 	<h1> Other Jukeboxes </h1>
-	
-	<% @not_user_jukeboxes.each do |juke| %>
-	<br>
-		<%= link_to juke.name, jukebox_path(juke.id) %> 
+	<ul>	
+		<% @not_user_jukeboxes.each do |juke| %>
+		<li>
+			<%= link_to juke.name, jukebox_path(juke.id) %> 
+		</li>
 	<% end %>
-	
-	<br>
+</ul>
 	<hr>
 	<i class="icon-level-up"></i> <%= link_to "Create a jukebox", new_jukebox_path, :class => "btn btn-default" %>
 </div>

@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :jukeboxes, :dependent => :destroy
   has_many :jukebox_songs, :dependent => :destroy
   
+  validates_format_of :username, :with => /[a-z][1-9]$/, :message => " must only contain letters or numbers"
   validates_uniqueness_of :username
   validates_uniqueness_of :email
   validates_presence_of :username
@@ -40,7 +41,7 @@ class User < ActiveRecord::Base
       user.name = auth.info.name
       user.oauth_token = auth.credentials.token
       user.oauth_expires_at = Time.at(auth.credentials.expires_at)
-      user.save!
+      user.save(:validate => false)
     end
   end
   

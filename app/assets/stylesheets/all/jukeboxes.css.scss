@@ -24,9 +24,25 @@ label {
   font-family: $header_font;
 }
 
+#map_container {
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+.jukeboxes_index{
+	li {
+		float: none;
+		display: inline-block;
+		margin-left: 2em;
+		margin-right: 2em;
+	}
+}
+
 .jukebox_header {
   text-align: center;
   width: 600px;
+	padding-top: 3em;
   display: inline-block;
   h1 {
 	font-size: 1.5em;
@@ -54,6 +70,8 @@ label {
 	  }
   }
 }
+
+#map_container { height: 300px; width: 300px; }
 
 .location {
   font-size: .65em;

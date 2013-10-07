@@ -1,6 +1,6 @@
 $header_font: "aw-conqueror-carved-one";
 $header_font2: "sans-serif";
-$font3: "hellenic-wide";
+$font3: "chippewa-falls";
 $color_theme: blue;
 //rgba(160,20,20,.9);
 
@@ -11,12 +11,12 @@ html, body {
   border: 0px;
   height: 100%;
   width: 100%;
+	background-color: $color_theme;
 }
 
 p, ol, ul, td {
   font-family: Georgia, helvetica, sans-serif;
   font-size: .9em;
-  line-height: 1.2em;
 }
 
 a {
@@ -38,21 +38,22 @@ a {
   margin: 0 auto;
   height: 100%;
   width: 100%;
-  background: url("/images/j2.jpg") no-repeat center fixed;
+  //background: url("/images/j2.jpg") no-repeat center fixed;
   background-size: cover;
   overflow-y: auto;
   
   #notice, .content, #permission_denied {
-    margin: 0 15em .5em 15em;
+    // margin: 0 15em .5em 15em;
 	  border-radius: 30px;
   }
   
   #notice, #permission_denied {
 		position: relative;
-		display: inline-block;
+		display: block;
 		background-color: rgba(255, 255, 255, 0.8);
 		padding: 15px;
-		width: 10em;
+		margin-bottom: 2em;
+		width: 100%;
 		top: 4.5em;
   }
   
@@ -64,19 +65,26 @@ a {
 		display: inline-block;
 		vertical-align: top;
 		position: relative;
-		top: 6em;
+		//top: 6em;
+		width: 100%;
+		height: inherit;
+		overflow-y: auto;
 		padding-top: 2em;
 		padding-bottom: 2em;
 		background-color: rgba(255,255,255,1);
-		border: 15px solid $color_theme;
-		-webkit-border-radius: 100px 100px 50px 50px;
-		-moz-border-radius: 100px 100px 50px 50px;
-		-o-border-radius: 100px 100px 50px 50px;
-		border-radius: 100px 100px 50px 50px;
-		// pre-animation opacity 
-		-webkit-opacity: .1;
-		-o-opacity: .1;
-		-moz-opacity: .1;
+		//border: 15px solid $color_theme;
+		-webkit-border-radius: 200px 200px 50px 50px;
+		-moz-border-radius: 200px 200px 50px 50px;
+		-o-border-radius: 200px 200px 50px 50px;
+		border-radius: 200px 200px 50px 50px;
+		min-width: 40%;
+		
+		.inside {
+			margin-top: 5em;
+		  display: inline-block;
+			vertical-align: top;
+			margin: 2em;
+		}
 	
 		p {
 		  display: inherit;
@@ -85,12 +93,6 @@ a {
 		  vertical-align: inherit;
 		}
   }
-}
-
-.new_session, .users_index, .about{
-  display: inline-block;
-	vertical-align: top;
-	margin: 2em;
 }
 
 .form {
@@ -116,6 +118,22 @@ a {
   left: 0px;
 }
 
+.title {
+	font-family: $font3, Verdana, Helvetica;
+	font-size: 3em;
+}
+
+.favorited {
+	color: blue;
+}
+
+.unfavorited {
+	color: black;
+}
+
+.icon-thumbs-up:hover {
+	color: blue;
+}
 
 header {
   position: absolute;
@@ -129,6 +147,8 @@ header {
   -webkit-transition: top .1s ease-out;
   -o-transition: top .1s ease-out;
   z-index: 1000;
+	box-shadow: 1px 1px 11px rgba(0,0,0,.99);
+	
 	
 	.adjust {
 	  margin-top: 13px;
@@ -143,6 +163,7 @@ header {
 		font-family: $header_font, Helvetica;
 		text-align: center;
 		margin: 1em;
+		font-size: 1.2em;
 		padding-top: .2em;
 	}
 	
@@ -166,7 +187,8 @@ header {
 
   .navbar-nav {
 	    li {
-			  line-height: 64px;
+				margin-bottom: 0;
+			  line-height:67px;
 			}
 			
 			a {

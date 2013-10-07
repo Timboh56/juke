@@ -4,7 +4,7 @@ module ApplicationHelper
     if current_user
       nav_links += content_tag(:li,link_to("My Account", users_path, :class => "nav_link"), :id => "users") + content_tag(:li,link_to("Logout", logout_path, :class => "nav_link"))
     else
-      nav_links += content_tag(:li,link_to("Register", register_path, :class => "nav_link"))     
+      nav_links += content_tag(:li,link_to("Register", register_path, :class => "nav_link"), :id => "register")     
     end
   end
   
@@ -13,7 +13,7 @@ module ApplicationHelper
     if current_user
       nav_links += content_tag(:li,link_to("My Account", edit_user_path(current_user), :class => "nav_link"), :id => "users") + content_tag(:li,link_to("Logout", logout_path, :class => "nav_link"))
     else
-      nav_links += content_tag(:li,link_to("Register", register_path, :class => "nav_link"))     
+      nav_links += content_tag(:li,link_to("Register", register_path, :id => "register", :class => "nav_link"))     
     end
   end
   

@@ -23,11 +23,15 @@ var playlist = {
 		this.container.on("click",".jp-play", function(event){
 			event.preventDefault();
 			
-			// get the first song
-			// if success, start playing it
-			self.get_next_song("init").done(function(){
-				self.add_and_play_current_song();
-			});
+			if(self.initialized == false){
+				// get the first song
+				// if success, start playing it
+				self.get_next_song("init").done(function(){
+					self.add_and_play_current_song();
+				});
+				self.initialized = true;
+			}
+			
 		});
 		
 	},
@@ -42,7 +46,9 @@ var playlist = {
 			data: { id: self.jukebox_id, jukebox_id: self.jukebox_id},
 			url: "/get_playlist",
 			success: function(data){
-				$(".playlist").html(data);
+				$(".playlist_table").slideToggle(5);
+				$(".playlist_table").html(data);
+				$(".playlist_table").slideToggle(500);
 			}
 		});
 	},
@@ -117,9 +123,6 @@ var playlist = {
 		// REFACTOR TO SOMETHING LESS UGLY
 		var html = $("<h2>").html(self.current_song.name + " by " + self.current_song.artist);
 		self.container.find(".current_song").html(html);
-		
-		// update the page's playlist for any changes
-		self.get_playlist();
 		
 		// add current_song to jPlaylist for jplayer
 		self.playlist.add({

@@ -25,9 +25,13 @@
 		</nav>
 	</header>
 	<div class="super">
-		<%= notice_div %>
 		<div class="content">
-			<%= yield %>
+			<%= notice_div %>
+
+			<div class="inside">
+			
+				<%= yield %>
+		</div>
 		</div>
 	</div>
 </body>

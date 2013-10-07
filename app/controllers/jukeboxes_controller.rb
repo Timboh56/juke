@@ -7,6 +7,7 @@ class JukeboxesController < ApplicationController
     if current_user
       @not_user_jukeboxes = Jukebox.not_user_jukeboxes(current_user)
       @user_jukeboxes = Jukebox.user_jukeboxes(current_user)
+      @faved_jukeboxes = current_user.favorites.map! { |fave| fave.jukebox }
       respond_with(@jukeboxes)
     end
   end
@@ -15,6 +16,7 @@ class JukeboxesController < ApplicationController
   # GET /jukeboxs/1.json
   def show
     @jukebox = Jukebox.find(params[:id])
+    @favorite = Favorite.where(:jukebox_id => params[:id]).find_by_user_id(current_user.id)
     @songs = @jukebox.jukebox_songs.order("rank ASC")
     
     respond_with(@jukebox)
@@ -108,9 +110,7 @@ class JukeboxesController < ApplicationController
   end
   
   def get_playlist
-    cache do
-      @songs = JukeboxSong.songs_for_jukebox(params[:id])
-    end
+    @songs = JukeboxSong.songs_for_jukebox(params[:id])
     render :partial => "playlist2", :locals => { :songs => @songs }
   end
   

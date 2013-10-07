@@ -1,15 +1,13 @@
 class UsersController < ApplicationController
   filter_resource_access :attribute_check => true
-  caches_page :new
-  caches_action :index, :cache_path => :cache_path.to_proc
-  cache_sweeper :user_sweeper, :only => [ :index ]
+  # caches_page :new
+  # caches_action :index, :cache_path => :cache_path.to_proc
+  # cache_sweeper :user_sweeper, :only => [ :index ]
   
   # GET /users
   # GET /users.json
   def index
-    @users = current_user.top_role == 1 ? User.all : nil
-    @user = current_user
-    
+    @users = current_user.top_role == 1 ? User.all : nil    
 
     respond_to do |format|
       format.html # index.html.erb

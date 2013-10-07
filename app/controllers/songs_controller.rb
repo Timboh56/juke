@@ -16,18 +16,26 @@ class SongsController < ApplicationController
   # GET /songs/1.json
   def show
     @song = Song.find(params[:id])
+    @msg = get_flash
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @song }
     end
   end
+  
+  def get_flash
+    msg = session[:msg]
+    reset_session
+    return msg
+  end
 
   # GET /songs/new
   # GET /songs/new.json
   def new
+    
     @song = Song.new
-
+    session[:msg] = "smelly"
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @song }
@@ -43,7 +51,7 @@ class SongsController < ApplicationController
   # POST /songs.json
   def create
     @song = Song.new(params[:song])
-
+    
     respond_to do |format|
       if @song.save
         format.html { redirect_to @song, notice: 'Song was successfully created.' }

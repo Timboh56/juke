@@ -11,7 +11,7 @@ class Jukebox < ActiveRecord::Base
     where(arel[:user_id].not_eq(user.id)) 
   }
   scope :user_jukeboxes, lambda { |user| where(:user_id => user.id) }
-  
+  validates_format_of :name, :with => /[a-z][1-9]$/, :message => " must only contain letters or numbers"
   validates_presence_of :name
   validates_uniqueness_of :name
   
@@ -61,7 +61,7 @@ class Jukebox < ActiveRecord::Base
     vote_counts = []
     
     jukebox_songs.each do |jukebox_song|
-      vote_counts.push([jukebox_song.id, jukebox_song.votes_count])
+      vote_counts.push([jukebox_song, jukebox_song.votes_count])
     end
 
     # sort the array by vote count
@@ -73,8 +73,7 @@ class Jukebox < ActiveRecord::Base
     # if rankings have already been assigned to jukebox songs of this jukebox with jukebox_id,
     # skip jukebox_song with ranking of 0 because that's the currently playing jukebox_song
     vote_counts.each_with_index do |arr,i|
-      id = arr[0]
-      jukebox_song = jukebox_songs.find(id)
+      jukebox_song = arr[0]
       
       # start with 0, rank 0 is current song playing
       jukebox_song.rank = i

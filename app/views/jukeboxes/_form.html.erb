@@ -15,14 +15,12 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
-  <div class="field">
-    <%= f.label :latitude %><br />
-    <%= f.text_field :latitude %>
-  </div>
-  <div class="field">
-    <%= f.label :longitude %><br />
-    <%= f.text_field :longitude %>
-  </div>
+	<br>
+	<div class="field">
+		<%= f.label :location %>
+		<%= render :partial => "layouts/map" %>
+	<br>
+	</div>
   <div class="field">
     <%= f.label :street %><br />
     <%= f.text_field :street %>

@@ -1,7 +1,7 @@
 class Song < ActiveRecord::Base
   attr_accessible :artist, :name, :album, :url, :length
   has_many :jukebox_songs, :dependent => :destroy
-
+  validates_uniqueness_of :name, :scope => [:artist], :message => "This song has already been submitted."
   before_save(:file_info)
     
   searchable do

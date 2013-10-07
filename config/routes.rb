@@ -7,9 +7,10 @@ BarApp::Application.routes.draw do
   
   match 'auth/:provider/callback', to: 'UserSessions#create'
   match 'auth/failure', to: redirect('/')  
-  
+    
   resources :jukeboxes
   resources :jukebox_songs
+  resources :favorites
   
   match "/search_for_songs" => "JukeboxSongs#search_for_songs"
   match "/upvote" => "JukeboxSongs#upvote"

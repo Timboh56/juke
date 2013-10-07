@@ -9,11 +9,7 @@
 			position: "absolute",
 			top: "0px",
 		},ANIMATION_TIME);
-		
-		$(".content").animate({
-			opacity: 1
-		},ANIMATION_TIME);
-		
+
 		setTimeout(function() {
 			$("#notice").fadeOut('slow');
 		},NOTICE_TIME);

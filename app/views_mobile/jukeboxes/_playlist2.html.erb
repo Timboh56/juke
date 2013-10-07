@@ -1,4 +1,4 @@
-<table>
+<table class="playlist_table">
 	<tr>
 		  <% if current_user %>
 			<th>  </th>
@@ -13,7 +13,7 @@
 	<tr class="song" id="<%= song.id %>">
 		  <td>
 				<div class="ranking">
-	  	  	<%= song.rank + 1 %>
+	  	  	<b><%= song.rank + 1 %></b>
 				</div>
 		  </td>
   		  <% if current_user %>
@@ -31,9 +31,9 @@
 			</h2>
 		  </td>
 		  <td>
-			  <h2>
+			  <div class="artist_name">
 				  <%= song.artist %>
-			  </h2>
+				</div class="artist_name">
 		  </td>
 	      <td>
 		  	  <%= user_div(song.user) %> 

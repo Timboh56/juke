@@ -1,11 +1,11 @@
 module JukeboxesHelper
   
+  def jukebox_title_div(jukebox, favorite)
+    render :partial => "jukebox_title_div", :locals => { :jukebox => jukebox, :favorite => favorite }
+  end
+  
   def playlist(songs)
-    if songs
-      render :partial => "playlist2", :locals => { :songs => songs}
-    else 
-      "There are no songs submitted yet!"
-    end
+    render :partial => "playlist2", :locals => { :songs => songs}
   end
   
   def location(jukebox)
@@ -22,7 +22,7 @@ module JukeboxesHelper
   end
   
   def jplayer(jukebox)
-    if user_authorized_for_object?(jukebox) && !empty_playlist?
+    if user_authorized_for_object?(jukebox) && !jukebox.empty_playlist?
       render :partial => "jplayer"
     end
   end

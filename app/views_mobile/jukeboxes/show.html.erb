@@ -2,6 +2,8 @@
 
 <%= header_name(@jukebox.name )%>
 <div class="jukebox_header" id="<%= @jukebox.id %>">
+	<%= jukebox_title_div(@jukebox, @favorite) %>
+	
 <div class="jquery_jplayer">
 	
 </div>

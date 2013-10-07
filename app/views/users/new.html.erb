@@ -1,3 +1,9 @@
 <h1>Register</h1>
 <%= render :partial => "form", :locals => { :user => @user } %>
 <%= link_to 'Back', users_path, :class => "btn btn-default" %>
+
+<script type="text/javascript">
+	$(function(){
+		add_active_class_nav("register");
+	});
+</script>
